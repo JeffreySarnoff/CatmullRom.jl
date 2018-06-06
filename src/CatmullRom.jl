@@ -12,11 +12,23 @@ struct Point2D{T}
     y::T
 end
 
+struct Point3D{T}
+    x::T
+    y::T
+    z::T
+end
 
 function DistSquared(p::Point2D, q::Point2D)
     dx = q.x - p.x
     dy = q.y - p.y
     return dx*dx + dy*dy
+end
+
+function DistSquared(p::Point3D, q::Point3D)
+    dx = q.x - p.x
+    dy = q.y - p.y
+    dz = q.z - p.z
+    return dx*dx + dy*dy + dz*dz
 end
 
 struct CubicPoly{T}
@@ -111,6 +123,24 @@ function CentripetalCatmullRom(p0::Point2D{T}, p1::Point2D{T}, p2::Point2D{T}, p
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
 
     return xcpoly, ycpoly
+end
+
+
+function CentripetalCatmullRom(p0::Point3D{T}, p1::Point3D{T}, p2::Point3D{T}, p3::Point3D{T}) where {T}
+    dt0 = T(sqrt(sqrt(DistSquared(p0, p1))))
+    dt1 = T(sqrt(sqrt(DistSquared(p1, p2))))
+    dt2 = T(sqrt(sqrt(DistSquared(p2, p3))))
+
+    # safety check for repeated points
+    if (dt1 < 1.0e-4)  dt1 = T(1.0) end
+    if (dt0 < 1.0e-4)  dt0 = dt1 end
+    if (dt2 < 1.0e-4)  dt2 = dt1 end
+
+    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
+    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
+    zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, dt0, dt1, dt2)
+
+    return xcpoly, ycpoly, zpoly
 end
 
 function test()
