@@ -36,6 +36,7 @@ function polyval(cpoly::CubicPoly{T}, t::T) where {T<:Number}
     return t1
 end
 
+polyval(cpoly::CubicPoly{Float32}, t::Float64) = polyval(cpoly, Float32(t))
 
 #=
  * Compute coefficients for a cubic polynomial
