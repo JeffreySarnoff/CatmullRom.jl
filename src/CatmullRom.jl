@@ -1,6 +1,8 @@
+# q.v. https://stackoverflow.com/questions/9489736/catmull-rom-curve-with-no-cusps-and-no-self-intersections/23980479#23980479
+
 module CatmullRom
 
-# https://stackoverflow.com/questions/9489736/catmull-rom-curve-with-no-cusps-and-no-self-intersections/23980479#23980479
+export CentripetalCatmullRom, Point2D
 
 struct Point2D{T}
     x::T
