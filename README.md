@@ -1,0 +1,2 @@
+# CatmullRom.jl
+Centrepedal variant
