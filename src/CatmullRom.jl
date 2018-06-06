@@ -4,6 +4,9 @@ module CatmullRom
 
 export CentripetalCatmullRom, Point2D
 
+using Polynomials
+import Polynomials: Poly, polyval, polyint, polyder
+
 struct Point2D{T}
     x::T
     y::T
@@ -21,9 +24,33 @@ struct CubicPoly{T}
     c1::T
     c2::T
     c3::T
+    
+    poly::Poly{T}
+    diff1poly::Poly{T}
+    diff2poly::Poly{T}
+    integratedpoly::Poly{T}
+    
+    function CubicPoly(c0::T, c1::T, c2::T, c3::T) where {T}
+        poly = Poly([c0, c1, c2, c3])
+        diff1poly = polyder(poly)
+        diff2poly = polyder(diff1poly)
+        integratedpoly = polyint(poly)
+        return new{T}(c0, c1, c2, c3, poly, diff1poly, diff2poly, integratedpoly)
+    end
+    
 end
 
-function polyval(cpoly::CubicPoly{T}, t::T) where {T<:Number}
+@inline poly(x::CubicPoly{T}) where {T} = x.poly
+@inline diff1poly(x::CubicPoly{T}) where {T} = x.diff1poly
+@inline diff2poly(x::CubicPoly{T}) where {T} = x.diff2poly
+@inline integratedpoly(x::CubicPoly{T}) where {T} = x.integratedpoly
+
+@inline polyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.poly, z)
+@inline diff1polyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.diff1poly, z)
+@inline diff2polyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.diff2poly, z)
+@inline integratedpolyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.integratedpoly, z)
+
+function evalpoly(cpoly::CubicPoly{T}, t::T) where {T<:Number}
     t1 = t
     t2 = t1 * t1
     t3 = t2 * t1
@@ -36,7 +63,7 @@ function polyval(cpoly::CubicPoly{T}, t::T) where {T<:Number}
     return t1
 end
 
-polyval(cpoly::CubicPoly{Float32}, t::Float64) = polyval(cpoly, Float32(t))
+evalpoly(cpoly::CubicPoly{Float32}, t::Float64) = polyval(cpoly, Float32(t))
 
 #=
  * Compute coefficients for a cubic polynomial
@@ -71,9 +98,9 @@ end
 
 
 function CentripetalCatmullRom(p0::Point2D{T}, p1::Point2D{T}, p2::Point2D{T}, p3::Point2D{T}) where {T}
-    dt0 = T(DistSquared(p0, p1)^0.25)
-    dt1 = T(DistSquared(p1, p2)^0.25)
-    dt2 = T(DistSquared(p2, p3)^0.25)
+    dt0 = T(sqrt(sqrt(DistSquared(p0, p1))))
+    dt1 = T(sqrt(sqrt(DistSquared(p1, p2))))
+    dt2 = T(sqrt(sqrt(DistSquared(p2, p3))))
 
     # safety check for repeated points
     if (dt1 < 1.0e-4)  dt1 = T(1.0) end
@@ -95,8 +122,8 @@ function test()
     xcpoly, ycpoly = CentripetalCatmullRom(p0, p1, p2, p3)
 
     for i=0:10
-        xcoord = polyval(xcpoly, 0.1*i)
-        ycoord = polyval(ycpoly, 0.1*i)
+        xcoord = evalpoly(xcpoly, 0.1*i)
+        ycoord = evalpoly(ycpoly, 0.1*i)
         coord = Point2D(xcoord, ycoord)
         println(coord)
     end
