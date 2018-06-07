@@ -87,32 +87,32 @@ end
 @inline dpolyval(x::CubicPoly{T}, z::T) where {T} = polyval(dpoly(x), z)
 
 struct CatmullRom{T,N}
-    polys::NTuple{N,Poly{T}}
+    polys::NTuple{N,CubicPoly{T}}
 end
 
 function polyval(cr::CatmullRom{T,1}, x::T) where {T}
-    p1 = polyval(cr.polys[1], x)
+    p1 = polyval(cr.polys.poly[1], x)
     return (p1,)
 end
 
 function polyval(cr::CatmullRom{T,2}, x::T) where {T}
-    p1 = polyval(cr.polys[1], x)
-    p2 = polyval(cr.polys[2], x)
+    p1 = polyval(cr.polys.poly[1], x)
+    p2 = polyval(cr.polys.poly[2], x)
     return (p1, p2)
 end
 
 function polyval(cr::CatmullRom{T,3}, x::T) where {T}
-    p1 = polyval(cr.polys[1], x)
-    p2 = polyval(cr.polys[2], x)
-    p3 = polyval(cr.polys[3], x)
+    p1 = polyval(cr.polys.poly[1], x)
+    p2 = polyval(cr.polys.poly[2], x)
+    p3 = polyval(cr.polys.poly[3], x)
     return (p1, p2, p3)
 end
 
 function polyval(cr::CatmullRom{T,3}, x::T) where {T}
-    p1 = polyval(cr.polys[1], x)
-    p2 = polyval(cr.polys[2], x)
-    p3 = polyval(cr.polys[3], x)
-    p4 = polyval(cr.polys[4], x)
+    p1 = polyval(cr.polys.poly[1], x)
+    p2 = polyval(cr.polys.poly[2], x)
+    p3 = polyval(cr.polys.poly[3], x)
+    p4 = polyval(cr.polys.poly[4], x)
     return (p1, p2, p3, p4)
 end
 
