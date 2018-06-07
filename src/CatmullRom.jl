@@ -1,4 +1,4 @@
-# q.v. https://stackoverflow.com/questions/9489736/catmull-rom-curve-with-no-cusps-and-no-self-intersections/23980479#23980479
+__precompile__()
 
 module CatmullRom
 
