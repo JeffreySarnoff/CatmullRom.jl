@@ -86,29 +86,29 @@ end
 @inline polyval(x::CubicPoly{T}, z::T) where {T} = polyval(poly(x), z)
 @inline dpolyval(x::CubicPoly{T}, z::T) where {T} = polyval(dpoly(x), z)
 
-struct CatmullRom{T,N}
+struct CatmullRomCentripetal{T,N}
     polys::NTuple{N,CubicPoly{T}}
 end
 
-function polyval(cr::CatmullRom{T,1}, x::T) where {T}
+function polyval(cr::CatmullRomCentripetal{T,1}, x::T) where {T}
     p1 = polyval(cr.polys[1].poly, x)
     return (p1,)
 end
 
-function polyval(cr::CatmullRom{T,2}, x::T) where {T}
+function polyval(cr::CatmullRomCentripetal{T,2}, x::T) where {T}
     p1 = polyval(cr.polys[1].poly, x)
     p2 = polyval(cr.polys[2].poly, x)
     return (p1, p2)
 end
 
-function polyval(cr::CatmullRom{T,3}, x::T) where {T}
+function polyval(cr::CatmullRomCentripetal{T,3}, x::T) where {T}
     p1 = polyval(cr.polys[1].poly, x)
     p2 = polyval(cr.polys[2].poly, x)
     p3 = polyval(cr.polys[3].poly, x)
     return (p1, p2, p3)
 end
 
-function polyval(cr::CatmullRom{T,4}, x::T) where {T}
+function polyval(cr::CatmullRomCentripetal{T,4}, x::T) where {T}
     p1 = polyval(cr.polys[1].poly, x)
     p2 = polyval(cr.polys[2].poly, x)
     p3 = polyval(cr.polys[3].poly, x)
@@ -159,7 +159,7 @@ function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT1D{
 
     xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
 
-    return CatmullRom{T,1}((xcpoly,))
+    return CatmullRomCentripetal{T,1}((xcpoly,))
 end
 
 function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT2D{T}}
@@ -175,7 +175,7 @@ function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT2D{
     xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
 
-    return CatmullRom{T,2}((xcpoly, ycpoly))
+    return CatmullRomCentripetal{T,2}((xcpoly, ycpoly))
 end
 
 function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT3D{T}}
@@ -192,7 +192,7 @@ function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT3D{
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
     zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
 
-    return CatmullRom{T,3}((xcpoly, ycpoly, zcpoly))
+    return CatmullRomCentripetal{T,3}((xcpoly, ycpoly, zcpoly))
 end
 
 function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT4D{T}}
@@ -210,7 +210,7 @@ function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT4D{
     zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
     tcpoly = NonuniformCatmullRom(p0.t, p1.t, p2.t, p3.t, d0, d1, d2)
 
-    return CatmullRom{T,4}((xcpoly, ycpoly, zcpoly, tcpoly))
+    return CatmullRomCentripetal{T,4}((xcpoly, ycpoly, zcpoly, tcpoly))
 end
 
 
