@@ -2,7 +2,7 @@
 
 module CatmullRom
 
-export CentripetalCatmullRom, Point2D
+export CentripetalCatmullRom, POINT1D, POINT2D, POINT3D, POINT4D
 
 using Polynomials
 import Polynomials: Poly, polyval, polyint, polyder
@@ -226,7 +226,7 @@ function test()
     
     for i=0:4
         xcoord, ycoord = polyval(crpoly, 0.25*i)
-        coord = Point2D(xcoord, ycoord)
+        coord = POINT2D(xcoord, ycoord)
         push!(coords, coord)
     end
     return coords
