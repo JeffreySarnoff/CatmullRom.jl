@@ -148,67 +148,67 @@ end
 
 
 function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT1D{T}}
-    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
-    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
-    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
+    d0 = T(sqrt(sqrt(dist2(p0, p1))))
+    d1 = T(sqrt(sqrt(dist2(p1, p2))))
+    d2 = T(sqrt(sqrt(dist2(p2, p3))))
 
     # safety check for repeated points
-    if (dt1 < 1.0e-4)  dt1 = T(1.0) end
-    if (dt0 < 1.0e-4)  dt0 = dt1 end
-    if (dt2 < 1.0e-4)  dt2 = dt1 end
+    if (d1 < 1.0e-4)  d1 = T(1.0) end
+    if (d0 < 1.0e-4)  d0 = d1 end
+    if (d2 < 1.0e-4)  d2 = d1 end
 
-    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
+    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
 
     return CatmullRom{T,1}((xcpoly,))
 end
 
 function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT2D{T}}
-    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
-    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
-    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
+    d0 = T(sqrt(sqrt(dist2(p0, p1))))
+    d1 = T(sqrt(sqrt(dist2(p1, p2))))
+    d2 = T(sqrt(sqrt(dist2(p2, p3))))
 
     # safety check for repeated points
-    if (dt1 < 1.0e-4)  dt1 = T(1.0) end
-    if (dt0 < 1.0e-4)  dt0 = dt1 end
-    if (dt2 < 1.0e-4)  dt2 = dt1 end
+    if (d1 < 1.0e-4)  d1 = T(1.0) end
+    if (d0 < 1.0e-4)  d0 = d1 end
+    if (d2 < 1.0e-4)  d2 = d1 end
 
-    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
-    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
+    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
+    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
 
     return CatmullRom{T,2}((xcpoly, ycpoly))
 end
 
 function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT3D{T}}
-    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
-    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
-    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
+    d0 = T(sqrt(sqrt(dist2(p0, p1))))
+    d1 = T(sqrt(sqrt(dist2(p1, p2))))
+    d2 = T(sqrt(sqrt(dist2(p2, p3))))
 
     # safety check for repeated points
-    if (dt1 < 1.0e-4)  dt1 = T(1.0) end
-    if (dt0 < 1.0e-4)  dt0 = dt1 end
-    if (dt2 < 1.0e-4)  dt2 = dt1 end
+    if (d1 < 1.0e-4)  d1 = T(1.0) end
+    if (d0 < 1.0e-4)  d0 = d1 end
+    if (d2 < 1.0e-4)  d2 = d1 end
 
-    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
-    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
-    zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, dt0, dt1, dt2)
+    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
+    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
+    zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
 
     return CatmullRom{T,3}((xcpoly, ycpoly, zcpoly))
 end
 
 function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT4D{T}}
-    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
-    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
-    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
+    d0 = T(sqrt(sqrt(dist2(p0, p1))))
+    d1 = T(sqrt(sqrt(dist2(p1, p2))))
+    d2 = T(sqrt(sqrt(dist2(p2, p3))))
 
     # safety check for repeated points
-    if (dt1 < 1.0e-4)  dt1 = T(1.0) end
-    if (dt0 < 1.0e-4)  dt0 = dt1 end
-    if (dt2 < 1.0e-4)  dt2 = dt1 end
+    if (d1 < 1.0e-4)  d1 = T(1.0) end
+    if (d0 < 1.0e-4)  d0 = d1 end
+    if (d2 < 1.0e-4)  d2 = d1 end
 
-    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
-    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
-    zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, dt0, dt1, dt2)
-    tcpoly = NonuniformCatmullRom(p0.t, p1.t, p2.t, p3.t, dt0, dt1, dt2)
+    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
+    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
+    zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
+    tcpoly = NonuniformCatmullRom(p0.t, p1.t, p2.t, p3.t, d0, d1, d2)
 
     return CatmullRom{T,4}((xcpoly, ycpoly, zcpoly, tcpoly))
 end
