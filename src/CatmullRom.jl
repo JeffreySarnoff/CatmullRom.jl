@@ -222,10 +222,12 @@ function test()
 
     crpoly = CentripetalCatmullRom(p0, p1, p2, p3)
 
-    coords = Vector{POINT2D}(5)
+    n = 4
+    coords = Vector{POINT2D}(n)
+    m = inv(n)
     
-    for i=1:4
-        xcoord, ycoord = polyval(crpoly, 0.25*i)
+    for i=1:n
+        xcoord, ycoord = polyval(crpoly, min(1.0,m*i))
         coord = POINT2D(xcoord, ycoord)
         coords[i] = coord
     end
