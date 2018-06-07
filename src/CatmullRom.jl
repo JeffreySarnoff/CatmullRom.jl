@@ -91,28 +91,28 @@ struct CatmullRom{T,N}
 end
 
 function polyval(cr::CatmullRom{T,1}, x::T) where {T}
-    p1 = polyval(cr.polys.poly[1], x)
+    p1 = polyval(cr.polys[1].poly, x)
     return (p1,)
 end
 
 function polyval(cr::CatmullRom{T,2}, x::T) where {T}
-    p1 = polyval(cr.polys.poly[1], x)
-    p2 = polyval(cr.polys.poly[2], x)
+    p1 = polyval(cr.polys[1].poly, x)
+    p2 = polyval(cr.polys[2].poly, x)
     return (p1, p2)
 end
 
 function polyval(cr::CatmullRom{T,3}, x::T) where {T}
-    p1 = polyval(cr.polys.poly[1], x)
-    p2 = polyval(cr.polys.poly[2], x)
-    p3 = polyval(cr.polys.poly[3], x)
+    p1 = polyval(cr.polys[1].poly, x)
+    p2 = polyval(cr.polys[2].poly, x)
+    p3 = polyval(cr.polys[3].poly, x)
     return (p1, p2, p3)
 end
 
-function polyval(cr::CatmullRom{T,3}, x::T) where {T}
-    p1 = polyval(cr.polys.poly[1], x)
-    p2 = polyval(cr.polys.poly[2], x)
-    p3 = polyval(cr.polys.poly[3], x)
-    p4 = polyval(cr.polys.poly[4], x)
+function polyval(cr::CatmullRom{T,4}, x::T) where {T}
+    p1 = polyval(cr.polys[1].poly, x)
+    p2 = polyval(cr.polys[2].poly, x)
+    p3 = polyval(cr.polys[3].poly, x)
+    p4 = polyval(cr.polys[4].poly, x)
     return (p1, p2, p3, p4)
 end
 
