@@ -227,7 +227,7 @@ function test()
     for i=1:4
         xcoord, ycoord = polyval(crpoly, 0.25*i)
         coord = POINT2D(xcoord, ycoord)
-        push!(coords, coord)
+        coords[i] = coord
     end
     return coords
 end
