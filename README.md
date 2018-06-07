@@ -1,4 +1,4 @@
-# CatmullRom.jl
+#  CentripetalCatmullRom.jl
 Centripetal variant
 
 
