@@ -1,5 +1,5 @@
 # CatmullRom.jl
-Centrepedal variant
+Centripetal variant
 
 
 
