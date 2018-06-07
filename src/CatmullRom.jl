@@ -223,7 +223,7 @@ function test()
     crpoly = CentripetalCatmullRom(p0, p1, p2, p3)
 
     n = 4
-    coords = Vector{POINT2D}(n)
+    coords = Vector{POINT2D}(undef, n)
     m = inv(n)
     
     for i=1:n
