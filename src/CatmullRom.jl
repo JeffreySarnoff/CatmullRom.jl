@@ -224,7 +224,7 @@ function test()
 
     coords = Vector{POINT2D}(5)
     
-    for i=0:4
+    for i=1:4
         xcoord, ycoord = polyval(crpoly, 0.25*i)
         coord = POINT2D(xcoord, ycoord)
         push!(coords, coord)
