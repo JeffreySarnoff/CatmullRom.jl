@@ -7,75 +7,114 @@ export CentripetalCatmullRom, Point2D
 using Polynomials
 import Polynomials: Poly, polyval, polyint, polyder
 
-struct Point2D{T}
+struct POINT1D{T}
     x::T
-    y::T
+end
+struct POINT2D{T}
+    x::T; y::T
+end
+struct POINT3D{T}
+    x::T; y::T; z::T
+end
+struct POINT4D{T}
+    x::T; y::T; z::T; t::T
 end
 
-struct Point3D{T}
-    x::T
-    y::T
-    z::T
-end
+x(p::POINT1D{T}) where {T} = p.x
+x(p::POINT2D{T}) where {T} = p.x
+x(p::POINT3D{T}) where {T} = p.x
+x(p::POINT4D{T}) where {T} = p.x
 
-function DistSquared(p::Point2D, q::Point2D)
-    dx = q.x - p.x
-    dy = q.y - p.y
-    return dx*dx + dy*dy
-end
+y(p::POINT2D{T}) where {T} = p.y
+y(p::POINT3D{T}) where {T} = p.y
+y(p::POINT4D{T}) where {T} = p.y
 
-function DistSquared(p::Point3D, q::Point3D)
-    dx = q.x - p.x
-    dy = q.y - p.y
-    dz = q.z - p.z
-    return dx*dx + dy*dy + dz*dz
-end
+z(p::POINT3D{T}) where {T} = p.z
+z(p::POINT4D{T}) where {T} = p.z
+
+t(p::POINT4D{T}) where {T} = p.t
+
+dx(p::POINT1D{T}, q::POINT1D{T}) where {T} = x(q) - x(p)
+dx(p::POINT2D{T}, q::POINT2D{T}) where {T} = x(q) - x(p)
+dx(p::POINT3D{T}, q::POINT3D{T}) where {T} = x(q) - x(p)
+dx(p::POINT4D{T}, q::POINT4D{T}) where {T} = x(q) - x(p)
+
+dy(p::POINT2D{T}, q::POINT2D{T}) where {T} = y(q) - y(p)
+dy(p::POINT3D{T}, q::POINT3D{T}) where {T} = y(q) - y(p)
+dy(p::POINT4D{T}, q::POINT4D{T}) where {T} = y(q) - y(p)
+
+dz(p::POINT3D{T}, q::POINT3D{T}) where {T} = z(q) - z(p)
+dz(p::POINT4D{T}, q::POINT4D{T}) where {T} = z(q) - z(p)
+
+dt(p::POINT4D{T}, q::POINT4D{T}) where {T} = t(q) - t(p)
+
+dx2(p::POINT1D{T}, q::POINT1D{T}) where {T} = dx(p, q)^2
+dx2(p::POINT2D{T}, q::POINT2D{T}) where {T} = dx(p, q)^2
+dx2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dx(p, q)^2
+dx2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dx(p, q)^2
+
+dy2(p::POINT2D{T}, q::POINT2D{T}) where {T} = dy(p, q)^2
+dy2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dy(p, q)^2
+dy2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dy(p, q)^2
+
+dz2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dz(p, q)^2
+dz2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dz(p, q)^2
+
+dt2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dt(p, q)^2
+
+# distance squared
+dist2(p::POINT1D{T}, q::POINT1D{T}) where {T} = dx2(p, q)
+dist2(p::POINT2D{T}, q::POINT2D{T}) where {T} = dx2(p, q) + dy2(p, q)
+dist2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dx2(p, q) + dy2(p, q) + dz2(p, q)
+dist2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dx2(p, q) + dy2(p, q) + dz2(p, q) + dt2(p, q)
+
 
 struct CubicPoly{T}
-    c0::T
-    c1::T
-    c2::T
-    c3::T
-    
     poly::Poly{T}
-    diff1poly::Poly{T}
-    diff2poly::Poly{T}
-    integratedpoly::Poly{T}
+    dpoly::Poly{T}
     
     function CubicPoly(c0::T, c1::T, c2::T, c3::T) where {T}
         poly = Poly([c0, c1, c2, c3])
-        diff1poly = polyder(poly)
-        diff2poly = polyder(diff1poly)
-        integratedpoly = polyint(poly)
-        return new{T}(c0, c1, c2, c3, poly, diff1poly, diff2poly, integratedpoly)
-    end
-    
+        dpoly = polyder(poly)
+        return new{T}(poly, dpoly)
+    end    
 end
 
 @inline poly(x::CubicPoly{T}) where {T} = x.poly
-@inline diff1poly(x::CubicPoly{T}) where {T} = x.diff1poly
-@inline diff2poly(x::CubicPoly{T}) where {T} = x.diff2poly
-@inline integratedpoly(x::CubicPoly{T}) where {T} = x.integratedpoly
+@inline dpoly(x::CubicPoly{T}) where {T} = x.dpoly
 
-@inline polyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.poly, z)
-@inline diff1polyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.diff1poly, z)
-@inline diff2polyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.diff2poly, z)
-@inline integratedpolyval(x::CubicPoly{T}, z::T) where {T} = polyval(x.integratedpoly, z)
+@inline polyval(x::CubicPoly{T}, z::T) where {T} = polyval(poly(x), z)
+@inline dpolyval(x::CubicPoly{T}, z::T) where {T} = polyval(dpoly(x), z)
 
-function evalpoly(cpoly::CubicPoly{T}, t::T) where {T<:Number}
-    t1 = t
-    t2 = t1 * t1
-    t3 = t2 * t1
-    t3 *= cpoly.c3
-    t2 *= cpoly.c2
-    t1 *= cpoly.c1
-    t1 += cpoly.c0
-    t1 += t2
-    t1 += t3
-    return t1
+struct CatmullRom{T,N}
+    polys::NTuple{N,Poly{T}}
 end
 
-evalpoly(cpoly::CubicPoly{Float32}, t::Float64) = polyval(cpoly, Float32(t))
+function polyval(cr::CatmullRom{T,1}, x::T) where {T}
+    p1 = polyval(cr.polys[1], x)
+    return (p1,)
+end
+
+function polyval(cr::CatmullRom{T,2}, x::T) where {T}
+    p1 = polyval(cr.polys[1], x)
+    p2 = polyval(cr.polys[2], x)
+    return (p1, p2)
+end
+
+function polyval(cr::CatmullRom{T,3}, x::T) where {T}
+    p1 = polyval(cr.polys[1], x)
+    p2 = polyval(cr.polys[2], x)
+    p3 = polyval(cr.polys[3], x)
+    return (p1, p2, p3)
+end
+
+function polyval(cr::CatmullRom{T,3}, x::T) where {T}
+    p1 = polyval(cr.polys[1], x)
+    p2 = polyval(cr.polys[2], x)
+    p3 = polyval(cr.polys[3], x)
+    p4 = polyval(cr.polys[4], x)
+    return (p1, p2, p3, p4)
+end
 
 #=
  * Compute coefficients for a cubic polynomial
@@ -86,7 +125,7 @@ evalpoly(cpoly::CubicPoly{Float32}, t::Float64) = polyval(cpoly, Float32(t))
  *   p'(0) = t0, p'(1) = t1.
 =#
 
-function InitCubicPoly(x0::T, x1::T, t0::T, t1::T) where {T<:Number}
+function coeffcalc(x0::T, x1::T, t0::T, t1::T) where {T<:Number}
     c0 = x0
     c1 = t0
     c2 = -3*x0 + 3*x1 - 2*t0 - t1
@@ -104,15 +143,29 @@ function NonuniformCatmullRom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T
     t1 *= dt1
     t2 *= dt1
 
-    return InitCubicPoly(x1, x2, t1, t2)
+    return coeffcalc(x1, x2, t1, t2)
 end
 
 
+function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT1D{T}}
+    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
+    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
+    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
 
-function CentripetalCatmullRom(p0::Point2D{T}, p1::Point2D{T}, p2::Point2D{T}, p3::Point2D{T}) where {T}
-    dt0 = T(sqrt(sqrt(DistSquared(p0, p1))))
-    dt1 = T(sqrt(sqrt(DistSquared(p1, p2))))
-    dt2 = T(sqrt(sqrt(DistSquared(p2, p3))))
+    # safety check for repeated points
+    if (dt1 < 1.0e-4)  dt1 = T(1.0) end
+    if (dt0 < 1.0e-4)  dt0 = dt1 end
+    if (dt2 < 1.0e-4)  dt2 = dt1 end
+
+    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
+
+    return CatmullRom{T,1}((xcpoly,))
+end
+
+function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT2D{T}}
+    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
+    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
+    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
 
     # safety check for repeated points
     if (dt1 < 1.0e-4)  dt1 = T(1.0) end
@@ -122,14 +175,13 @@ function CentripetalCatmullRom(p0::Point2D{T}, p1::Point2D{T}, p2::Point2D{T}, p
     xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
 
-    return xcpoly, ycpoly
+    return CatmullRom{T,2}((xcpoly, ycpoly))
 end
 
-
-function CentripetalCatmullRom(p0::Point3D{T}, p1::Point3D{T}, p2::Point3D{T}, p3::Point3D{T}) where {T}
-    dt0 = T(sqrt(sqrt(DistSquared(p0, p1))))
-    dt1 = T(sqrt(sqrt(DistSquared(p1, p2))))
-    dt2 = T(sqrt(sqrt(DistSquared(p2, p3))))
+function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT3D{T}}
+    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
+    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
+    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
 
     # safety check for repeated points
     if (dt1 < 1.0e-4)  dt1 = T(1.0) end
@@ -140,24 +192,48 @@ function CentripetalCatmullRom(p0::Point3D{T}, p1::Point3D{T}, p2::Point3D{T}, p
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
     zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, dt0, dt1, dt2)
 
-    return xcpoly, ycpoly, zpoly
+    return CatmullRom{T,3}((xcpoly, ycpoly, zcpoly))
 end
+
+function CentripetalCatmullRom(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT4D{T}}
+    dt0 = T(sqrt(sqrt(dist2(p0, p1))))
+    dt1 = T(sqrt(sqrt(dist2(p1, p2))))
+    dt2 = T(sqrt(sqrt(dist2(p2, p3))))
+
+    # safety check for repeated points
+    if (dt1 < 1.0e-4)  dt1 = T(1.0) end
+    if (dt0 < 1.0e-4)  dt0 = dt1 end
+    if (dt2 < 1.0e-4)  dt2 = dt1 end
+
+    xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, dt0, dt1, dt2)
+    ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, dt0, dt1, dt2)
+    zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, dt0, dt1, dt2)
+    tcpoly = NonuniformCatmullRom(p0.t, p1.t, p2.t, p3.t, dt0, dt1, dt2)
+
+    return CatmullRom{T,4}((xcpoly, ycpoly, zcpoly, tcpoly))
+end
+
 
 function test()
-    p0 = Point2D(0.0, 0.0)
-    p1 = Point2D(1.0, 1.0)
-    p2 = Point2D(1.5, 1.25)
-    p3 = Point2D(2.0, 0.0)
+    p0 = POINT2D(0.0, 0.0)
+    p1 = POINT2D(1.0, 1.0)
+    p2 = POINT2D(1.5, 1.25)
+    p3 = POINT2D(2.0, 0.0)
 
-    xcpoly, ycpoly = CentripetalCatmullRom(p0, p1, p2, p3)
+    crpoly = CentripetalCatmullRom(p0, p1, p2, p3)
 
-    for i=0:10
-        xcoord = evalpoly(xcpoly, 0.1*i)
-        ycoord = evalpoly(ycpoly, 0.1*i)
+    coords = Vector{POINT2D}(5)
+    
+    for i=0:4
+        xcoord, ycoord = polyval(crpoly, 0.25*i)
         coord = Point2D(xcoord, ycoord)
-        println(coord)
+        push!(coords, coord)
     end
+    return coords
 end
+
+print(test())
+
 
 
 end # module
