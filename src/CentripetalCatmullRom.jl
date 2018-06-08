@@ -2,72 +2,12 @@ __precompile__()
 
 module  CentripetalCatmullRom
 
-export CatmullRom, POINT1D, POINT2D, POINT3D, POINT4D
+export CatmullRom, PT1D, PT2D, PT3D, PT4D
 
 using Polynomials
-import Polynomials: Poly, polyval, polyint, polyder
+import Polynomials: polyval
 
-struct POINT1D{T}
-    x::T
-end
-struct POINT2D{T}
-    x::T; y::T
-end
-struct POINT3D{T}
-    x::T; y::T; z::T
-end
-struct POINT4D{T}
-    x::T; y::T; z::T; t::T
-end
-
-x(p::POINT1D{T}) where {T} = p.x
-x(p::POINT2D{T}) where {T} = p.x
-x(p::POINT3D{T}) where {T} = p.x
-x(p::POINT4D{T}) where {T} = p.x
-
-y(p::POINT2D{T}) where {T} = p.y
-y(p::POINT3D{T}) where {T} = p.y
-y(p::POINT4D{T}) where {T} = p.y
-
-z(p::POINT3D{T}) where {T} = p.z
-z(p::POINT4D{T}) where {T} = p.z
-
-t(p::POINT4D{T}) where {T} = p.t
-
-dx(p::POINT1D{T}, q::POINT1D{T}) where {T} = x(q) - x(p)
-dx(p::POINT2D{T}, q::POINT2D{T}) where {T} = x(q) - x(p)
-dx(p::POINT3D{T}, q::POINT3D{T}) where {T} = x(q) - x(p)
-dx(p::POINT4D{T}, q::POINT4D{T}) where {T} = x(q) - x(p)
-
-dy(p::POINT2D{T}, q::POINT2D{T}) where {T} = y(q) - y(p)
-dy(p::POINT3D{T}, q::POINT3D{T}) where {T} = y(q) - y(p)
-dy(p::POINT4D{T}, q::POINT4D{T}) where {T} = y(q) - y(p)
-
-dz(p::POINT3D{T}, q::POINT3D{T}) where {T} = z(q) - z(p)
-dz(p::POINT4D{T}, q::POINT4D{T}) where {T} = z(q) - z(p)
-
-dt(p::POINT4D{T}, q::POINT4D{T}) where {T} = t(q) - t(p)
-
-dx2(p::POINT1D{T}, q::POINT1D{T}) where {T} = dx(p, q)^2
-dx2(p::POINT2D{T}, q::POINT2D{T}) where {T} = dx(p, q)^2
-dx2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dx(p, q)^2
-dx2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dx(p, q)^2
-
-dy2(p::POINT2D{T}, q::POINT2D{T}) where {T} = dy(p, q)^2
-dy2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dy(p, q)^2
-dy2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dy(p, q)^2
-
-dz2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dz(p, q)^2
-dz2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dz(p, q)^2
-
-dt2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dt(p, q)^2
-
-# distance squared
-dist2(p::POINT1D{T}, q::POINT1D{T}) where {T} = dx2(p, q)
-dist2(p::POINT2D{T}, q::POINT2D{T}) where {T} = dx2(p, q) + dy2(p, q)
-dist2(p::POINT3D{T}, q::POINT3D{T}) where {T} = dx2(p, q) + dy2(p, q) + dz2(p, q)
-dist2(p::POINT4D{T}, q::POINT4D{T}) where {T} = dx2(p, q) + dy2(p, q) + dz2(p, q) + dt2(p, q)
-
+include("points_1Dto4D.jl")
 
 struct CubicPoly{T}
     poly::Poly{T}
