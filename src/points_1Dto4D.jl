@@ -42,6 +42,16 @@ PT2D = ProtoNT( :x, :y )
 PT3D = ProtoNT( :x, :y, :z )
 PT4D = ProtoNT( :x, :y, :z, :t )
 
+
+# retrieve the coordinates of a Point as a Tuple
+
+coords(nt::PT1D) = values(nt)
+coords(nt::PT2D) = values(nt)
+coords(nt::PT3D) = values(nt)
+coords(nt::PT4D) = values(nt)
+
+# retrieve a coordinate from a Point as a Number
+
 xcoord(nt::PT1D) = nt.x
 xcoord(nt::PT2D) = nt.x
 ycoord(nt::PT2D) = nt.y
@@ -53,19 +63,23 @@ ycoord(nt::PT4D) = nt.y
 zcoord(nt::PT4D) = nt.z
 tcoord(nt::PT4D) = nt.t
 
-# oriented separation for coordinate axes
+
+# separation for coordinate axes, oriented
+
 Δxcoord(nt1::T, nt2::T) where {T<:NamedTuple} = xcoord(nt2) - xcoord(nt1)
 Δycoord(nt1::T, nt2::T) where {T<:NamedTuple} = ycoord(nt2) - ycoord(nt1)
 Δzcoord(nt1::T, nt2::T) where {T<:NamedTuple} = zcoord(nt2) - zcoord(nt1)
 Δtcoord(nt1::T, nt2::T) where {T<:NamedTuple} = tcoord(nt2) - tcoord(nt1)
 
 # squared separation for coordinate axes, unoriented 
+
 Δxcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δxcoord(nt1, nt2); d*d; end
 Δycoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δycoord(nt1, nt2); d*d; end
 Δzcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δzcoord(nt1, nt2); d*d; end
 Δtcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δtcoord(nt1, nt2); d*d; end
 
 # squared interpoint distance (norm2)
+
 Δpoint2(pt1::T, pt2::T) where {T<:PT1D} = Δxcoord2(pt1, pt2)
 Δpoint2(pt1::T, pt2::T) where {T<:PT2D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2)
 Δpoint2(pt1::T, pt2::T) where {T<:PT3D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2) + Δzcoord(pt1, pt2)
@@ -73,7 +87,8 @@ tcoord(nt::PT4D) = nt.t
 
 const dpoint2 = Δpoint2
 
-# interpoint distance 
+# interpoint distance
+
 Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
 Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
 Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
