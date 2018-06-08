@@ -47,21 +47,30 @@ ycoord(nt::PT4D) = nt.y
 zcoord(nt::PT4D) = nt.z
 tcoord(nt::PT4D) = nt.t
 
-# distance, separation
-dxcoord(nt1::T, nt2::T) where {T<:NamedTuple} = xcoord(nt2) - xcoord(nt1)
-dycoord(nt1::T, nt2::T) where {T<:NamedTuple} = ycoord(nt2) - ycoord(nt1)
-dzcoord(nt1::T, nt2::T) where {T<:NamedTuple} = zcoord(nt2) - zcoord(nt1)
-dtcoord(nt1::T, nt2::T) where {T<:NamedTuple} = tcoord(nt2) - tcoord(nt1)
+# oriented separation for coordinate axes
+Δxcoord(nt1::T, nt2::T) where {T<:NamedTuple} = xcoord(nt2) - xcoord(nt1)
+Δycoord(nt1::T, nt2::T) where {T<:NamedTuple} = ycoord(nt2) - ycoord(nt1)
+Δzcoord(nt1::T, nt2::T) where {T<:NamedTuple} = zcoord(nt2) - zcoord(nt1)
+Δtcoord(nt1::T, nt2::T) where {T<:NamedTuple} = tcoord(nt2) - tcoord(nt1)
 
-# x,y,z,t intracoordinate distance 
-dxcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dxcoord(nt1, nt2); d*d; end
-dycoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dycoord(nt1, nt2); d*d; end
-dzcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dzcoord(nt1, nt2); d*d; end
-dtcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dtcoord(nt1, nt2); d*d; end
+# squared separation for coordinate axes, unoriented 
+Δxcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δxcoord(nt1, nt2); d*d; end
+Δycoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δycoord(nt1, nt2); d*d; end
+Δzcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δzcoord(nt1, nt2); d*d; end
+Δtcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δtcoord(nt1, nt2); d*d; end
 
-# interpoint distance (norm2)
-dpoint(pt1::T, pt2::T) where {T<:PT1D} = dxcoord2(pt1, pt2)
-dpoint(pt1::T, pt2::T) where {T<:PT2D} = dxcoord2(pt1, pt2) + dycoord2(pt1, pt2)
-dpoint(pt1::T, pt2::T) where {T<:PT3D} = dxcoord2(pt1, pt2) + dycoord2(pt1, pt2) + dzcoord(pt1, pt2)
-dpoint(pt1::T, pt2::T) where {T<:PT4D} = dxcoord2(pt1, pt2) + dycoord2(pt1, pt2) + dzcoord(pt1, pt2) + dtcoord(pt1, pt2)
+# squared interpoint distance (norm2)
+Δpoint2(pt1::T, pt2::T) where {T<:PT1D} = Δxcoord2(pt1, pt2)
+Δpoint2(pt1::T, pt2::T) where {T<:PT2D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2)
+Δpoint2(pt1::T, pt2::T) where {T<:PT3D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2) + Δzcoord(pt1, pt2)
+Δpoint2(pt1::T, pt2::T) where {T<:PT4D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2) + Δzcoord(pt1, pt2) + Δtcoord(pt1, pt2)
 
+const dpoint2 = Δpoint2
+
+# interpoint distance 
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+
+const dpoint  = Δpoint
