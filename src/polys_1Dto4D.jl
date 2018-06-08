@@ -1,22 +1,22 @@
-struct CubicPoly{T}
+struct Cubic{T}
     poly::Poly{T}
     dpoly::Poly{T}
     
-    function CubicPoly(c0::T, c1::T, c2::T, c3::T) where {T}
+    function Cubic(c0::T, c1::T, c2::T, c3::T) where {T}
         poly = Poly([c0, c1, c2, c3])
         dpoly = polyder(poly)
         return new{T}(poly, dpoly)
     end    
 end
 
-@inline poly(x::CubicPoly{T}) where {T} = x.poly
-@inline dpoly(x::CubicPoly{T}) where {T} = x.dpoly
+@inline poly(x::Cubic{T}) where {T} = x.poly
+@inline dpoly(x::Cubic{T}) where {T} = x.dpoly
 
-@inline polyval(x::CubicPoly{T}, z::T) where {T} = polyval(poly(x), z)
-@inline dpolyval(x::CubicPoly{T}, z::T) where {T} = polyval(dpoly(x), z)
+@inline polyval(x::Cubic{T}, z::T) where {T} = polyval(poly(x), z)
+@inline dpolyval(x::Cubic{T}, z::T) where {T} = polyval(dpoly(x), z)
 
 struct CatmullRomPolys{T,N}
-    polys::NTuple{N,CubicPoly{T}}
+    polys::NTuple{N,Cubic{T}}
 end
 
 function polyval(cr::CatmullRomPolys{T,1}, x::T) where {T}
@@ -59,7 +59,7 @@ function coeffcalc(x0::T, x1::T, t0::T, t1::T) where {T<:Number}
     c1 = t0
     c2 = -3*x0 + 3*x1 - 2*t0 - t1
     c3 =  2*x0 - 2*x1 +   t0 + t1
-    return CubicPoly(c0,c1,c2,c3)
+    return Cubic(c0,c1,c2,c3)
 end
 
 # compute coefficients for a nonuniform Catmull-Rom spline
