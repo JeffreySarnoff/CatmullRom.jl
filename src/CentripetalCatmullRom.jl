@@ -1,6 +1,6 @@
 __precompile__()
 
-module  CentripetalCatmullRom
+module CentripetalCatmullRom
 
 export CatmullRom, PT1D, PT2D, PT3D, PT4D
 
