@@ -8,6 +8,9 @@ export CatmullRom,
        Δpoint, Δpoint2, dpoint, dpoint2, # dpoint, dpoint2 alias Δpoint, Δpoint2   
        polyval, polyder                  # from Polynomials, specialized
 
+
+import Base: values                      # for NamedTuples
+
 using Polynomials
 import Polynomials: polyval, polyder
 
