@@ -1,3 +1,5 @@
+Base.zero(::Type{Poly{T}}) where {T} = Poly(zero(T))
+
 struct Cubic{T}
     poly::Poly{T}
     δpoly::Poly{T}
