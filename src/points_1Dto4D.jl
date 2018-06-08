@@ -53,9 +53,15 @@ dycoord(nt1::T, nt2::T) where {T<:NamedTuple} = ycoord(nt2) - ycoord(nt1)
 dzcoord(nt1::T, nt2::T) where {T<:NamedTuple} = zcoord(nt2) - zcoord(nt1)
 dtcoord(nt1::T, nt2::T) where {T<:NamedTuple} = tcoord(nt2) - tcoord(nt1)
 
-# distance squared (norm2)
+# x,y,z,t intracoordinate distance 
 dxcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dxcoord(nt1, nt2); d*d; end
 dycoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dycoord(nt1, nt2); d*d; end
 dzcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dzcoord(nt1, nt2); d*d; end
 dtcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = dtcoord(nt1, nt2); d*d; end
+
+# interpoint distance (norm2)
+dpoint(pt1::T, pt2::T) where {T<:PT1D} = dxcoord2(pt1, pt2)
+dpoint(pt1::T, pt2::T) where {T<:PT2D} = dxcoord2(pt1, pt2) + dycoord2(pt1, pt2)
+dpoint(pt1::T, pt2::T) where {T<:PT3D} = dxcoord2(pt1, pt2) + dycoord2(pt1, pt2) + dzcoord(pt1, pt2)
+dpoint(pt1::T, pt2::T) where {T<:PT4D} = dxcoord2(pt1, pt2) + dycoord2(pt1, pt2) + dzcoord(pt1, pt2) + dtcoord(pt1, pt2)
 
