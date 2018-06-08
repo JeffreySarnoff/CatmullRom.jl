@@ -1,6 +1,6 @@
 struct Cubic{T}
     poly::Poly{T}
-    dpoly::Poly{T}
+    δpoly::Poly{T}
     
     function Cubic(c0::T, c1::T, c2::T, c3::T) where {T}
         poly = Poly([c0, c1, c2, c3])
@@ -10,10 +10,14 @@ struct Cubic{T}
 end
 
 @inline poly(x::Cubic{T}) where {T} = x.poly
-@inline dpoly(x::Cubic{T}) where {T} = x.dpoly
+@inline δpoly(x::Cubic{T}) where {T} = x.δpoly
+
+const dpoly = δpoly
 
 @inline polyval(x::Cubic{T}, z::T) where {T} = polyval(poly(x), z)
-@inline dpolyval(x::Cubic{T}, z::T) where {T} = polyval(dpoly(x), z)
+@inline δpolyval(x::Cubic{T}, z::T) where {T} = polyval(δpoly(x), z)
+
+const dpolyval = δpolyval
 
 struct CatmullRomPolys{T,N}
     polys::NTuple{N,Cubic{T}}
@@ -75,11 +79,12 @@ function NonuniformCatmullRom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T
     return coeffcalc(x1, x2, t1, t2)
 end
 
+root4(x) = sqrt(sqrt(x))
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT1D{T}}
-    d0 = T(sqrt(sqrt(dist2(p0, p1))))
-    d1 = T(sqrt(sqrt(dist2(p1, p2))))
-    d2 = T(sqrt(sqrt(dist2(p2, p3))))
+function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT1D{T}}
+    d0 = T(root4(Δpoint2(p0, p1)))
+    d1 = T(root4(Δpoint2(p1, p2)))
+    d2 = T(root4(Δpoint2(p2, p3)))
 
     # safety check for repeated points
     if (d1 < 1.0e-4)  d1 = T(1.0) end
@@ -91,10 +96,10 @@ function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT1D{T}}
     return CatmullRomPolys{T,1}((xcpoly,))
 end
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT2D{T}}
-    d0 = T(sqrt(sqrt(dist2(p0, p1))))
-    d1 = T(sqrt(sqrt(dist2(p1, p2))))
-    d2 = T(sqrt(sqrt(dist2(p2, p3))))
+function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT2D{T}}
+    d0 = T(root4(Δpoint2(p0, p1)))
+    d1 = T(root4(Δpoint2(p1, p2)))
+    d2 = T(root4(Δpoint2(p2, p3)))
 
     # safety check for repeated points
     if (d1 < 1.0e-4)  d1 = T(1.0) end
@@ -107,10 +112,10 @@ function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT2D{T}}
     return CatmullRomPolys{T,2}((xcpoly, ycpoly))
 end
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT3D{T}}
-    d0 = T(sqrt(sqrt(dist2(p0, p1))))
-    d1 = T(sqrt(sqrt(dist2(p1, p2))))
-    d2 = T(sqrt(sqrt(dist2(p2, p3))))
+function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT3D{T}}
+    d0 = T(root4(Δpoint2(p0, p1)))
+    d1 = T(root4(Δpoint2(p1, p2)))
+    d2 = T(root4(Δpoint2(p2, p3)))
 
     # safety check for repeated points
     if (d1 < 1.0e-4)  d1 = T(1.0) end
@@ -124,10 +129,10 @@ function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT3D{T}}
     return CatmullRomPolys{T,3}((xcpoly, ycpoly, zcpoly))
 end
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:POINT4D{T}}
-    d0 = T(sqrt(sqrt(dist2(p0, p1))))
-    d1 = T(sqrt(sqrt(dist2(p1, p2))))
-    d2 = T(sqrt(sqrt(dist2(p2, p3))))
+function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT4D{T}}
+    d0 = T(root4(Δpoint2(p0, p1)))
+    d1 = T(root4(Δpoint2(p1, p2)))
+    d2 = T(root4(Δpoint2(p2, p3)))
 
     # safety check for repeated points
     if (d1 < 1.0e-4)  d1 = T(1.0) end
