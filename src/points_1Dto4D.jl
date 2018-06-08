@@ -1,3 +1,9 @@
+#=
+    Tuple of Values from NamedTuples
+
+tuple_of_values(namedtuple::T) where T<:NamedTuple = Base.values(namedtuple)
+=#
+
 """
      Prototypes for NamedTuples
      
