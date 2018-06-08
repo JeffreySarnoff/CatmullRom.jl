@@ -4,8 +4,8 @@ struct Cubic{T}
     
     function Cubic(c0::T, c1::T, c2::T, c3::T) where {T}
         poly = Poly([c0, c1, c2, c3])
-        dpoly = polyder(poly)
-        return new{T}(poly, dpoly)
+        δpoly = polyder(poly)
+        return new{T}(poly, δpoly)
     end    
 end
 
