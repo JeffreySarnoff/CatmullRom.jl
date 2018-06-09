@@ -1,18 +1,20 @@
 Base.zero(::Type{Poly{T}}) where {T} = Poly(zero(T))
+ncoeffs(x::Poly{T}) where {T} = Base.length(x.a)
 
 struct Cubic{T}
     poly::Poly{T}
     δpoly::Poly{T}
-    
-    function Cubic(c0::T, c1::T, c2::T, c3::T) where {T}
+        
+    function Cubic(c0::T, c1::T, c2::T, c3::T; δx::Bool=false) where {T}
         poly = Poly([c0, c1, c2, c3])
-        δpoly = polyder(poly)
+        δpoly = δx ? polyder(poly) : zero(Poly{T})
         return new{T}(poly, δpoly)
-    end    
+    end
 end
 
 @inline poly(x::Cubic{T}) where {T} = x.poly
-@inline δpoly(x::Cubic{T}) where {T} = x.δpoly
+@inline δpoly(x::Cubic{T}) where {T} = ncoeffs(x) === 1 ? polyder(poly(x)) : δpoly(x)
+@inline δpoly(x::Cubic{T}, δx::Bool) where {T} = δx ? δpoly(x) : zero(Poly{T})
 
 const dpoly = δpoly
 
@@ -21,35 +23,113 @@ const dpoly = δpoly
 
 const dpolyval = δpolyval
 
-struct CatmullRomPolys{T,N}
-    polys::NTuple{N,Cubic{T}}
+
+@inline zeros1(::Type{Poly{T}) where {T} = (zero(Poly{T}),)
+@inline zeros2(::Type{Poly{T}) where {T} = (zero(Poly{T}), zero(Poly{T}))
+@inline zeros3(::Type{Poly{T}) where {T} = (zero(Poly{T}), zero(Poly{T}), zero(Poly{T}))
+@inline zeros4(::Type{Poly{T}) where {T} = (zero(Poly{T}), zero(Poly{T}), zero(Poly{T}, zero(Poly{T}))
+
+
+struct Cubics{T,N}
+    polys::NTuple{N,Poly{T}}
+    δpolys::NTuple{N,Poly{T}}
+    
+    function Cubics(x::NTuple{0,T}) where {T<:Real}
+        polys  = (zero(Poly{T}),)
+        δpolys = polys
+        return new{T}(polys, δpolys)
+    end
 end
 
-function polyval(cr::CatmullRomPolys{T,1}, x::T) where {T}
-    p1 = polyval(cr.polys[1].poly, x)
-    return (p1,)
+@inline polys(cubics::Cubics{T,N}) where {N,T} = cubics.polys
+@inline δpolys(cubics::Cubics{T,N}) where {N,T} = cubics.δpolys
+
+const dpolys = δpolys
+
+@inline polysval(x::Cubics{T,N}, z::T) where {N,T} = polyval.(polys(x), z)
+@inline δpolysval(x::Cubics{T,N}, z::T) where {N,T} = polyval.(δpolys(x), z)
+
+@inline function δpolysval(x::Cubics{T,N}, z::T) where {N,T}
+    polyders = δpolys(x)
+    if any(ncoeffs.(polyders) .== 1)
+        polyders = polyder.(polys(x))
+    end
+    return polyval.(polyders, z)
 end
 
-function polyval(cr::CatmullRomPolys{T,2}, x::T) where {T}
-    p1 = polyval(cr.polys[1].poly, x)
-    p2 = polyval(cr.polys[2].poly, x)
-    return (p1, p2)
+const dpolysval = δpolysval
+
+
+function Cubics(xcubic::Cubic{T}; δx::Bool=false) where {T}
+    polys  = (poly(xcubic),)
+    if δx
+        δpolys = polyder.(polys)
+    else
+        δpolys = zeros1(Poly{T})
+    end
+    return Cubics{T,1}(polys, δpolys)
 end
 
-function polyval(cr::CatmullRomPolys{T,3}, x::T) where {T}
-    p1 = polyval(cr.polys[1].poly, x)
-    p2 = polyval(cr.polys[2].poly, x)
-    p3 = polyval(cr.polys[3].poly, x)
-    return (p1, p2, p3)
+function Cubics(xcubic::Cubic{T}, ycubic::Cubic{T}; δx::Bool=false) where {T}
+    polys  = (poly(xcubic), poly(ycubic),)
+    if δx
+        δpolys = (δpoly(xcubic), δpoly(ycubic),)
+    else
+        δpolys = zeros2(Poly{T})
+    end
+    return Cubics{T,2}(polys, δpolys)
 end
 
-function polyval(cr::CatmullRomPolys{T,4}, x::T) where {T}
-    p1 = polyval(cr.polys[1].poly, x)
-    p2 = polyval(cr.polys[2].poly, x)
-    p3 = polyval(cr.polys[3].poly, x)
-    p4 = polyval(cr.polys[4].poly, x)
-    return (p1, p2, p3, p4)
+function Cubics(xcubic::Cubic{T}, ycubic::Cubic{T}, zcubic::Cubic{T}; δx::Bool=false) where {T}
+    polys  = (poly(xcubic), poly(ycubic), poly(zcubic))
+    if δx
+        δpolys = (δpoly(xcubic), δpoly(ycubic), δpoly(zcubic),)
+    else
+        δpolys = zeros3(Poly{T})
+    end
+    return Cubics{T,3}(polys, δpolys)
 end
+        
+function Cubics(xcubic::Cubic{T}, ycubic::Cubic{T}, zcubic::Cubic{T}, tcubic::Cubic{T}; δx::Bool=false) where {T}
+    polys  = (poly(xcubic), poly(ycubic), poly(zcubic), poly(tcubic))
+    if δx
+        δpolys = (δpoly(xcubic), δpoly(ycubic), δpoly(zcubic), δpoly(zcubic))
+    else
+        δpolys = zeros4(Poly{T})
+    end
+    return Cubics{T,4}(polys, δpolys)
+end
+
+
+"""
+    Centripetal Catmull-Rom Cubic polynomials in 1D, 2D, 3D, 4D
+"""
+
+CCR1D = ProtoNT( :x )
+CCR2D = ProtoNT( :x, :y )
+CCR3D = ProtoNT( :x, :y, :z )
+CCR4D = ProtoNT( :x, :y, :z, :t )
+
+
+# retrieve the Centripetal Catmull-Rom cubic polynomials as Tuples
+
+polys(ccr::CCR1D) = (ccr.x.poly,)
+polys(ccr::CCR2D) = (ccr.x.poly, ccr.y.poly)
+polys(ccr::CCR3D) = (ccr.x.poly, ccr.y.poly, ccr.z.poly)
+polys(ccr::CCR4D) = (ccr.x.poly, ccr.y.poly, ccr.z.poly, ccr.t.poly)
+
+δpolys(ccr::CCR1D) = (ccr.x.δpoly,)
+δpolys(ccr::CCR2D) = (ccr.x.δpoly, ccr.y.δpoly)
+δpolys(ccr::CCR3D) = (ccr.x.δpoly, ccr.y.δpoly, ccr.z.δpoly)
+δpolys(ccr::CCR4D) = (ccr.x.δpoly, ccr.y.δpoly, ccr.z.δpoly, ccr.t.δpoly)
+
+# evaluate Centripetal Catmull-Rom cubic polynomials
+
+for CR in (:CCR1D, :CCR2D, :CCR3D, :CCR4D)
+    @eval polyval(ccr::$CR, z::T) where {T} = polyval.(polys(ccr), z)
+    @eval δpolyval(ccr::$CR, z::T) where {T} = polyval.(δpolys(ccr), z)
+end
+
 
 #=
  * Compute coefficients for a cubic polynomial
@@ -83,7 +163,7 @@ end
 
 root4(x) = sqrt(sqrt(x))
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT1D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT1D{T}}
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -95,10 +175,10 @@ function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT1D{T}}
 
     xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
 
-    return CatmullRomPolys{T,1}((xcpoly,))
+    return Cubics{T}(xcpoly)
 end
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT2D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT2D{T}}
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -111,10 +191,10 @@ function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT2D{T}}
     xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
 
-    return CatmullRomPolys{T,2}((xcpoly, ycpoly))
+    return Cubics{T}(xcpoly, ycpoly)
 end
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT3D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT3D{T}}
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -128,10 +208,10 @@ function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT3D{T}}
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
     zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
 
-    return CatmullRomPolys{T,3}((xcpoly, ycpoly, zcpoly))
+    return Cubics{T}(xcpoly, ycpoly, zcpoly)
 end
 
-function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT4D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT4D{T}}
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -146,5 +226,5 @@ function CatmullRomPolys(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT4D{T}}
     zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
     tcpoly = NonuniformCatmullRom(p0.t, p1.t, p2.t, p3.t, d0, d1, d2)
 
-    return CatmullRomPolys{T,4}((xcpoly, ycpoly, zcpoly, tcpoly))
+    return Cubics{T}(xcpoly, ycpoly, zcpoly, tcpoly)
 end
