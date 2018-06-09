@@ -24,20 +24,20 @@ const dpoly = δpoly
 const dpolyval = δpolyval
 
 
-@inline zeros1(::Type{Poly{T}) where {T} = (zero(Poly{T}),)
-@inline zeros2(::Type{Poly{T}) where {T} = (zero(Poly{T}), zero(Poly{T}))
-@inline zeros3(::Type{Poly{T}) where {T} = (zero(Poly{T}), zero(Poly{T}), zero(Poly{T}))
-@inline zeros4(::Type{Poly{T}) where {T} = (zero(Poly{T}), zero(Poly{T}), zero(Poly{T}, zero(Poly{T}))
+@inline zeros1(::Type{Poly{T}}) where {T} = (zero(Poly{T}),)
+@inline zeros2(::Type{Poly{T}}) where {T} = (zero(Poly{T}), zero(Poly{T}))
+@inline zeros3(::Type{Poly{T}}) where {T} = (zero(Poly{T}), zero(Poly{T}), zero(Poly{T}))
+@inline zeros4(::Type{Poly{T}}) where {T} = (zero(Poly{T}), zero(Poly{T}), zero(Poly{T}), zero(Poly{T}))
 
 
 struct Cubics{T,N}
     polys::NTuple{N,Poly{T}}
     δpolys::NTuple{N,Poly{T}}
     
-    function Cubics(x::NTuple{0,T}) where {T<:Real}
+    function Cubics{T,N}(x::NTuple{0,T}) where {N, T<:Real}
         polys  = (zero(Poly{T}),)
         δpolys = polys
-        return new{T}(polys, δpolys)
+        return new{T,N}(polys, δpolys)
     end
 end
 
@@ -103,7 +103,8 @@ end
 
 """
     Centripetal Catmull-Rom Cubic polynomials in 1D, 2D, 3D, 4D
-"""
+    
+""" CCR1D, CCR2D, CCR3D, CCR4D
 
 CCR1D = ProtoNT( :x )
 CCR2D = ProtoNT( :x, :y )
@@ -149,7 +150,9 @@ function coeffcalc(x0::T, x1::T, t0::T, t1::T) where {T<:Number}
 end
 
 # compute coefficients for a nonuniform Catmull-Rom spline
+
 function NonuniformCatmullRom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T) where {T}
+
     # compute tangents when parameterized in [t1,t2]
     t1 = (x1 - x0) / dt0 - (x2 - x0) / (dt0 + dt1) + (x2 - x1) / dt1
     t2 = (x2 - x1) / dt1 - (x3 - x1) / (dt1 + dt2) + (x3 - x2) / dt2
