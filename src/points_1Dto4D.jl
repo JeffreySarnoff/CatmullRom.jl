@@ -21,19 +21,19 @@ PT3D = @ProtoNT( (:x, :y, :z) )
 PT4D = @ProtoNT( (:x, :y, :z, :t) )
 
 macro PT1D(x)
-    :(P1D(($x,)))
+    :(PT1D(($x,)))
 end
 
 macro PT2D(x, y)
-    :(P2D(($x, $y)))
+    :(PT2D(($x, $y)))
 end
 
 macro PT3D(x, y, z)
-    :(P3D(($x, $y, $z)))
+    :(PT3D(($x, $y, $z)))
 end
 
 macro PT4D(x, y, z, t)
-    :(P4D(($x, $y, $z, $t)))
+    :(PT4D(($x, $y, $z, $t)))
 end
 
 
