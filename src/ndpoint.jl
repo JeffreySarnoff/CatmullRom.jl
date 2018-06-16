@@ -75,6 +75,98 @@ x25(x::Point{N,T}) where {T,N} = x.coords[25]
 x26(x::Point{N,T}) where {T,N} = x.coords[26]
 
 
+# coordinate, squared distance from origin
+
+x1²(x::Point{N,T}) where {T,N} = let a = x.coords[1]; a*a; end 
+x2²(x::Point{N,T}) where {T,N} = let a = x.coords[2]; a*a; end
+x3²(x::Point{N,T}) where {T,N} = let a = x.coords[3]; a*a; end
+x4²(x::Point{N,T}) where {T,N} = let a = x.coords[4]; a*a; end
+x5²(x::Point{N,T}) where {T,N} = let a = x.coords[5]; a*a; end
+x6²(x::Point{N,T}) where {T,N} = let a = x.coords[6]; a*a; end
+x7²(x::Point{N,T}) where {T,N} = let a = x.coords[7]; a*a; end
+x8²(x::Point{N,T}) where {T,N} = let a = x.coords[8]; a*a; end
+x9²(x::Point{N,T}) where {T,N} = let a = x.coords[9]; a*a; end
+x10²(x::Point{N,T}) where {T,N} = let a = x.coords[10]; a*a; end
+x11²(x::Point{N,T}) where {T,N} = let a = x.coords[11]; a*a; end
+x12²(x::Point{N,T}) where {T,N} = let a = x.coords[12]; a*a; end
+x13²(x::Point{N,T}) where {T,N} = let a = x.coords[13]; a*a; end
+x14²(x::Point{N,T}) where {T,N} = let a = x.coords[14]; a*a; end
+x15²(x::Point{N,T}) where {T,N} = let a = x.coords[15]; a*a; end
+x16²(x::Point{N,T}) where {T,N} = let a = x.coords[16]; a*a; end
+x17²(x::Point{N,T}) where {T,N} = let a = x.coords[17]; a*a; end
+x18²(x::Point{N,T}) where {T,N} = let a = x.coords[18]; a*a; end
+x19²(x::Point{N,T}) where {T,N} = let a = x.coords[19]; a*a; end
+x20²(x::Point{N,T}) where {T,N} = let a = x.coords[20]; a*a; end
+x21²(x::Point{N,T}) where {T,N} = let a = x.coords[21]; a*a; end
+x22²(x::Point{N,T}) where {T,N} = let a = x.coords[22]; a*a; end
+x23²(x::Point{N,T}) where {T,N} = let a = x.coords[23]; a*a; end
+x24²(x::Point{N,T}) where {T,N} = let a = x.coords[24]; a*a; end
+x25²(x::Point{N,T}) where {T,N} = let a = x.coords[25]; a*a; end
+x26²(x::Point{N,T}) where {T,N} = let a = x.coords[26]; a*a; end
+
+# point, squared distance from origin
+
+Δpt²(pt1::T) where {F, T<:Point{1,F}} = Δx1²(pt1)
+Δpt²(pt1::T) where {F, T<:Point{2,F}} = Δx1²(pt1) + Δx2²(pt1) 
+Δpt²(pt1::T) where {F, T<:Point{3,F}} = Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) 
+Δpt²(pt1::T) where {F, T<:Point{4,F}} = Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) 
+Δpt²(pt1::T) where {F, T<:Point{5,F}} = Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) 
+Δpt²(pt1::T) where {F, T<:Point{6,F}} = Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) 
+Δpt²(pt1::T) where {F, T<:Point{7,F}} = Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) 
+Δpt²(pt1::T) where {F, T<:Point{8,F}} = Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)
+Δpt²(pt1::T) where {F, T<:Point{9,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + Δx9²(pt1)
+Δpt²(pt1::T) where {F, T<:Point{10,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{11,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{12,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{13,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{14,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{15,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{16,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{17,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{18,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{19,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{20,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1) + Δx20²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{21,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1) + Δx20²(pt1) + Δx21²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{22,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1) + Δx20²(pt1) + Δx21²(pt1) + Δx22²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{23,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1) + Δx20²(pt1) + Δx21²(pt1) + Δx22²(pt1) + Δx23²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{24,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1) + Δx20²(pt1) + Δx21²(pt1) + Δx22²(pt1) + Δx23²(pt1) + Δx24²(pt1))
+Δpt²(pt1::T) where {F, T<:Point{25,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1) + Δx20²(pt1) + Δx21²(pt1) + Δx22²(pt1) + Δx23²(pt1) + Δx24²(pt1)) + Δx25²(pt1)
+Δpt²(pt1::T) where {F, T<:Point{26,F}} = (Δx1²(pt1) + Δx2²(pt1) + Δx3²(pt1) + Δx4²(pt1) + Δx5²(pt1) + Δx6²(pt1) + Δx7²(pt1) + Δx8²(pt1)) + (Δx9²(pt1) + Δx10²(pt1) + Δx11²(pt1) + Δx12²(pt1) + Δx13²(pt1) + Δx14²(pt1) + Δx15²(pt1) + Δx16²(pt1)) + (Δx17²(pt1) + Δx18²(pt1) + Δx19²(pt1) + Δx20²(pt1) + Δx21²(pt1) + Δx22²(pt1) + Δx23²(pt1) + Δx24²(pt1)) + (Δx25²(pt1) + Δx26²(pt1))
+
+const dpoint2 = Δpt²
+
+# point, distance from the origin
+
+
+Δpt(pt1::T) where {F, T<:Point{1,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{2,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{3,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{4,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{5,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{6,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{7,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{8,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{9,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{10,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{11,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{12,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{13,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{14,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{15,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{16,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{17,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{18,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{19,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{20,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{21,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{22,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{23,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{24,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{25,F}} = sqrt(Δpt²(pt1))
+Δpt(pt1::T) where {F, T<:Point{26,F}} = sqrt(Δpt²(pt1))
+
+const dpoint = Δpt
+
 
 # separation for coordinate axes, oriented
 
@@ -164,8 +256,6 @@ x26(x::Point{N,T}) where {T,N} = x.coords[26]
 Δpt²(pt1::T, pt2::T) where {F, T<:Point{26,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2) + Δx21²(pt1, pt2) + Δx22²(pt1, pt2) + Δx23²(pt1, pt2) + Δx24²(pt1, pt2)) + (Δx25²(pt1, pt2) + Δx26²(pt1, pt2))
 
 
-const dpoint2 = Δpt²
-
 # interpoint distance
 
 Δpt(pt1::T, pt2::T) where {F, T<:Point{1,F}} = sqrt(Δpt²(pt1, pt2))
@@ -195,4 +285,3 @@ const dpoint2 = Δpt²
 Δpt(pt1::T, pt2::T) where {F, T<:Point{25,F}} = sqrt(Δpt²(pt1, pt2))
 Δpt(pt1::T, pt2::T) where {F, T<:Point{26,F}} = sqrt(Δpt²(pt1, pt2))
 
-const dpoint = Δpt
