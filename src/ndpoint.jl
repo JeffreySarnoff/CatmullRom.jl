@@ -105,6 +105,34 @@ x26(x::Point{N,T}) where {T,N} = x.coords[26]
 Δx25(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x25(nt2) - x25(nt1)
 Δx26(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x26(nt2) - x26(nt1)
 
+# squared separation for coordinate axes, unoriented
+
+Δx1²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx1(nt1::T, nt2::T); d*d end
+Δx2²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx2(nt1::T, nt2::T); d*d end
+Δx3²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx3(nt1::T, nt2::T); d*d end
+Δx4²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx4(nt1::T, nt2::T); d*d end
+Δx5²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx5(nt1::T, nt2::T); d*d end
+Δx6²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx6(nt1::T, nt2::T); d*d end
+Δx7²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx7(nt1::T, nt2::T); d*d end
+Δx8²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx8(nt1::T, nt2::T); d*d end
+Δx9²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx9(nt1::T, nt2::T); d*d end
+Δx10²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx10(nt1::T, nt2::T); d*d end
+Δx11²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx11(nt1::T, nt2::T); d*d end
+Δx12²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx12(nt1::T, nt2::T); d*d end
+Δx13²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx13(nt1::T, nt2::T); d*d end
+Δx14²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx14(nt1::T, nt2::T); d*d end
+Δx15²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx15(nt1::T, nt2::T); d*d end
+Δx16²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx16(nt1::T, nt2::T); d*d end
+Δx17²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx17(nt1::T, nt2::T); d*d end
+Δx18²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx18(nt1::T, nt2::T); d*d end
+Δx19²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx19(nt1::T, nt2::T); d*d end
+Δx20²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx20(nt1::T, nt2::T); d*d end
+Δx21²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx21(nt1::T, nt2::T); d*d end
+Δx22²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx22(nt1::T, nt2::T); d*d end
+Δx23²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx23(nt1::T, nt2::T); d*d end
+Δx24²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx24(nt1::T, nt2::T); d*d end
+Δx25²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx25(nt1::T, nt2::T); d*d end
+Δx26²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx26(nt1::T, nt2::T); d*d end
 
 #=
 # squared separation for coordinate axes, unoriented 
