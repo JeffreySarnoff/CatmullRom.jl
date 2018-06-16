@@ -7,6 +7,9 @@ struct Point{N,T}
     coords::NTuple{N,T}
 end
 
+nd(x::Point{N,T}) where {T,N} = N
+Base.eltype(x::Point{N,T}) where {T,N} = T
+
 Point(x1::T) where {T} = Point((x,))
 Point(x1::T, x2::T) where {T} = Point((x1, x2))
 Point(x1::T, x2::T, x3::T) where {T} = Point((x1, x2, x3))
