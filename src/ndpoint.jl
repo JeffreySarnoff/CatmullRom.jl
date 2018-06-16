@@ -134,29 +134,46 @@ x26(x::Point{N,T}) where {T,N} = x.coords[26]
 Δx25²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx25(nt1::T, nt2::T); d*d end
 Δx26²(nt1::T, nt2::T) where {F, T<:Point{N,F}} = let d = Δx26(nt1::T, nt2::T); d*d end
 
-#=
-# squared separation for coordinate axes, unoriented 
-
-Δxcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δxcoord(nt1, nt2); d*d; end
-Δycoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δycoord(nt1, nt2); d*d; end
-Δzcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δzcoord(nt1, nt2); d*d; end
-Δtcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δtcoord(nt1, nt2); d*d; end
-
 # squared interpoint distance (norm2)
 
-Δpoint2(pt1::T, pt2::T) where {T<:PT1D} = Δxcoord2(pt1, pt2)
-Δpoint2(pt1::T, pt2::T) where {T<:PT2D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2)
-Δpoint2(pt1::T, pt2::T) where {T<:PT3D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2) + Δzcoord(pt1, pt2)
-Δpoint2(pt1::T, pt2::T) where {T<:PT4D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2) + Δzcoord(pt1, pt2) + Δtcoord(pt1, pt2)
-
-const dpoint2 = Δpoint2
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{1,F}} = Δx1²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{2,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{3,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{4,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{5,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{6,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{7,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{8,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)
+ 
+const dpoint2 = Δpt²
 
 # interpoint distance
 
-Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
-Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
-Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
-Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{1,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{2,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{3,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{4,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{5,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{6,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{7,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{8,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{9,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{10,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{11,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{12,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{13,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{14,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{15,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{16,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{17,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{18,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{19,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{20,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{21,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{22,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{23,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{24,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{25,F}} = sqrt(Δpt²(pt1, pt2))
+Δpt(pt1::T, pt2::T) where {F, T<:Point{26,F}} = sqrt(Δpt²(pt1, pt2))
 
-const dpoint = Δpoint
-=#
+const dpoint = Δpt
