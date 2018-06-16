@@ -1,3 +1,14 @@
+export Point, nd, setindex, Δpt², Δpt, 
+    x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16,
+    x17, x18, x19, x20, x21, x22, x23, x24, x25, x26,
+    Δx1², Δx2², Δx3², Δx4², Δx5², Δx6², Δx7², Δx8²,  Δx9²,
+x9, Δx10², Δx11², Δx12², Δx13², Δx14², Δx15², Δx16²,
+    Δx17², Δx18², Δx19², Δx20², Δx21², Δx22², Δx23², Δx24², Δx25², Δx26²,
+    Δx1, Δx2, Δx3, Δx4, Δx5, Δx6, Δx7, Δx8, Δx9,
+    Δx10, Δx11, Δx12, Δx13, Δx14, Δx15, Δx16,
+    Δx17, Δx18, Δx19, Δx20, Δx21, Δx22, Δx23, Δx24, Δx25, Δx26
+
+
 # form points in 1D..26D coordinate space
 
 # zs = zip(split(repeat("x",26),""), string.(collect(1:26)));
@@ -34,13 +45,13 @@ Point(x1::T, x2::T, x3::T, x4::T, x5::T, x6::T, x7::T, x8::T, x9::T, x10::T, x11
 Base.getindex(x::Point{N,T}, idx::I) where {T,N,I<:Union{Signed,Unsigned}} = x.coords[idx]
 Base.getindex(x::Point{N,T}, idxs::R) where {T,N,R<:UnitRange} = x.coords[idxs]
 
-function Base.setindex!(pt::Point{N,T}, value::T, idx::Signed) where {T,N}
+function setindex(pt::Point{N,T}, value::T, idx::Signed) where {T,N}
     idx == 1 && return Point(value, pt[2:end]...,)
     idx == N && return Point(pt[1:end-1]..., value)
     return Point(pt[1:(idx-1)]...,value,pt[idx+1:end]...,)
 end
 
-function Base.setindex!(pt::Point{N,T}, values::NTuple{M,T}, idxs::R) where {T,N,M,R<:UnitRange}
+function setindex(pt::Point{N,T}, values::NTuple{M,T}, idxs::R) where {T,N,M,R<:UnitRange}
     idxs.start == 1 && return Point(values..., pt[M+1:end]...,)
     idxs.stop == N && return Point(pt[1:end-M]..., values...,)
     return Point( pt[1:(idxs.start-1)]..., values..., pt[idxs.stop+1:end]...,)
