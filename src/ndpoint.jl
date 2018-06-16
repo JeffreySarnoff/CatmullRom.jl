@@ -1,7 +1,7 @@
 # form points in 1D..26D coordinate space
 
-zs = zip(split(repeat("x",26),""), string.(collect(1:26)));
-coord_symbols = ([Symbol(string(i,j)) for (i,j) in zs]...,);
+# zs = zip(split(repeat("x",26),""), string.(collect(1:26)));
+# coord_symbols = ([Symbol(string(i,j)) for (i,j) in zs]...,);
 # (:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9, :x10, .., :x20, :x21, :x22, :x23, :x24, :x25, :x26)
 
 struct Point{N,T}
