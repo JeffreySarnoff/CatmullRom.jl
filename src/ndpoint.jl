@@ -42,8 +42,8 @@ end
 
 function Base.setindex!(pt::Point{N,T}, values::NTuple{M,T}, idxs::R) where {T,N,M,R<:UnitRange}
     idxs.start == 1 && return Point(values..., pt[M+1:end]...,)
-    idxs.end == N && return Point(pt[1:end-M]..., values...,)
-    return Point( pt[1:(idxs.start-1)]..., values..., pt[idxs.end+1:end]...,)
+    idxs.stop == N && return Point(pt[1:end-M]..., values...,)
+    return Point( pt[1:(idxs.start-1)]..., values..., pt[idxs.stop+1:end]...,)
 end
 
 
