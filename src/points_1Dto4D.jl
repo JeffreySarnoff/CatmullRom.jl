@@ -1,46 +1,40 @@
-#=
-    Tuple of Values from NamedTuples
-
-tuple_of_values(namedtuple::T) where T<:NamedTuple = Base.values(namedtuple)
-=#
-
 """
-     Prototypes for NamedTuples
-     
-     Specify the names without specifying their value's types.
-     
-     The names are given as a tuple of symbols.
-     
-     ```julia
-     using Dates
-     
-     field_names  = (:city, :timezone, :utcplus)
-     TimeZoneInfo = ProtoNT( field_names )
-     
-     city     = "Boston"
-     timezone = "America/NewYork"
-     utcplus  = (Hour(-5), Hour(-4))
-     
-     boston_zoneinfo = TimeZoneInfo( (city, timezone, utcplus) ) 
-     ```
-     
-""" ProtoNT
+    ProtoNT(names::NTuple{N,Symbol})
+    
+Generate a NamedTuple Prototype that labels precipient values using `names`.
+"""
+macro ProtoNT(names)
+   :(NamedTuple{$names})
+end
 
-ProtoNT(z::Symbol) = NamedTuple{(z,)}
-ProtoNT(z::Tuple)  = NamedTuple{(map(Symbol, z)...,)}
-ProtoNT(z::Vector) = NamedTuple{(map(Symbol, z)...,)}
-ProtoNT(z::Symbol, zs...) = NamedTuple{(z, map(Symbol, zs)...,)}
-ProtoNT(z::AbstractString) = NamedTuple{(Symbol(z),)}
-ProtoNT(z::AbstractString, zs...) = NamedTuple{(Symbol(z), map(Symbol, zs)...,)}
 
 """
     Point in 1D, 2D, 3D, 4D
+
+   a2Dpoint = PT2D( (1.0, 2.0) )
+   a2Dpoint = @PT2D( 1.0, 2.0 )
 """
 
-PT1D = ProtoNT( :x )
-PT2D = ProtoNT( :x, :y )
-PT3D = ProtoNT( :x, :y, :z )
-PT4D = ProtoNT( :x, :y, :z, :t )
+PT1D = @ProtoNT( (:x,) )
+PT2D = @ProtoNT( (:x, :y) )
+PT3D = @ProtoNT( (:x, :y, :z) )
+PT4D = @ProtoNT( (:x, :y, :z, :t) )
+
+macro PT1D(x)
+    :(P1D(($x,)))
+end
+
+macro PT2D(x, y)
+    :(P2D(($x, $y)))
+end
+
+macro PT3D(x, y, z)
+    :(P3D(($x, $y, $z)))
+end
+
+macro PT4D(x, y, z, t)
+    :(P4D(($x, $y, $z, $t)))
+end
 
 
 # retrieve the coordinates of a Point as a Tuple
