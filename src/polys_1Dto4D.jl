@@ -182,7 +182,8 @@ end
 
 root4(x) = sqrt(sqrt(x))
 
-function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT1D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {P<:PT1D}
+    T = typeof(p0.x)
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -194,10 +195,11 @@ function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT1D{T}}
 
     xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
 
-    return Cubics{T}(xcpoly)
+    return Cubics{T,1}(xcpoly)
 end
 
-function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT2D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {P<:PT2D}
+    T = typeof(p0.x)
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -210,10 +212,11 @@ function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT2D{T}}
     xcpoly = NonuniformCatmullRom(p0.x, p1.x, p2.x, p3.x, d0, d1, d2)
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
 
-    return Cubics{T}(xcpoly, ycpoly)
+    return Cubics{T,2}(xcpoly, ycpoly)
 end
 
-function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT3D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {P<:PT3D}
+    T = typeof(p0.x)
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -227,10 +230,11 @@ function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT3D{T}}
     ycpoly = NonuniformCatmullRom(p0.y, p1.y, p2.y, p3.y, d0, d1, d2)
     zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
 
-    return Cubics{T}(xcpoly, ycpoly, zcpoly)
+    return Cubics{T,3}(xcpoly, ycpoly, zcpoly)
 end
 
-function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT4D{T}}
+function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {P<:PT4D}
+    T = typeof(p0.x)
     d0 = T(root4(Δpoint2(p0, p1)))
     d1 = T(root4(Δpoint2(p1, p2)))
     d2 = T(root4(Δpoint2(p2, p3)))
@@ -245,5 +249,5 @@ function CatmullRomCubics(p0::P, p1::P, p2::P, p3::P) where {T, P<:PT4D{T}}
     zcpoly = NonuniformCatmullRom(p0.z, p1.z, p2.z, p3.z, d0, d1, d2)
     tcpoly = NonuniformCatmullRom(p0.t, p1.t, p2.t, p3.t, d0, d1, d2)
 
-    return Cubics{T}(xcpoly, ycpoly, zcpoly, tcpoly)
+    return Cubics{T,4}(xcpoly, ycpoly, zcpoly, tcpoly)
 end
