@@ -1,3 +1,4 @@
+# form points in 1D..26D coordinate space
 
 zs = zip(split(repeat("x",26),""), string.(collect(1:26)));
 coord_symbols = ([Symbol(string(i,j)) for (i,j) in zs]...,);
