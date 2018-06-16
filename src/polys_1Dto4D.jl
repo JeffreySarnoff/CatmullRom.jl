@@ -70,6 +70,17 @@ function Cubics(xcubic::Cubic{T}; δx::Bool=false) where {T}
     return Cubics{T,1}(polys, δpolys)
 end
 
+function Cubics{T,1}(xcubic::Tuple(Poly{T}, Poly{T}); δx::Bool=false) where {T}
+    polys  = xcubic[1]
+    if δx
+        δpolys = polyder.(polys)
+    else
+        δpolys = xcubic[2]
+    end
+    return Cubics{T,1}(polys, δpolys)
+end
+
+
 function Cubics(xcubic::Cubic{T}, ycubic::Cubic{T}; δx::Bool=false) where {T}
     polys  = (poly(xcubic), poly(ycubic),)
     if δx
@@ -79,6 +90,18 @@ function Cubics(xcubic::Cubic{T}, ycubic::Cubic{T}; δx::Bool=false) where {T}
     end
     return Cubics{T,2}(polys, δpolys)
 end
+
+function Cubics{T,2}(xcubic::Tuple{Poly{T}, Poly{T}}, ycubic::Tuple{Poly{T}, Poly{T}}; δx::Bool=false) where {T}
+    polys  = (xcubic[1], ycubic[1])
+    if δx
+        δpolys = (δpoly(polys[1]), δpoly(polys[2]),)
+    else
+        δpolys = (xcubic[2], ycubic[2])
+    end
+    
+    #return Cubics{T,2}(polys, δpolys)
+end
+
 
 function Cubics(xcubic::Cubic{T}, ycubic::Cubic{T}, zcubic::Cubic{T}; δx::Bool=false) where {T}
     polys  = (poly(xcubic), poly(ycubic), poly(zcubic))
