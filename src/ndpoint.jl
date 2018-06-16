@@ -11,6 +11,9 @@ end
 nd(x::Point{N,T}) where {T,N} = N
 Base.eltype(x::Point{N,T}) where {T,N} = T
 
+Base.lastindex(x::Point{N,T}) where {T,N} = N
+Base.lastindex(::Type{Point{N,T}}) where {T,N} = N
+
 Point(x1::T) where {T} = Point((x,))
 Point(x1::T, x2::T) where {T} = Point((x1, x2))
 Point(x1::T, x2::T, x3::T) where {T} = Point((x1, x2, x3))
@@ -30,6 +33,19 @@ Point(x1::T, x2::T, x3::T, x4::T, x5::T, x6::T, x7::T, x8::T, x9::T, x10::T, x11
     
 Base.getindex(x::Point{N,T}, idx::I) where {T,N,I<:Union{Signed,Unsigned}} = x.coords[idx]
 Base.getindex(x::Point{N,T}, idxs::R) where {T,N,R<:UnitRange} = x.coords[idxs]
+
+function Base.setindex!(pt::Point{N,T}, value::T, idx::Signed) where {T,N}
+    idx == 1 && return Point(value, pt[2:end]...,)
+    idx == N && return Point(pt[1:end-1]..., value)
+    return Point(pt[1:(idx-1)]...,value,pt[idx+1:end]...,)
+end
+
+function Base.setindex!(pt::Point{N,T}, values::NTuple{M,T}, idxs::R) where {T,N,M,R<:UnitRange}
+    idxs.start == 1 && return Point(values..., pt[M+1:end]...,)
+    idxs.end == N && return Point(pt[1:end-M]..., values...,)
+    return Point( pt[1:(idxs.start-1)]..., values..., pt[idxs.end+1:end]...,)
+end
+
 
 x1(x::Point{N,T}) where {T,N} = x.coords[1]
 x2(x::Point{N,T}) where {T,N} = x.coords[2]
