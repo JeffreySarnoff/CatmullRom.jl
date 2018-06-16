@@ -144,7 +144,16 @@ x26(x::Point{N,T}) where {T,N} = x.coords[26]
 Δpt²(pt1::T, pt2::T) where {F, T<:Point{6,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) 
 Δpt²(pt1::T, pt2::T) where {F, T<:Point{7,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) 
 Δpt²(pt1::T, pt2::T) where {F, T<:Point{8,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)
- 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{9,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{10,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2) + Δx10²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{11,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{12,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{13,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{14,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{15,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{16,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2) + Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)
+
+
 const dpoint2 = Δpt²
 
 # interpoint distance
