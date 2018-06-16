@@ -1,3 +1,5 @@
+module Points
+
 export Point, nd, setindex, Δpt², Δpt, 
     x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16,
     x17, x18, x19, x20, x21, x22, x23, x24, x25, x26,
@@ -296,3 +298,4 @@ const dpoint = Δpt
 Δpt(pt1::T, pt2::T) where {F, T<:Point{25,F}} = sqrt(Δpt²(pt1, pt2))
 Δpt(pt1::T, pt2::T) where {F, T<:Point{26,F}} = sqrt(Δpt²(pt1, pt2))
 
+end # Points
