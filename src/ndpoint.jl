@@ -73,3 +73,62 @@ x23(x::Point{N,T}) where {T,N} = x.coords[23]
 x24(x::Point{N,T}) where {T,N} = x.coords[24]
 x25(x::Point{N,T}) where {T,N} = x.coords[25]
 x26(x::Point{N,T}) where {T,N} = x.coords[26]
+
+
+
+# separation for coordinate axes, oriented
+
+Δx1(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x1(nt2) - x1(nt1)
+Δx2(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x2(nt2) - x2(nt1)
+Δx3(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x3(nt2) - x3(nt1)
+Δx4(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x4(nt2) - x4(nt1)
+Δx5(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x5(nt2) - x5(nt1)
+Δx6(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x6(nt2) - x6(nt1)
+Δx7(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x7(nt2) - x7(nt1)
+Δx8(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x8(nt2) - x8(nt1)
+Δx9(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x9(nt2) - x9(nt1)
+Δx10(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x10(nt2) - x10(nt1)
+Δx11(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x11(nt2) - x11(nt1)
+Δx12(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x12(nt2) - x12(nt1)
+Δx13(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x13(nt2) - x13(nt1)
+Δx14(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x14(nt2) - x14(nt1)
+Δx15(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x15(nt2) - x15(nt1)
+Δx16(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x16(nt2) - x16(nt1)
+Δx17(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x17(nt2) - x17(nt1)
+Δx18(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x18(nt2) - x18(nt1)
+Δx19(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x19(nt2) - x19(nt1)
+Δx20(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x20(nt2) - x20(nt1)
+Δx21(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x21(nt2) - x21(nt1)
+Δx22(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x22(nt2) - x22(nt1)
+Δx23(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x23(nt2) - x23(nt1)
+Δx24(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x24(nt2) - x24(nt1)
+Δx25(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x25(nt2) - x25(nt1)
+Δx26(nt1::T, nt2::T) where {F, T<:Point{N,F}} = x26(nt2) - x26(nt1)
+
+
+#=
+# squared separation for coordinate axes, unoriented 
+
+Δxcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δxcoord(nt1, nt2); d*d; end
+Δycoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δycoord(nt1, nt2); d*d; end
+Δzcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δzcoord(nt1, nt2); d*d; end
+Δtcoord2(nt1::T, nt2::T) where {T<:NamedTuple} = let d = Δtcoord(nt1, nt2); d*d; end
+
+# squared interpoint distance (norm2)
+
+Δpoint2(pt1::T, pt2::T) where {T<:PT1D} = Δxcoord2(pt1, pt2)
+Δpoint2(pt1::T, pt2::T) where {T<:PT2D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2)
+Δpoint2(pt1::T, pt2::T) where {T<:PT3D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2) + Δzcoord(pt1, pt2)
+Δpoint2(pt1::T, pt2::T) where {T<:PT4D} = Δxcoord2(pt1, pt2) + Δycoord2(pt1, pt2) + Δzcoord(pt1, pt2) + Δtcoord(pt1, pt2)
+
+const dpoint2 = Δpoint2
+
+# interpoint distance
+
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+Δpoint(nt1::T, nt2::T) where {T<:NamedTuple} = sqrt(Δpoint2(nt1, nt2))
+
+const dpoint = Δpoint
+=#
