@@ -106,10 +106,26 @@ end
     
 """ CCR1D, CCR2D, CCR3D, CCR4D
 
-CCR1D = ProtoNT( :x )
-CCR2D = ProtoNT( :x, :y )
-CCR3D = ProtoNT( :x, :y, :z )
-CCR4D = ProtoNT( :x, :y, :z, :t )
+CCR1D = @ProtoNT( (:x,) )
+CCR2D = @ProtoNT( (:x, :y) )
+CCR3D = @ProtoNT( (:x, :y, :z) )
+CCR4D = @ProtoNT( (:x, :y, :z, :t) )
+
+macro CCR1D(x)
+    :(CCR1D(($x,)))
+end
+
+macro CCR2D(x, y)
+    :(CCR2D(($x, $y)))
+end
+
+macro CCR3D(x, y, z)
+    :(CCR3D(($x, $y, $z)))
+end
+
+macro CCR4D(x, y, z, t)
+    :(CCR4D(($x, $y, $z, $t)))
+end
 
 
 # retrieve the Centripetal Catmull-Rom cubic polynomials as Tuples
