@@ -1,6 +1,8 @@
 module Points
 
-export Point, nd, setindex, Δpt², Δpt, dpoint2, dpoint,
+export Coordinates, Point,
+    ndims, lastindex, getindex, setindex!,
+    Δpt², Δpt, dpoint2, dpoint,
     x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16,
     x17, x18, x19, x20, x21, x22, x23, x24, x25, x26,
     x1², x2², x3², x4², x5², x6², x7², x8²,  x9²,
@@ -19,15 +21,14 @@ import LinearAlgebra: norm, dot, vecdot, vecnorm
 
 # form points in 1D..26D coordinate space
 
-# zs = zip(split(repeat("x",26),""), string.(collect(1:26)));
-# coord_symbols = ([Symbol(string(i,j)) for (i,j) in zs]...,);
-# (:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9, :x10, .., :x20, :x21, :x22, :x23, :x24, :x25, :x26)
+abstract type Coordinates <: Number end
 
-struct Point{N,T}
+struct Point{N,T} <: Coordinates
     coords::NTuple{N,T}
 end
 
 Point(xs...) = Point((xs))
+Point(xs::AbstractArray{T, 1}) where {T} = Point((xs...,))
 
 ndims(x::Point{N,T}) where {T,N} = N
 eltype(x::Point{N,T}) where {T,N} = T
@@ -38,17 +39,18 @@ lastindex(::Type{Point{N,T}}) where {T,N} = N
 getindex(x::Point{N,T}, idx::I) where {T,N,I<:Union{Signed,Unsigned}} = x.coords[idx]
 getindex(x::Point{N,T}, idxs::R) where {T,N,R<:UnitRange} = x.coords[idxs]
 
-function setindex(pt::Point{N,T}, value::T, idx::Signed) where {T,N}
+function setindex!(pt::Point{N,T}, value::T, idx::Signed) where {T,N}
     idx == 1 && return Point(value, pt[2:end]...,)
     idx == N && return Point(pt[1:end-1]..., value)
     return Point(pt[1:(idx-1)]...,value,pt[idx+1:end]...,)
 end
 
-function setindex(pt::Point{N,T}, values::NTuple{M,T}, idxs::R) where {T,N,M,R<:UnitRange}
+function setindex!(pt::Point{N,T}, values::NTuple{M,T}, idxs::R) where {T,N,M,R<:UnitRange}
     idxs.start == 1 && return Point(values..., pt[M+1:end]...,)
     idxs.stop == N && return Point(pt[1:end-M]..., values...,)
     return Point( pt[1:(idxs.start-1)]..., values..., pt[idxs.stop+1:end]...,)
 end
+
 
 
 #=
