@@ -72,7 +72,7 @@ end
     x3²(x::Point{N,T}) where {T,N} = let a = x.coords[3]; a*a; end
 =#
 
-macro pointcoordsqr(num)
+macro pointcoordsquared(num)
     fname = Symbol("x" * string(num) * "²")
     quote
         $(esc(fname))(pt::Point{N,T}) where {T,N} =
@@ -81,37 +81,9 @@ macro pointcoordsqr(num)
 end
 
 for i in 1:26
-    @eval @pointcoordsqr($i)
+    @eval @pointcoordsquared($i)
 end
 
-
-
-x1²(x::Point{N,T}) where {T,N} = let a = x.coords[1]; a*a; end 
-x2²(x::Point{N,T}) where {T,N} = let a = x.coords[2]; a*a; end
-x3²(x::Point{N,T}) where {T,N} = let a = x.coords[3]; a*a; end
-x4²(x::Point{N,T}) where {T,N} = let a = x.coords[4]; a*a; end
-x5²(x::Point{N,T}) where {T,N} = let a = x.coords[5]; a*a; end
-x6²(x::Point{N,T}) where {T,N} = let a = x.coords[6]; a*a; end
-x7²(x::Point{N,T}) where {T,N} = let a = x.coords[7]; a*a; end
-x8²(x::Point{N,T}) where {T,N} = let a = x.coords[8]; a*a; end
-x9²(x::Point{N,T}) where {T,N} = let a = x.coords[9]; a*a; end
-x10²(x::Point{N,T}) where {T,N} = let a = x.coords[10]; a*a; end
-x11²(x::Point{N,T}) where {T,N} = let a = x.coords[11]; a*a; end
-x12²(x::Point{N,T}) where {T,N} = let a = x.coords[12]; a*a; end
-x13²(x::Point{N,T}) where {T,N} = let a = x.coords[13]; a*a; end
-x14²(x::Point{N,T}) where {T,N} = let a = x.coords[14]; a*a; end
-x15²(x::Point{N,T}) where {T,N} = let a = x.coords[15]; a*a; end
-x16²(x::Point{N,T}) where {T,N} = let a = x.coords[16]; a*a; end
-x17²(x::Point{N,T}) where {T,N} = let a = x.coords[17]; a*a; end
-x18²(x::Point{N,T}) where {T,N} = let a = x.coords[18]; a*a; end
-x19²(x::Point{N,T}) where {T,N} = let a = x.coords[19]; a*a; end
-x20²(x::Point{N,T}) where {T,N} = let a = x.coords[20]; a*a; end
-x21²(x::Point{N,T}) where {T,N} = let a = x.coords[21]; a*a; end
-x22²(x::Point{N,T}) where {T,N} = let a = x.coords[22]; a*a; end
-x23²(x::Point{N,T}) where {T,N} = let a = x.coords[23]; a*a; end
-x24²(x::Point{N,T}) where {T,N} = let a = x.coords[24]; a*a; end
-x25²(x::Point{N,T}) where {T,N} = let a = x.coords[25]; a*a; end
-x26²(x::Point{N,T}) where {T,N} = let a = x.coords[26]; a*a; end
 
 # point, squared distance from origin
 
