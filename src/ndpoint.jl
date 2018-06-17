@@ -21,12 +21,15 @@ struct Point{N,T}
     coords::NTuple{N,T}
 end
 
+Point(xs...) = Point((xs))
+
 nd(x::Point{N,T}) where {T,N} = N
 Base.eltype(x::Point{N,T}) where {T,N} = T
 
 Base.lastindex(x::Point{N,T}) where {T,N} = N
 Base.lastindex(::Type{Point{N,T}}) where {T,N} = N
 
+#=
 Point(x1::T) where {T} = Point((x,))
 Point(x1::T, x2::T) where {T} = Point((x1, x2))
 Point(x1::T, x2::T, x3::T) where {T} = Point((x1, x2, x3))
@@ -43,7 +46,8 @@ Point(x1::T, x2::T, x3::T, x4::T, x5::T, x6::T, x7::T, x8::T, x9::T, x10::T, x11
 Point(x1::T, x2::T, x3::T, x4::T, x5::T, x6::T, x7::T, x8::T, x9::T, x10::T, x11::T, x12::T, x13::T, x14::T) where {T} = Point((x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14))
 Point(x1::T, x2::T, x3::T, x4::T, x5::T, x6::T, x7::T, x8::T, x9::T, x10::T, x11::T, x12::T, x13::T, x14::T, x15::T) where {T} = Point((x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15))
 Point(x1::T, x2::T, x3::T, x4::T, x5::T, x6::T, x7::T, x8::T, x9::T, x10::T, x11::T, x12::T, x13::T, x14::T, x15::T, x16::T) where {T} = Point((x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16))
-    
+=#
+
 Base.getindex(x::Point{N,T}, idx::I) where {T,N,I<:Union{Signed,Unsigned}} = x.coords[idx]
 Base.getindex(x::Point{N,T}, idxs::R) where {T,N,R<:UnitRange} = x.coords[idxs]
 
