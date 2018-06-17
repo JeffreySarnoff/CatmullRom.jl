@@ -3,12 +3,12 @@ module Points
 export Point, nd, setindex, Δpt², Δpt, 
     x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16,
     x17, x18, x19, x20, x21, x22, x23, x24, x25, x26,
-    Δx1², Δx2², Δx3², Δx4², Δx5², Δx6², Δx7², Δx8²,  Δx9²,
-    Δx10², Δx11², Δx12², Δx13², Δx14², Δx15², Δx16²,
-    Δx17², Δx18², Δx19², Δx20², Δx21², Δx22², Δx23², Δx24², Δx25², Δx26²,
-    Δx1, Δx2, Δx3, Δx4, Δx5, Δx6, Δx7, Δx8, Δx9,
-    Δx10, Δx11, Δx12, Δx13, Δx14, Δx15, Δx16,
-    Δx17, Δx18, Δx19, Δx20, Δx21, Δx22, Δx23, Δx24, Δx25, Δx26
+    x1², x2², x3², x4², x5², x6², x7², x8²,  x9²,
+    x10², x11², x12², x13², x14², x15², x16²,
+    x17², x18², x19², x20², x21², x22², x23², x24², x25², x26²,
+    x1, x2, x3, x4, x5, x6, x7, x8, x9,
+    x10, x11, x12, x13, x14, x15, x16,
+    x17, x18, x19, x20, x21, x22, x23, x24, x25, x26
 
 
 # form points in 1D..26D coordinate space
@@ -183,90 +183,90 @@ const dpoint = Δpt
 
 # separation for coordinate axes, oriented
 
-Δx1(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x1(nt2) - x1(nt1)
-Δx2(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x2(nt2) - x2(nt1)
-Δx3(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x3(nt2) - x3(nt1)
-Δx4(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x4(nt2) - x4(nt1)
-Δx5(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x5(nt2) - x5(nt1)
-Δx6(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x6(nt2) - x6(nt1)
-Δx7(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x7(nt2) - x7(nt1)
-Δx8(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x8(nt2) - x8(nt1)
-Δx9(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x9(nt2) - x9(nt1)
-Δx10(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x10(nt2) - x10(nt1)
-Δx11(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x11(nt2) - x11(nt1)
-Δx12(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x12(nt2) - x12(nt1)
-Δx13(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x13(nt2) - x13(nt1)
-Δx14(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x14(nt2) - x14(nt1)
-Δx15(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x15(nt2) - x15(nt1)
-Δx16(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x16(nt2) - x16(nt1)
-Δx17(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x17(nt2) - x17(nt1)
-Δx18(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x18(nt2) - x18(nt1)
-Δx19(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x19(nt2) - x19(nt1)
-Δx20(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x20(nt2) - x20(nt1)
-Δx21(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x21(nt2) - x21(nt1)
-Δx22(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x22(nt2) - x22(nt1)
-Δx23(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x23(nt2) - x23(nt1)
-Δx24(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x24(nt2) - x24(nt1)
-Δx25(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x25(nt2) - x25(nt1)
-Δx26(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x26(nt2) - x26(nt1)
+x1(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x1(nt2) - x1(nt1)
+x2(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x2(nt2) - x2(nt1)
+x3(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x3(nt2) - x3(nt1)
+x4(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x4(nt2) - x4(nt1)
+x5(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x5(nt2) - x5(nt1)
+x6(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x6(nt2) - x6(nt1)
+x7(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x7(nt2) - x7(nt1)
+x8(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x8(nt2) - x8(nt1)
+x9(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x9(nt2) - x9(nt1)
+x10(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x10(nt2) - x10(nt1)
+x11(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x11(nt2) - x11(nt1)
+x12(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x12(nt2) - x12(nt1)
+x13(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x13(nt2) - x13(nt1)
+x14(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x14(nt2) - x14(nt1)
+x15(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x15(nt2) - x15(nt1)
+x16(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x16(nt2) - x16(nt1)
+x17(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x17(nt2) - x17(nt1)
+x18(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x18(nt2) - x18(nt1)
+x19(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x19(nt2) - x19(nt1)
+x20(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x20(nt2) - x20(nt1)
+x21(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x21(nt2) - x21(nt1)
+x22(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x22(nt2) - x22(nt1)
+x23(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x23(nt2) - x23(nt1)
+x24(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x24(nt2) - x24(nt1)
+x25(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x25(nt2) - x25(nt1)
+x26(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = x26(nt2) - x26(nt1)
 
 # squared separation for coordinate axes, unoriented
 
-Δx1²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx1(nt1::T, nt2::T); d*d end
-Δx2²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx2(nt1::T, nt2::T); d*d end
-Δx3²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx3(nt1::T, nt2::T); d*d end
-Δx4²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx4(nt1::T, nt2::T); d*d end
-Δx5²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx5(nt1::T, nt2::T); d*d end
-Δx6²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx6(nt1::T, nt2::T); d*d end
-Δx7²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx7(nt1::T, nt2::T); d*d end
-Δx8²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx8(nt1::T, nt2::T); d*d end
-Δx9²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx9(nt1::T, nt2::T); d*d end
-Δx10²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx10(nt1::T, nt2::T); d*d end
-Δx11²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx11(nt1::T, nt2::T); d*d end
-Δx12²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx12(nt1::T, nt2::T); d*d end
-Δx13²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx13(nt1::T, nt2::T); d*d end
-Δx14²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx14(nt1::T, nt2::T); d*d end
-Δx15²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx15(nt1::T, nt2::T); d*d end
-Δx16²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx16(nt1::T, nt2::T); d*d end
-Δx17²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx17(nt1::T, nt2::T); d*d end
-Δx18²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx18(nt1::T, nt2::T); d*d end
-Δx19²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx19(nt1::T, nt2::T); d*d end
-Δx20²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx20(nt1::T, nt2::T); d*d end
-Δx21²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx21(nt1::T, nt2::T); d*d end
-Δx22²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx22(nt1::T, nt2::T); d*d end
-Δx23²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx23(nt1::T, nt2::T); d*d end
-Δx24²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx24(nt1::T, nt2::T); d*d end
-Δx25²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx25(nt1::T, nt2::T); d*d end
-Δx26²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = Δx26(nt1::T, nt2::T); d*d end
+x1²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x1(nt1::T, nt2::T); d*d end
+x2²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x2(nt1::T, nt2::T); d*d end
+x3²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x3(nt1::T, nt2::T); d*d end
+x4²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x4(nt1::T, nt2::T); d*d end
+x5²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x5(nt1::T, nt2::T); d*d end
+x6²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x6(nt1::T, nt2::T); d*d end
+x7²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x7(nt1::T, nt2::T); d*d end
+x8²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x8(nt1::T, nt2::T); d*d end
+x9²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x9(nt1::T, nt2::T); d*d end
+x10²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x10(nt1::T, nt2::T); d*d end
+x11²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x11(nt1::T, nt2::T); d*d end
+x12²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x12(nt1::T, nt2::T); d*d end
+x13²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x13(nt1::T, nt2::T); d*d end
+x14²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x14(nt1::T, nt2::T); d*d end
+x15²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x15(nt1::T, nt2::T); d*d end
+x16²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x16(nt1::T, nt2::T); d*d end
+x17²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x17(nt1::T, nt2::T); d*d end
+x18²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x18(nt1::T, nt2::T); d*d end
+x19²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x19(nt1::T, nt2::T); d*d end
+x20²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x20(nt1::T, nt2::T); d*d end
+x21²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x21(nt1::T, nt2::T); d*d end
+x22²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x22(nt1::T, nt2::T); d*d end
+x23²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x23(nt1::T, nt2::T); d*d end
+x24²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x24(nt1::T, nt2::T); d*d end
+x25²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x25(nt1::T, nt2::T); d*d end
+x26²(nt1::T, nt2::T) where {N, F, T<:Point{N,F}} = let d = x26(nt1::T, nt2::T); d*d end
 
 # squared interpoint distance (norm2)
 
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{1,F}} = Δx1²(pt1, pt2)
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{2,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) 
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{3,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) 
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{4,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) 
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{5,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) 
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{6,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) 
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{7,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) 
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{8,F}} = Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{9,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + Δx9²(pt1, pt2)
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{10,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{11,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{12,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{13,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{14,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{15,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{16,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{17,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{18,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{19,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{20,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{21,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2) + Δx21²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{22,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2) + Δx21²(pt1, pt2) + Δx22²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{23,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2) + Δx21²(pt1, pt2) + Δx22²(pt1, pt2) + Δx23²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{24,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2) + Δx21²(pt1, pt2) + Δx22²(pt1, pt2) + Δx23²(pt1, pt2) + Δx24²(pt1, pt2))
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{25,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2) + Δx21²(pt1, pt2) + Δx22²(pt1, pt2) + Δx23²(pt1, pt2) + Δx24²(pt1, pt2)) + Δx25²(pt1, pt2)
-Δpt²(pt1::T, pt2::T) where {F, T<:Point{26,F}} = (Δx1²(pt1, pt2) + Δx2²(pt1, pt2) + Δx3²(pt1, pt2) + Δx4²(pt1, pt2) + Δx5²(pt1, pt2) + Δx6²(pt1, pt2) + Δx7²(pt1, pt2) + Δx8²(pt1, pt2)) + (Δx9²(pt1, pt2) + Δx10²(pt1, pt2) + Δx11²(pt1, pt2) + Δx12²(pt1, pt2) + Δx13²(pt1, pt2) + Δx14²(pt1, pt2) + Δx15²(pt1, pt2) + Δx16²(pt1, pt2)) + (Δx17²(pt1, pt2) + Δx18²(pt1, pt2) + Δx19²(pt1, pt2) + Δx20²(pt1, pt2) + Δx21²(pt1, pt2) + Δx22²(pt1, pt2) + Δx23²(pt1, pt2) + Δx24²(pt1, pt2)) + (Δx25²(pt1, pt2) + Δx26²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{1,F}} = x1²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{2,F}} = x1²(pt1, pt2) + x2²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{3,F}} = x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{4,F}} = x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{5,F}} = x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{6,F}} = x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{7,F}} = x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) 
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{8,F}} = x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{9,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + x9²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{10,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{11,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{12,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{13,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{14,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{15,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{16,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{17,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{18,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{19,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{20,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2) + x20²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{21,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2) + x20²(pt1, pt2) + x21²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{22,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2) + x20²(pt1, pt2) + x21²(pt1, pt2) + x22²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{23,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2) + x20²(pt1, pt2) + x21²(pt1, pt2) + x22²(pt1, pt2) + x23²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{24,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2) + x20²(pt1, pt2) + x21²(pt1, pt2) + x22²(pt1, pt2) + x23²(pt1, pt2) + x24²(pt1, pt2))
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{25,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2) + x20²(pt1, pt2) + x21²(pt1, pt2) + x22²(pt1, pt2) + x23²(pt1, pt2) + x24²(pt1, pt2)) + x25²(pt1, pt2)
+Δpt²(pt1::T, pt2::T) where {F, T<:Point{26,F}} = (x1²(pt1, pt2) + x2²(pt1, pt2) + x3²(pt1, pt2) + x4²(pt1, pt2) + x5²(pt1, pt2) + x6²(pt1, pt2) + x7²(pt1, pt2) + x8²(pt1, pt2)) + (x9²(pt1, pt2) + x10²(pt1, pt2) + x11²(pt1, pt2) + x12²(pt1, pt2) + x13²(pt1, pt2) + x14²(pt1, pt2) + x15²(pt1, pt2) + x16²(pt1, pt2)) + (x17²(pt1, pt2) + x18²(pt1, pt2) + x19²(pt1, pt2) + x20²(pt1, pt2) + x21²(pt1, pt2) + x22²(pt1, pt2) + x23²(pt1, pt2) + x24²(pt1, pt2)) + (x25²(pt1, pt2) + x26²(pt1, pt2))
 
 
 # interpoint distance
