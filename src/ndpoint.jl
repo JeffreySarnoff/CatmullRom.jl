@@ -11,9 +11,10 @@ export Point, nd, setindex, Δpt², Δpt, dpoint2, dpoint,
     x17, x18, x19, x20, x21, x22, x23, x24, x25, x26
 
 
-import Base: abs, abs2, angle
+import Base: abs, abs2, angle,
+             eltype, ndims, lastindex, getindex, setindex!
 
-import LinearAlgebra: vecdot, vecnorm
+import LinearAlgebra: norm, dot, vecdot, vecnorm
 
 
 # form points in 1D..26D coordinate space
@@ -28,14 +29,14 @@ end
 
 Point(xs...) = Point((xs))
 
-nd(x::Point{N,T}) where {T,N} = N
-Base.eltype(x::Point{N,T}) where {T,N} = T
+ndims(x::Point{N,T}) where {T,N} = N
+eltype(x::Point{N,T}) where {T,N} = T
 
-Base.lastindex(x::Point{N,T}) where {T,N} = N
-Base.lastindex(::Type{Point{N,T}}) where {T,N} = N
+lastindex(x::Point{N,T}) where {T,N} = N
+lastindex(::Type{Point{N,T}}) where {T,N} = N
 
-Base.getindex(x::Point{N,T}, idx::I) where {T,N,I<:Union{Signed,Unsigned}} = x.coords[idx]
-Base.getindex(x::Point{N,T}, idxs::R) where {T,N,R<:UnitRange} = x.coords[idxs]
+getindex(x::Point{N,T}, idx::I) where {T,N,I<:Union{Signed,Unsigned}} = x.coords[idx]
+getindex(x::Point{N,T}, idxs::R) where {T,N,R<:UnitRange} = x.coords[idxs]
 
 function setindex(pt::Point{N,T}, value::T, idx::Signed) where {T,N}
     idx == 1 && return Point(value, pt[2:end]...,)
