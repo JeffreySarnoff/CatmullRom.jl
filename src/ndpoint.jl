@@ -11,6 +11,11 @@ export Point, nd, setindex, Δpt², Δpt, dpoint2, dpoint,
     x17, x18, x19, x20, x21, x22, x23, x24, x25, x26
 
 
+import Base: abs, abs2, angle
+
+import LinearAlgebra: vecdot, vecnorm
+
+
 # form points in 1D..26D coordinate space
 
 # zs = zip(split(repeat("x",26),""), string.(collect(1:26)));
@@ -28,8 +33,6 @@ Base.eltype(x::Point{N,T}) where {T,N} = T
 
 Base.lastindex(x::Point{N,T}) where {T,N} = N
 Base.lastindex(::Type{Point{N,T}}) where {T,N} = N
-
-
 
 Base.getindex(x::Point{N,T}, idx::I) where {T,N,I<:Union{Signed,Unsigned}} = x.coords[idx]
 Base.getindex(x::Point{N,T}, idxs::R) where {T,N,R<:UnitRange} = x.coords[idxs]
@@ -119,34 +122,7 @@ const dpoipt2 = Δpt²
 
 # point, distance from the origin
 
-
-Δpt(pt::T) where {F, T<:Point{1,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{2,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{3,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{4,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{5,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{6,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{7,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{8,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{9,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{10,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{11,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{12,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{13,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{14,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{15,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{16,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{17,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{18,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{19,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{20,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{21,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{22,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{23,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{24,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{25,F}} = sqrt(Δpt²(pt))
-Δpt(pt::T) where {F, T<:Point{26,F}} = sqrt(Δpt²(pt))
-
+Δpt(pt::T) where {N, F, T<:Point{N,F}} = sqrt(Δpt²(pt))
 
 const dpoint = Δpt
 
