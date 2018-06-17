@@ -53,7 +53,7 @@ end
     x3(x::Point{N,T}) where {T,N} = x.coords[3]
 =#
 
-macro pointcoords(num)
+macro pointcoord(num)
     fname = Symbol("x" * string(num))
     quote
         $(esc(fname))(pt::Point{N,T}) where {T,N} = pt.coords[$num]
@@ -61,11 +61,30 @@ macro pointcoords(num)
 end
 
 for i in 1:26
-    @eval @pointcoords($i)
+    @eval @pointcoord($i)
 end
 
 
 # coordinate, squared distance from origin
+#=
+    x1²(x::Point{N,T}) where {T,N} = let a = x.coords[1]; a*a; end 
+    x2²(x::Point{N,T}) where {T,N} = let a = x.coords[2]; a*a; end
+    x3²(x::Point{N,T}) where {T,N} = let a = x.coords[3]; a*a; end
+=#
+
+macro pointcoordsqr(num)
+    fname = Symbol("x" * string(num) * "²")
+    quote
+        $(esc(fname))(pt::Point{N,T}) where {T,N} =
+            let a = pt.coords[$num]; a*a; end
+    end
+end
+
+for i in 1:26
+    @eval @pointcoordsqr($i)
+end
+
+
 
 x1²(x::Point{N,T}) where {T,N} = let a = x.coords[1]; a*a; end 
 x2²(x::Point{N,T}) where {T,N} = let a = x.coords[2]; a*a; end
