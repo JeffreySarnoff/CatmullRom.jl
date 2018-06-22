@@ -91,7 +91,7 @@ function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::Vector{F})
 end
 
 function centripetal_catmullrom(pt0::T, pt1::T, pt2::T, pt3::T, interpolants::Vector{F}) where {N, M, F, T<:NTuple{N,F}}
-    centripetal_catmullrom(p0, p1, p2, p3, (interpolants...,))
+    centripetal_catmullrom(pt0, pt1, pt2, pt3, (interpolants...,))
 end
 
 function centripetal_catmullrom(pt0::T, pt1::T, pt2::T, pt3::T, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
