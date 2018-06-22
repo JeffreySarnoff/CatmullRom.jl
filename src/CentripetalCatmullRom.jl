@@ -72,7 +72,7 @@ function centripetal_catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T
     return polys
 end
 
-function centripetal_catmullrom((points::Tuple{T,T,T,T}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
+function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
     polys = centripetal_catmullrom_polys(points...,)
     
     points = Array{F, 2}(undef, (M,N))
