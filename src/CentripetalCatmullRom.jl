@@ -97,6 +97,11 @@ function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::NTuple{M,F
     return points
 end
 
+
+centripetal_catmullrom(points::Union{Tuple{}, Tuple{T}, Tuple{T,T}, Tuple{T,T,T}}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}} =
+    throw(ErrorException("expected four points ($points)"))
+              
+              
 function centripetal_catmullrom(points::NTuple{N,T}, interpolants::NTuple{M,F}) where {N, M, L, F, T<:NTuple{L, F}}
     interp = [];#Array{F, 2}(undef, (M*(length(points)-1),N))   
     for ptidx in 1:N-3
