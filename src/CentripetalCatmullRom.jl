@@ -81,7 +81,11 @@ function centripetal_catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T
 end
 
 function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
-    polys = centripetal_catmullrom_polys(points...,)
+    centripetal_catmullrom(points..., interpolants)
+end
+
+function centripetal_catmullrom(pt0::T, pt1::T, pt2::T, pt3::T, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
+    polys = centripetal_catmullrom_polys(pt0, pt1, pt2, pt3)
     
     points = Array{F, 2}(undef, (M,N))
     for col in 1:N
@@ -96,7 +100,7 @@ function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::NTuple{M,F
     return points
 end
 
-
+#=
 centripetal_catmullrom(points::Union{Tuple{}, Tuple{T}, Tuple{T,T}, Tuple{T,T,T}}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}} =
     throw(ErrorException("expected four points ($points)"))
               
@@ -111,7 +115,7 @@ function centripetal_catmullrom(points::NTuple{N,T}, interpolants::NTuple{M,F}) 
     interp
 end
            
-
+=#
 
 
 end # module CentripetalCatmullRom
