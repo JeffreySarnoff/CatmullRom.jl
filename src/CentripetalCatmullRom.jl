@@ -9,6 +9,16 @@ export centripetal_catmullrom, into01,
 using Polynomials
 import Polynomials: polyval, polyder
 
+@inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
+
+function into01(values::Union{Vararg{T}, Tuple{Vararg{T}, Vector{T}}) where {T<:Real}
+    mn, mx = minimum(values), maximum(values)
+    delta = mx - mn
+    map(clamp01, (values .- mn) ./ delta))
+end
+
+
+
 
 qrtrroot(x) = sqrt(sqrt(x))
 
