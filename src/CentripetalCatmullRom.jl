@@ -110,6 +110,8 @@ function centripetal_catmullrom(pt0::T, pt1::T, pt2::T, pt3::T, interpolants::NT
     return points
 end
 
+function ccr_interpolation(point_before, point_first, point_last, point_after, interpolants)
+end
 #=
 centripetal_catmullrom(points::Union{Tuple{}, Tuple{T}, Tuple{T,T}, Tuple{T,T,T}}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}} =
     throw(ErrorException("expected four points ($points)"))
