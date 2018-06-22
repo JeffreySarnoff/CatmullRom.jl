@@ -29,8 +29,8 @@ qrtrroot(x) = sqrt(sqrt(x))
 function cubicpoly(x0::T, x1::T, dx0::T, dx1::T) where {T}
     c0 = x0
     c1 = dx0
-    c2 = -3*x0 + 3*x1 - 2*t0 - t1
-    c3 =  2*x0 - 2*x1 +   t0 + t1
+    c2 = -3*x0 + 3*x1 - 2*dx0 - dx1
+    c3 =  2*x0 - 2*x1 +   dx0 + dx1
     return Poly([c0, c1, c2, c3])
 end
 
