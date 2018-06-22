@@ -87,5 +87,18 @@ function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::NTuple{M,F
     
     return points
 end
-       
+
+function centripetal_catmullrom(points::NTuple{N,T}, interpolants::NTuple{M,F}) where {N, M, L, F, T<:NTuple{L, F}}
+    interp = [];#Array{F, 2}(undef, (M*(length(points)-1),N))   
+    for ptidx in 1:N-3
+           pts = (points[ptidx:ptidx+3]...,)
+           newpts = centripetal_catmullrom(pts, interpolants)
+           append!(interp, newpts)
+       end
+    interp
+end
+           
+
+
+
 end # module CentripetalCatmullRom
