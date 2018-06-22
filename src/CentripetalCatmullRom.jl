@@ -47,7 +47,7 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
     return cubicpoly(x1, x2, t1, t2)
 end
 
-function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {F, T<:Tuple{F,F}}
+function prep_centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
     dt0 = qrtrroot(vecdot(p0, p1))
     dt1 = qrtrroot(vecdot(p1, p2))
     dt2 = qrtrroot(vecdot(p2, p3))
@@ -57,9 +57,25 @@ function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {F, T<:Tuple{F
     if (dt0 < 1e-4) dt0 = dt1 end
     if (dt2 < 1e-4) dt2 = dt1 end
  
-    xpoly = nonuniform_catmullrom(p0[1], p1[1], p2[1], p3[1], dt0, dt1, dt2)
-    ypoly = nonuniform_catmullrom(p0[2], p1[2], p2[2], p3[2], dt0, dt1, dt2)
-    return xpoly, ypoly
+    return dt0, dt1, dt2   
  end
 
+function centripetal_catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
+    dt0, dt1, dt2 = prep_centripetal_catmullrom(p0, p1, p2, p3)
+ 
+    polys = Vector{Poly}(undef, N)
+       
+    for i=1:N
+        polys[i] = nonuniform_catmullrom(p0[i], p1[i], p2[i], p3[i], dt0, dt1, dt2)
+    end      
+    
+    return polys
+end
+
+function centripetal_catmullrom((points::Tuple{T,T,T,T}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
+    polys = centripetal_catmullrom_polys(points...,)
+    
+    
+end
+       
 end # module CentripetalCatmullRom
