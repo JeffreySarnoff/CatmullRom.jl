@@ -75,7 +75,17 @@ end
 function centripetal_catmullrom((points::Tuple{T,T,T,T}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
     polys = centripetal_catmullrom_polys(points...,)
     
+    points = Array{F, 2}(undef, (M,N))
+    for col in 1:N
+        ply = polys[col]
+        for row in 1:M
+            value = interpolants[row]
+            0.0 <= value <= 1.0 || throw(DomainError("interpolant value ($value) should be in 0.0:1.0"))
+            points[row, col] = polyval(ply, value)
+        end
+    end
     
+    return points
 end
        
 end # module CentripetalCatmullRom
