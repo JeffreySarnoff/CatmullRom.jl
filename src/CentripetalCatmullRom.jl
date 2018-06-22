@@ -1,4 +1,4 @@
-_precompile__()
+__precompile__()
 
 module CentripetalCatmullRom
 
