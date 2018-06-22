@@ -2,7 +2,7 @@ __precompile__()
 
 module CentripetalCatmullRom
 
-export centripetal_catmullrom, 
+export centripetal_catmullrom, into01,
        polyval, polyder,                 # from Polynomials, specialized
        δpolyval, dpolyval                # dpolyval aliases δpolyval 
 
