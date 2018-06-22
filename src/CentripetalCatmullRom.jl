@@ -84,6 +84,13 @@ function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::NTuple{M,F
     centripetal_catmullrom(points..., interpolants)
 end
 
+function centripetal_catmullrom(points::Tuple{T,T,T,T}, interpolants::Vector{F}) where {N, M, F, T<:NTuple{N,F}}
+    centripetal_catmullrom(points..., (interpolants...,))
+end
+
+function centripetal_catmullrom(pt0::T, pt1::T, pt2::T, pt3::T, interpolants::Vec:F}) where {N, M, F, T<:NTuple{N,F}}
+end
+
 function centripetal_catmullrom(pt0::T, pt1::T, pt2::T, pt3::T, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
     polys = centripetal_catmullrom_polys(pt0, pt1, pt2, pt3)
     
