@@ -9,6 +9,8 @@ export centripetal_catmullrom, into01,
 using Polynomials
 import Polynomials: polyval, polyder
 
+using LinearAlgebra: dot
+
 """
     into01((xs...,))
     into01([xs...,])
@@ -56,9 +58,9 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
 end
 
 function prep_centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
-    dt0 = qrtrroot(vecdot(p0, p1))
-    dt1 = qrtrroot(vecdot(p1, p2))
-    dt2 = qrtrroot(vecdot(p2, p3))
+    dt0 = qrtrroot(dot(p0, p1))
+    dt1 = qrtrroot(dot(p1, p2))
+    dt2 = qrtrroot(dot(p2, p3))
  
     #safety check for repeated points
     if (dt1 < 1e-4) dt1 = 1.0 end
