@@ -60,10 +60,10 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
     return hermite_cubic(x1, x2, t1, t2)
 end
 
-function prep_catmullrom(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
-    dt0 = qrtrroot(dot(p0, p1))
-    dt1 = qrtrroot(dot(p1, p2))
-    dt2 = qrtrroot(dot(p2, p3))
+function prep_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
+    dt0 = qrtrroot(dot(pts[1], pts[2]))
+    dt1 = qrtrroot(dot(pts[2], pts[3]))
+    dt2 = qrtrroot(dot(pts[3], pts[4]))
  
     #safety check for repeated points
     if (dt1 < 1e-4) dt1 = 1.0 end
@@ -79,8 +79,8 @@ function prep_catmullrom(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
 =#
-function catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
-    dt0, dt1, dt2 = prep_catmullrom(p0, p1, p2, p3)
+function catmullrom_polys(pts::NTuple{4, NTuple{D,T}}) where {D, T}
+    dt0, dt1, dt2 = prep_catmullrom(pts)
  
     polys = Vector{Poly}(undef, N)
 
@@ -92,8 +92,8 @@ function catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F
 end
 
 
-function catmullrom_points(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
-    polys = catmullrom_polys(pta, pt0, pt1, ptb)
+function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F, T<:NTuple{N,F}}
+    polys = catmullrom_polys(pts)
 
     points = Array{F, 2}(undef, (M,N))
     for col in 1:N
@@ -108,8 +108,8 @@ function catmullrom_points(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{
     return points
 end
 
-catmullrom_points1(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}} =
-    catmullrom_points(pta, pt0, pt1, ptb, interpolants)[1:end-1,:]
+catmullrom_points1(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F} =
+    catmullrom_points(pts, interpolants)[1:end-1,:]
 
 #=
     interpolants
