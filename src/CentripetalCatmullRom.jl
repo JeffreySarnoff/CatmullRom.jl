@@ -126,7 +126,7 @@ function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     ndimens = length(points[1])
     eltyp = eltype(points[1])
     result = Array{eltyp, ndimens}(undef, (point_windows * ninterp, ndimens) )
-    interpolants1 = view(interpolants,1:end-1)
+    interpolants1 = view(interpolants,1:(ninterp-1))
     for i in 1:(point_windows-1)
          result[i:i+(ninterp-1),:] = catmullrom_points(points[i:i+3]..., interpolants1)
     end
