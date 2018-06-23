@@ -109,9 +109,9 @@ function catmullrom_points(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{
 end
 
 
-function catmullrom(points::U1, interpolants::U2) where {T, N1, N2, U1<:Union{NTuple{N1,T},Array{T,1}}, U2<:Union{NTuple{N2,T},Array{T,1}}}
-    npoints = length(U1)
-    ninterp = length(U2)
+function catmullrom(points::U1, interpolants::U2) where {U1, U2}
+    npoints = length(points)
+    ninterp = length(interpolants)
     npoints < 4 && throw(ErrorException("four points are required"))
     point_windows = npoints - 3
     result = Array{typeof(points[1]), 1}(undef, point_windows * ninterp)
