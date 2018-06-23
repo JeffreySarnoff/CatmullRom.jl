@@ -96,7 +96,7 @@ end
 function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
     polys = catmullrom_polys(pts)
 
-    points = Array{F, 2}(undef, (M,N))
+    points = Array{T, 2}(undef, (M,N))
     for col in 1:N
         ply = polys[col]
         for row in 1:M
