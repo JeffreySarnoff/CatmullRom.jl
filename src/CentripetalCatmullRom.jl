@@ -79,9 +79,9 @@ function prep_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
 =#
-function catmullrom_polys(pts::NTuple{4, NTuple{D,T}}) where {D, T}
+function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     dt0, dt1, dt2 = prep_catmullrom(pts)
- 
+    
     polys = Vector{Poly}(undef, N)
 
     for i=1:N
