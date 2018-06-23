@@ -95,11 +95,11 @@ end
 
 function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
     polys = catmullrom_polys(pts)
-
-    points = Array{T, 2}(undef, (M,N))
-    for col in 1:N
+    ninters = length(interpolants)
+    points = Array{T, 2}(undef, (ninters,D))
+    for col in 1:D
         ply = polys[col]
-        for row in 1:M
+        for row in 1:ninters
             value = interpolants[row]
             0.0 <= value <= 1.0 || throw(DomainError("interpolant value ($value) should be in 0.0:1.0"))
             points[row, col] = polyval(ply, value)
@@ -139,7 +139,7 @@ function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
     if npoints == 4
-        return catmullrom_points(points..., interpolants)
+        return catmullrom_points(points, interpolants)
     end
 
     ninterp = length(interpolants)
