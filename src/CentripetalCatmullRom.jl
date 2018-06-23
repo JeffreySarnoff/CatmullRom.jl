@@ -125,11 +125,19 @@ function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     ninterp < 2 && throw(ErrorException("at least two interpolants [0,1] are required"))
     ndimens = length(points[1])
     eltyp = eltype(points[1])
-    result = Array{eltyp, ndimens}(undef, (point_windows * ninterp, ndimens) )
+    result = Array{eltyp, ndimens}(undef, (point_windows * ninterp + 1, ndimens) )
     interpolants1 = interpolants[1:end-1] #view(interpolants,1:(ninterp-1))
-    for i in 1:(point_windows-1)
+    
+    result[1:(ninterp-1),:] = catmullrom_points(points[1:4]..., interpolants1)
+    result[(1*ninterp):(2*(ninterp-1)),:] = catmullrom_points(points[2:2+3]..., interpolants1)
+    result[(2*(ninterp-1)+1):(3*(ninterp-1)),:] = catmullrom_points(points[3:3+3]..., interpolants1)
+    result[(3*(ninterp-1)+1):(4*(ninterp-1)),:] = catmullrom_points(points[4:4+3]..., interpolants1)
+    result[(4*(ninterp-1)+1):(5*(ninterp-1)),:] = catmullrom_points(points[5:5+3]..., interpolants1)
+    #=
+    for i in 2:(point_windows-1)
         result[(i*(ninterp-1)):((i+1)*(ninterp-1)-1),:] = catmullrom_points(points[i:i+3]..., interpolants1)
     end
+    =#
     result[point_windows:(point_windows+ninterp-1), :] = catmullrom_points(points[end-3:end]..., interpolants)
 
     return result
