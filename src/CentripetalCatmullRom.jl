@@ -61,7 +61,7 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
     return hermite_cubic(x1, x2, t1, t2)
 end
 
-function prep_centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
+function prep_catmullrom(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
     dt0 = qrtrroot(dot(p0, p1))
     dt1 = qrtrroot(dot(p1, p2))
     dt2 = qrtrroot(dot(p2, p3))
@@ -80,8 +80,8 @@ function prep_centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {N, F, T<
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
 =#
-function centripetal_catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
-    dt0, dt1, dt2 = prep_centripetal_catmullrom(p0, p1, p2, p3)
+function catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T<:NTuple{N,F}}
+    dt0, dt1, dt2 = prep_catmullrom(p0, p1, p2, p3)
  
     polys = Vector{Poly}(undef, N)
        
@@ -93,8 +93,8 @@ function centripetal_catmullrom_polys(p0::T, p1::T, p2::T, p3::T) where {N, F, T
 end
 
 
-function centripetal_catmullrom_points(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
-    polys = centripetal_catmullrom_polys(pta, pt0, pt1, ptb)
+function catmullrom_points(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}}
+    polys = catmullrom_polys(pta, pt0, pt1, ptb)
     
     points = Array{F, 2}(undef, (M,N))
     for col in 1:N
@@ -115,25 +115,13 @@ function catmullrom(points::U1, interpolants::U2) where {T, N1, N2, U1<:Union{NT
     ninterp = length(U2)
     npoints < 4 && throw(ErrorException("four points are required"))
     point_windows = npoints - 3
-    
+    result = Array{typeof(points[1]), 1}(undef, point_windows * ninterp)
+    for i in 1:point_windows
+        result[i:i+ninterp-1] = catmullrom_points(points[i:i+3]..., interpolants)
+    end
+    return result
 end
 
-#=
-centripetal_catmullrom(points::Union{Tuple{}, Tuple{T}, Tuple{T,T}, Tuple{T,T,T}}, interpolants::NTuple{M,F}) where {N, M, F, T<:NTuple{N,F}} =
-    throw(ErrorException("expected four points ($points)"))
-              
-              
-function centripetal_catmullrom(points::NTuple{N,T}, interpolants::NTuple{M,F}) where {N, M, L, F, T<:NTuple{L, F}}
-    interp = [];#Array{F, 2}(undef, (M*(length(points)-1),N))   
-    for ptidx in 1:N-3
-           pts = (points[ptidx:ptidx+3]...,)
-           newpts = centripetal_catmullrom(pts, interpolants)
-           append!(interp, newpts)
-       end
-    interp
-end
-           
-=#
 
 
 end # module CentripetalCatmullRom
