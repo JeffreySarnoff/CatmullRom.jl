@@ -108,7 +108,15 @@ function catmullrom_points(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{
     return points
 end
 
+#=
+    interpolants
+    1 2 3 4 5 6         1 2 3 4 5 6
+    0         1         1         1
+              1 2 3 4 5 6         1 2 3 4 5 6
+    1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 6
 
+    (ninterpolants-1)*(npointspans-1) + ninterpolants
+=#
 function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
@@ -118,11 +126,11 @@ function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     ndimens = length(points[1])
     eltyp = eltype(points[1])
     result = Array{eltyp, ndimens}(undef, (point_windows * ninterp, ndimens) )
-    
-    result[1:ninterp, :] = catmullrom_points(points[1:4]..., interpolants)
-    for i in 2:point_windows
-         result[(1+(i-1)*ninterp):((i*ninterp)),:] = catmullrom_points(points[i:i+3]..., interpolants)
+    interpolants1 = view(interpolants,1:end-1)
+    for i in 1:(point_windows-1)
+         result[i:i+(ninterp-1),:] = catmullrom_points(points[i:i+3]..., interpolants1)
     end
+    result[point_windows:(point_windows+ninterp), :] = catmullrom_points(points[end-3:end]..., interpolants)
 
     return result
 end
