@@ -9,8 +9,7 @@ import Polynomials: polyval, polyder
 
 using LinearAlgebra: dot
 
-dpolyval(ply::Poly, value::T) = polyval(polyder(ply), value)
-dpolyder(ply::Poly) = polyder(polyder(ply))
+dpolyval(ply::Poly, value::T) where {T} = polyval(polyder(ply), value)
 
 
 """
@@ -110,7 +109,7 @@ function catmullrom_points(pta::T, pt0::T, pt1::T, ptb::T, interpolants::NTuple{
 end
 
 
-function catmullrom(points::U1, interpolants::U2) where {T, N1, N2, U1<:Union{NTuple{N,T},Array{T,1}}, U2<:Union{NTuple{N,T},Array{T,1}}
+function catmullrom(points::U1, interpolants::U2) where {T, N1, N2, U1<:Union{NTuple{N1,T},Array{T,1}}, U2<:Union{NTuple{N2,T},Array{T,1}}}
     npoints = length(U1)
     ninterp = length(U2)
     npoints < 4 && throw(ErrorException("four points are required"))
