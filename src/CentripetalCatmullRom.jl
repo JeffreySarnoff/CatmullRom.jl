@@ -116,29 +116,53 @@ end
     1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 6
 
     (ninterpolants-1)*(npointspans-1) + ninterpolants
+
+    points
+    1 2 3 4
+      ==    5 
+        ==
+          ==
+ 
+    p points --> (p-2) interpoland spans, first point and last point are not spanned
+
+    with exactly 4 points, one span of ninterpolants (pt2 and pt3 are included)
+    with more points, e.g. 5,  two spans of n-1 then n interpolants
+
+    with k points idx 1:k-3
 =#
 function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
-    point_windows = npoints - 3
+    
+    if npoints == 4
+        return catmullrom_points(points..., interpolants)
+    end
+    
     ninterp = length(interpolants)
     ninterp < 2 && throw(ErrorException("at least two interpolants [0,1] are required"))
     ndimens = length(points[1])
     eltyp = eltype(points[1])
-    result = Array{eltyp, ndimens}(undef, (point_windows * ninterp + 1, ndimens) )
+
+    point_spans = npoints - 2
+    totalpoints = (point_spans - 2) * (ninterp - 1) + ninterp
+    
+    result = Array{eltyp, ndimens}(undef, (totalpoints, ndimens) )
     interpolants1 = interpolants[1:end-1] #view(interpolants,1:(ninterp-1))
     
     result[1:(ninterp-1),:] = catmullrom_points(points[1:4]..., interpolants1)
     result[(1*ninterp):(2*(ninterp-1)),:] = catmullrom_points(points[2:2+3]..., interpolants1)
     result[(2*(ninterp-1)+1):(3*(ninterp-1)),:] = catmullrom_points(points[3:3+3]..., interpolants1)
     result[(3*(ninterp-1)+1):(4*(ninterp-1)),:] = catmullrom_points(points[4:4+3]..., interpolants1)
-    result[(4*(ninterp-1)+1):(5*(ninterp-1)),:] = catmullrom_points(points[5:5+3]..., interpolants1)
+    result[(4*(ninterp-1)+1):(5*(ninterp-1)+1),:] = catmullrom_points(points[5:5+3]..., interpolants)
+    
+    #result[(5*(ninterp-1)+1):(6*(ninterp-1)+1),:] = catmullrom_points(points[6:6+3]..., interpolants)
+    
     #=
     for i in 2:(point_windows-1)
         result[(i*(ninterp-1)):((i+1)*(ninterp-1)-1),:] = catmullrom_points(points[i:i+3]..., interpolants1)
     end
     =#
-    result[point_windows:(point_windows+ninterp-1), :] = catmullrom_points(points[end-3:end]..., interpolants)
+    #result[point_windows:(point_windows+ninterp-1), :] = catmullrom_points(points[end-3:end]..., interpolants)
 
     return result
 end
