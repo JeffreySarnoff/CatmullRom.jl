@@ -86,7 +86,7 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = Vector{Poly}(undef, N)
 
     for i=1:N
-        polys[i] = nonuniform_catmullrom(pt0[i], p1[i], p2[i], p3[i], dt0, dt1, dt2)
+        polys[i] = nonuniform_catmullrom(pt0[i], pt1[i], pt2[i], pt3[i], dt0, dt1, dt2)
     end
 
     return polys
