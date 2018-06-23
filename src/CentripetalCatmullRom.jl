@@ -92,7 +92,7 @@ function catmullrom_polys(pts::NTuple{4, NTuple{D,T}}) where {D, T}
 end
 
 
-function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F, T<:NTuple{N,F}}
+function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
     polys = catmullrom_polys(pts)
 
     points = Array{F, 2}(undef, (M,N))
