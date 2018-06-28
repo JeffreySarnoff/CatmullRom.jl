@@ -21,7 +21,7 @@ chebroot(k:Int, n::Int) = (1 + cospi( (2*(n-k)+1) / (2*n) )) / 2
 chebroots(n::Int) = n >= 1 ? [chebroot(k,n) for k=1:n] : throw(DomainError("$n < 1"))
 
 # Chebyshev type 1 roots mapped into 0..1 with 0 and 1 appended
-cheb01roots(n::Int) = n >= 0 ? [0.0, chebroots(n)..., 1.0] : : throw(DomainError("$n < 0"))
+cheb01roots(n::Int) = n >= 0 ? [0.0, chebroots(n)..., 1.0] : throw(DomainError("$n < 0"))
 
 
 # mapping into centripetal curve 
