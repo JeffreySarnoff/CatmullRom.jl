@@ -47,7 +47,7 @@ function hermite_cubic(x0::T, x1::T, dx0::T, dx1::T) where {T}
 end
 
 # compute nonuniform Catmull-Rom spline over [0, 1]
-function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T) where {T}
+function catmullrom_cubic(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T) where {T}
     # compute tangents when parameterized in [t1,t2]
     t1 = (x1 - x0) / dt0 - (x2 - x0) / (dt0 + dt1) + (x2 - x1) / dt1
     t2 = (x2 - x1) / dt1 - (x3 - x1) / (dt1 + dt2) + (x3 - x2) / dt2
@@ -60,7 +60,7 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
     return hermite_cubic(x1, x2, t1, t2)
 end
 
-function prep_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
+function prep_centripetal_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
     dt0 = qrtrroot(dot(pts[1], pts[2]))
     dt1 = qrtrroot(dot(pts[2], pts[3]))
     dt2 = qrtrroot(dot(pts[3], pts[4]))
@@ -80,13 +80,13 @@ function prep_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
    one poly for each coordinate axis
 =#
 function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-    dt0, dt1, dt2 = prep_catmullrom(pts)
+    dt0, dt1, dt2 = prep_centripetal_catmullrom(pts)
     pt0, pt1, pt2, pt3 = pts
     
     polys = Vector{Poly}(undef, N)
 
     for i=1:N
-        polys[i] = nonuniform_catmullrom(pt0[i], pt1[i], pt2[i], pt3[i], dt0, dt1, dt2)
+        polys[i] = catmullrom_cubic(pt0[i], pt1[i], pt2[i], pt3[i], dt0, dt1, dt2)
     end
 
     return polys
