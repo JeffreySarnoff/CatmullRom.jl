@@ -20,3 +20,5 @@ totaldist = sum(dists)
 
 tidxs = [0.0, (cumsum(dists) ./ totaldist)...,]
 
+
+cheb(k,n)= (0+1)/2 + (1/2)*cospi(((2*(n+1-k)-1))/(2*n))
