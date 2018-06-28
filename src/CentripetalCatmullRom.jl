@@ -180,7 +180,7 @@ function catmullrom(points::U1, interpolants::U2) where {U1, U2}
         k = i+1
         result[(i*ninterp1+1):(k*ninterp1),:] = catmullrom_points1((points[k:k+3]...,), interpolants)
     end
-    result[end, :] = [points[end]...,]
+    result[end, :] = [points[end-1]...,]
 
     return result
 end
