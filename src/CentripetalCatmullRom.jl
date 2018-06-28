@@ -112,6 +112,20 @@ end
 catmullrom_points1(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F} =
     catmullrom_points(pts, interpolants)[1:end-1,:]
 
+function fixup(interpolants::U2) where (U2)
+    interps = sort([interpolants...,])
+    if interps[end] < 1.0
+        interps = [interps..., 1.0]
+    end
+    if 0.0 < interps[1] < 1.0
+        interps = [0.0, interps...,]
+    end
+    if interps[1] != 0 || interps[end] != 1
+        interps = into01(interps)
+    end
+    return (interps...,)
+end
+
 #=
     interpolants
     1 2 3 4 5 6         1 2 3 4 5 6
@@ -135,12 +149,20 @@ catmullrom_points1(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F
     with k points idx 1:k-3
 =#
 
+"""
+    catmullrom(points, interpolants)
+
+    `points` is a tuple of points-as-tuples
+    `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
+"""
 function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
-
+    
+    interps = fixup(interpolants)
+    
     if npoints == 4
-        return catmullrom_points(points, interpolants)
+        return catmullrom_points(points, interps)
     end
 
     ninterp = length(interpolants)
