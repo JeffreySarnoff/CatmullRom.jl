@@ -13,6 +13,9 @@ dist(pa, pb) = sqrt(distance(pa, pb))
 
 dists = [dist(pts[i],pts[i+1]) for i=1:length(pts)-1]
 
+dists = [dist(pts2D[i,:],pts2D[i+1,:]) for i=1:length(pts2D[:,1])-1]
+
+
 totaldist = sum(dists)
 
 tidxs = [0.0, (cumsum(dists) ./ totaldist)...,]
