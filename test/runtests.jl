@@ -10,4 +10,4 @@ pts2D = catmullrom(points2D, interpolants)
 pts3D = catmullrom(points3D, interpolants)
 
 @test Float32.(pts2D[1,:]) == Float32.([0.25, 2.0])
-@test Float32.(pts3D[1,:]) == Float32.([1.75, 0.25, 2.0])
+@test Float32.(pts3D[1,:]) == Float32.([0.25, 2.0, 0.5])
