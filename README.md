@@ -12,13 +12,13 @@ Centripetal variant
 
 ### Exports
 
-catmullrom(points, interpolants)
+#### catmullrom(points, interpolants)
 - `points` is a tuple of points-as-tuples
 - `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
 -  yields interpolating points from points[2] through points[end-1] (inclusive)
 
 
-into01((xs...,)), into01([xs...,])
+#### into01((xs...,)), into01([xs...,])
 - maps values into 0.0:1.0
 - minimum(xs) --> 0.0, maximum(xs) --> 1.0
 
