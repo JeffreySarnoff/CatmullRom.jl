@@ -19,7 +19,7 @@ Centripetal variant
 
 
 #### into01((xs...,)), into01([xs...,])
-- maps values into 0.0:1.0
+- maps values into 0.0:1.0, linearly
 - minimum(xs) --> 0.0, maximum(xs) --> 1.0
 
 -----
