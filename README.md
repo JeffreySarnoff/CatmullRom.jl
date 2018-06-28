@@ -24,6 +24,11 @@ Centripetal variant
 
 -----
 
+### Notes
+
+With Centripetal Catmull Rom interpolation, the distances are not uniform.
+Each interval is square root of the Euclidean distance between the points.
+
 ### Refs
 
 Parameterization and Applications of Catmull-Rom Curves
