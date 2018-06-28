@@ -154,6 +154,8 @@ end
 
     `points` is a tuple of points-as-tuples
     `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
+
+interpolating points from points[2] through points[end-1] (inclusive)
 """
 function catmullrom(points::U1, interpolants::U2) where {U1, U2}
     npoints = length(points)
