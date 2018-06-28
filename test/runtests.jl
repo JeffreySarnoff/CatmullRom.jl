@@ -16,3 +16,4 @@ pts3D = catmullrom(points3D, interpolants)
 points2D = ((0.0, 0.0), (0.25, 2.0), (0.5, 3.0), (0.75, 2.0), (1.0, 0.0))
 interpolants = collect(0.0:0.25:1.0)
 pts2D = catmullrom(points2D, interpolants)
+@test pts2D[6,:] == [0.5, 3.0]
