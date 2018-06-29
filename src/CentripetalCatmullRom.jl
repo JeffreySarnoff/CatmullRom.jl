@@ -71,6 +71,15 @@ function prep_centripetal_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
    obtain N polys, parameterized over [0,1]
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
+
+julia> points2D = ([(sin(x*pi),cos(x*pi)) for x=0.0:(0.5/3):0.5]...,)
+((0.0, 1.0), (0.49999999999999994, 0.8660254037844387), (0.8660254037844386, 0.5000000000000001), (1.0, 6.123233995736766e-17))
+
+julia> polys = catmullrom_polys(points2D)
+2-element Array{Poly,1}:
+ Poly(0.49999999999999994 + 0.43301270189221924*x - 0.017949192431122307*x^2 - 0.049038105676658006*x^3)
+ Poly(0.8660254037844387 - 0.24999999999999994*x - 0.16506350946109644*x^2 + 0.049038105676658006*x^3)  
+
 =#
 function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     dt0, dt1, dt2 = prep_centripetal_catmullrom(pts)
@@ -98,15 +107,19 @@ function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NT
     validate_interpolants(interpolants)
     
     polys = catmullrom_polys(pts)
-    ninters = length(interpolants)-1
+    ninterps = length(interpolants)
     
-    points = Array{T, 2}(undef, (ninters,D))
-    points[1, :] = pts[2,:]
-    points[end, :] = pts[3, :]
+    points = Array{T, 2}(undef, (ninterps,D))
+    for col in 1:D
+        points[1, col] = pts[2][col]
+        points[end, col] = pts[3][col]
+    end
+   
+    ninterps -= 1
    
     for col in 1:D
         ply = polys[col]
-        for row in 2:ninters
+        for row in 2:ninterps
             value = interpolants[row]
             points[row, col] = polyval(ply, value)
         end
