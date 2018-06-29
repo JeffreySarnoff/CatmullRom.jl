@@ -425,3 +425,95 @@ ulia> ccrpoints2=catmullrom(sinpointstup,cpoints01)
  2.73821   0.392252
  2.74355   0.387467
  2.74889   0.382683
+
+
+julia> pointseq=into01([(-1.0, 0.0),(0.0, 1.0),(1.0,1.0),(2.0, 0.0)])
+4-element Array{Tuple{Float64,Float64},1}:
+ (0.0, 0.0)                              
+ (0.3333333333333333, 0.3333333333333333)
+ (0.6666666666666666, 0.3333333333333333)
+ (1.0, 0.0)                              
+
+julia> interpolants = uniformsep(2)
+2-element Array{Float64,1}:
+ 0.0
+ 1.0
+
+julia> interpolants = uniformsep(4)
+4-element Array{Float64,1}:
+ 0.0               
+ 0.3333333333333333
+ 0.6666666666666666
+ 1.0               
+
+julia> ccrpoints = catmullrom((pointseq...,), interpolants)
+4×2 Array{Float64,2}:
+ 0.333333  0.333333
+ 0.446239  0.367509
+ 0.559145  0.364647
+ 0.666667  0.333333
+
+julia> ccrpoints_uniformsep = catmullrom((pointseq...,), interpolants)
+4×2 Array{Float64,2}:
+ 0.333333  0.333333
+ 0.446239  0.367509
+ 0.559145  0.364647
+ 0.666667  0.333333
+
+julia> interpolants = zero_chebroots_one(2)
+4-element Array{Float64,1}:
+ 0.0               
+ 0.1464466094067262
+ 0.8535533905932737
+ 1.0               
+
+julia> ccrpoints_0chebroots1 = catmullrom((pointseq...,), interpolants)
+4×2 Array{Float64,2}:
+ 0.333333  0.333333
+ 0.382592  0.35346 
+ 0.620436  0.350045
+ 0.666667  0.333333
+
+julia> points_ccr_uniform=[(ccrpoints_uniformsep[i,:]...,) for i=1:length(ccrpoints_uniformsep[:,1])]
+4-element Array{Tuple{Float64,Float64},1}:
+ (0.3333333333333333, 0.3333333333333333)
+ (0.4462389222474171, 0.3675088896818928)
+ (0.559144511161501, 0.36464740899341525)
+ (0.6666666666666666, 0.3333333333333333)
+
+julia> points_ccr_cheby=[(ccrpoints_0chebroots1[i,:]...,) for i=1:length(ccrpoints_uniformsep0chebroots1[:,1])]
+ERROR: UndefVarError: ccrpoints_uniformsep0chebroots1 not defined
+Stacktrace:
+ [1] top-level scope at none:0
+
+julia> points_ccr_cheby=[(ccrpoints_0chebroots1[i,:]...,) for i=1:length(ccrpoints_chebroots1[:,1])]
+ERROR: UndefVarError: ccrpoints_chebroots1 not defined
+Stacktrace:
+ [1] top-level scope at none:0
+
+julia> points_ccr_cheby=[(ccrpoints_0chebroots1[i,:]...,) for i=1:length(ccrpoints_0chebroots1[:,1])]
+4-element Array{Tuple{Float64,Float64},1}:
+ (0.3333333333333333, 0.3333333333333333) 
+ (0.3825923366852, 0.3534595127974679)    
+ (0.6204358446073165, 0.35004507187405953)
+ (0.6666666666666666, 0.3333333333333333) 
+
+julia> ccrpoints_ccr_uniform = catmullrom((points_ccr_uniform...,), interpolants)
+4×2 Array{Float64,2}:
+ 0.446239  0.367509
+ 0.463448  0.369558
+ 0.543327  0.36682 
+ 0.559145  0.364647
+
+julia> ccrpoints_ccr_0chebroots1 = catmullrom((points_ccr_0chebroots1...,), interpolants)
+ERROR: UndefVarError: points_ccr_0chebroots1 not defined
+Stacktrace:
+ [1] top-level scope at none:0
+
+julia> ccrpoints_ccr_0chebroots1 = catmullrom((points_ccr_cheby...,), interpolants)
+4×2 Array{Float64,2}:
+ 0.382592  0.35346 
+ 0.408864  0.354493
+ 0.593789  0.351388
+ 0.620436  0.350045
+
