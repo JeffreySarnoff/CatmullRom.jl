@@ -16,8 +16,8 @@ end
 uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
 
 # Chebyshev type 1 roots mapped into 0..1
-chebroot(k::Int, n::Int) = (1 + cospi( (2*(n-k)+1) / (2*n) )) / 2
-chebroots01(n::Int) = n >= 1 ? [chebroot(k,n) for k=1:n] : throw(DomainError("$n < 1"))
+chebroot01(k::Int, n::Int) = (1 + cospi( (2*(n-k)+1) / (2*n) )) / 2
+chebroots01(n::Int) = n >= 1 ? [chebroot01(k,n) for k=1:n] : throw(DomainError("$n < 1"))
 
 # Chebyshev type 1 roots mapped into 0..1 with 0 and 1 appended
 """
@@ -26,7 +26,7 @@ chebroots01(n::Int) = n >= 1 ? [chebroot(k,n) for k=1:n] : throw(DomainError("$n
 
 Chebyshev type 1 roots mapped into 0..1, with 0 and 1 appended
 """
-zero_chebroots_one(n::Int) = n >= 0 ? [0.0, chebroots(n)..., 1.0] : throw(DomainError("$n < 0"))
+zero_chebroots_one(n::Int) = n >= 0 ? [0.0, chebroots01(n)..., 1.0] : throw(DomainError("$n < 0"))
 
 
 function validate_interpolants(interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
