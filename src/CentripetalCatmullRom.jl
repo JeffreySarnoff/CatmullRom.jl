@@ -129,7 +129,6 @@ function catmullrom_ipoints(pts::NTuple{I, NTuple{D,T}}, interpolants::Union{A,N
    
     idx₁ = 2; idx₂ = idx₁ + 3; sub₁ = 0; mul₁ = 1 
     for k in 1:niters
-        global idx₂, idx₁, sub₁, mul₁
         sub₂ = sub₁ - 1
         mul₂ = mul₁ + 1
         points[(mul₁ * points_per_interpolation + sub₁):(mul₂ * points_per_interpolation + sub₂), :] =
