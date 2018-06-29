@@ -7,7 +7,10 @@ maps values into 0.0:1.0 (minimum(xs) --> 0.0, maximum(xs) --> 1.0)
 function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
     mn, mx = minimum(values), maximum(values)
     delta = mx .- mn
-    map(clamp01, (values .- mn) ./ delta)
+    delta = sqrt(sum(map(x->x*x, delta)))
+    result = collect((v .- mn)./delta for v in values)
+    #result = map(clamp01, result)
+    return result
 end
 
 @inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
