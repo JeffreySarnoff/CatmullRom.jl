@@ -1,4 +1,18 @@
 
+function fixup(interpolants::U2) where (U2)
+    interps = sort([interpolants...,])
+    if interps[end] < 1.0
+        interps = [interps..., 1.0]
+    end
+    if 0.0 < interps[1] < 1.0
+        interps = [0.0, interps...,]
+    end
+    if interps[1] != 0 || interps[end] != 1
+        interps = into01(interps)
+    end
+    return (interps...,)
+end
+
 """
     into01((xs...,))
     into01([xs...,])
@@ -38,4 +52,5 @@ dists(pts) = [dist(pts[i,:],pts[i+1,:]) for i=1:length(pts[:,1])-1]
 centripetals(ptdists) = [0.0, (cumsum(ptdists) ./ sum(ptdists))...,]
 
 centripetals(pts) = centripetals(dists(pts))
+
 
