@@ -1,3 +1,9 @@
+function validate_interpolants(interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
+   interpolants[0] == 0 && interpolants[end] == 1 &&
+       minimum(interpolants) == 0 && maximum(interpolants) == 1 && 
+       length(interpolants) == length(unique(interpolants)) ||
+       throw(ErrorException("improper interpolants: $interpolants"))
+end
 
 function fixup(interpolants::U2) where (U2)
     interps = sort([interpolants...,])
