@@ -84,3 +84,15 @@ julia> tstchebroots01 = [into01(tstchebroots[:,1]) tstchebroots[:,2]]
  0.803333   1.06676
  0.977221   1.00924
  1.0        1.0    
+ 
+ 
+ julia> catmullrom((pointss...,), (tstchebroots[:,1]...,) )
+7×2 Array{Float64,2}:
+ 1.0      1.0    
+ 1.02456  1.01189
+ 1.21106  1.07854
+ 1.51833  1.11021
+ 1.81256  1.06429
+ 1.9788   1.00861
+ 2.0      1.0    
+
