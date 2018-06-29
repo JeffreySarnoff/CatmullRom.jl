@@ -20,6 +20,9 @@ function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::Union{A,NTuple
    return catmullrom_ipoints(points, interpolants)
 end
  
+catmullrom(points::AbstractArray{T, D}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F} =
+    catmullrom((points...,), interpolants)
+
 
 qrtrroot(x) = sqrt(sqrt(x))
 
