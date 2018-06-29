@@ -4,8 +4,10 @@
     
 =#
 
+square(x) = x*x
+
 # lineal distance between two points, each point given in Cartesian coordinates
-distance_lineal(point₀, point₁) = sqrt(sum(sqr.(point₁ .- point₀)))
+distance_lineal(point₀, point₁) = sqrt(sum(square.(point₁ .- point₀)))
 
 # centripetal adjustment to the distance between two points, each point given in Cartesian coordinates
 distance_centripetal(point₀, point₁) = sqrt(distance_lineal(point₀, point₁))
