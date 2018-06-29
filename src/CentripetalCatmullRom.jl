@@ -95,39 +95,62 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
 end
 
 
-    
-#=
-   given four ND points in increasing abcissae order
-   and k interpolant values in 0..1 where 0.0 and 1.0 the excluded bounds
-   determine the k interpolant determined ND points
-   where the first interpolant point is the second ND point
-   and the final interplant point is the third ND point
-=#
-function catmullrom_4points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
-    validate_interpolants(interpolants)
-    
-    polys = catmullrom_polys(pts)
-    ninterps = length(interpolants)
-    
-    points = Array{T, 2}(undef, (ninterps,D))
-    for col in 1:D
-        points[1, col] = pts[2][col]
-        points[end, col] = pts[3][col]
-    end
-   
-    ninterps -= 1
-   
-    for col in 1:D
-        ply = polys[col]
-        for row in 2:ninterps
-            value = interpolants[row]
-            points[row, col] = polyval(ply, value)
-        end
-    end
+"""
+    catmullrom(points, interpolants)
 
+    `points` is a tuple of points-as-tuples
+    `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
+
+interpolating points from points[2] through points[end-1] (inclusive)
+"""
+function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, I, N, D, T, F}
+    npoints = length(points)
+    npoints < 4 && throw(ErrorException("at least four points are required"))
+    
+    interps = fixup(interpolants)
+    
+    if npoints == 4
+        return catmullrom_4points(points, interps)
+    end
+    
+   return catmullrom_ipoints(points, interpolants)
+end
+ 
+ 
+"""
+    catmullrom_ipoints(points, interpolants)
+
+    `points` is a tuple of points-as-tuples
+    `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
+
+interpolating points from points[2] through points[end-1] (inclusive)
+"""
+function catmullrom_ipoints(pts::NTuple{I, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, I, N, D, T, F}
+    
+    points_per_interpolation = length(interpolants)
+    totalinterps = (I-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
+    
+    points = Array{T, 2}(undef, (totalinterps,D))
+   
+    niters = I - 5
+   
+    points[1:points_per_interpolation,   :] = catmullrom_4points(pts[1:4], interpolants)
+   
+    idx₁ = 2; idx₂ = idx₁ + 3; sub₁ = 0; mul₁ = 1 
+    for k in 1:niters
+        global idx₂, idx₁, sub₁, mul₁
+        sub₂ = sub₁ - 1
+        mul₂ = mul₁ + 1
+        points[(mul₁ * points_per_interpolation + sub₁):(mul₂ * points_per_interpolation + sub₂), :] =
+            catmullrom_4points(pts[idx₁:idx₂], interpolants)
+        idx₁ += 1; idx₂ += 1;
+        sub₁, mul₁ = sub₂, mul₂
+    end
+   
+    points[(end-points_per_interpolation+1):end, :] = catmullrom_4points(pts[end-3:end], interpolants)
+   
     return points
 end
-
 
 #=
    given four ND points in increasing abcissae order
@@ -161,6 +184,7 @@ function catmullrom_4points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,N
     return points
 end
 
+#=
 
 function catmullrom_5points(pts::NTuple{5, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
     
@@ -197,7 +221,7 @@ function catmullrom_7points(pts::NTuple{7, NTuple{D,T}}, interpolants::Union{A,N
     points = Array{T, 2}(undef, (totalinterps,D))
    
     points[1:points_per_interpolation,   :] = catmullrom_4points(pts[1:4], interpolants)
-    points[points_per_interpolation:(2*points_per_interpolation-1),   :] = catmullrom_4points(pts[2:5], interpolants)
+    points[(1*points_per_interpolation):(2*points_per_interpolation-1),   :] = catmullrom_4points(pts[2:5], interpolants)
     points[(2*points_per_interpolation-1):(3*points_per_interpolation-2),   :] = catmullrom_4points(pts[3:6], interpolants)
     points[(end-points_per_interpolation+1):end, :] = catmullrom_4points(pts[4:7], interpolants)
    
@@ -212,7 +236,7 @@ function catmullrom_8points(pts::NTuple{8, NTuple{D,T}}, interpolants::Union{A,N
     points = Array{T, 2}(undef, (totalinterps,D))
    
     points[1:points_per_interpolation,   :] = catmullrom_4points(pts[1:4], interpolants)
-    points[points_per_interpolation:(2*points_per_interpolation-1),   :] = catmullrom_4points(pts[2:5], interpolants)
+    points[(1*points_per_interpolation-0):(2*points_per_interpolation-1),   :] = catmullrom_4points(pts[2:5], interpolants)
     points[(2*points_per_interpolation-1):(3*points_per_interpolation-2),   :] = catmullrom_4points(pts[3:6], interpolants)
     points[(3*points_per_interpolation-2):(4*points_per_interpolation-3),   :] = catmullrom_4points(pts[4:7], interpolants)
     points[(end-points_per_interpolation+1):end, :] = catmullrom_4points(pts[5:8], interpolants)
@@ -220,8 +244,20 @@ function catmullrom_8points(pts::NTuple{8, NTuple{D,T}}, interpolants::Union{A,N
     return points
 end
 
+=#
+   
+#=
+    npoints = length(points)
+    npoints < 4 && throw(ErrorException("at least four points are required"))
+    
+    interps = fixup(interpolants)
+    
+    if npoints == 4
+        return catmullrom_4points(points, interps)
+    end
+=#
 
-
+#=
 # all but the last from catmullrom_points (all except the third ND point)
 catmullrom_4points1(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F} =
     catmullrom_4points(pts, interpolants)[1:end-1,:]
@@ -289,7 +325,6 @@ function catmullrom(points::U1, interpolants::U2) where {U1, U2}
 
     return result
 end
-
-
+=#
 
 end # module CentripetalCatmullRom
