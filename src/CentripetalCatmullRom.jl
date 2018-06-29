@@ -101,8 +101,8 @@ function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NT
     ninters = length(interpolants)-1
     
     points = Array{T, 2}(undef, (ninters,D))
-    points[1,:] = pts[2]...,
-    points[end,:] = pts[3]...,
+    points[1, :] = pts[2,:]
+    points[end, :] = pts[3, :]
    
     for col in 1:D
         ply = polys[col]
