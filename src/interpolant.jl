@@ -1,24 +1,3 @@
-function validate_interpolants(interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
-   interpolants[1] == 0 && interpolants[end] == 1 &&
-       minimum(interpolants) == 0 && maximum(interpolants) == 1 && 
-       length(interpolants) == length(unique(interpolants)) ||
-       throw(ErrorException("improper interpolants: $interpolants"))
-end
-
-function fixup(interpolants::U2) where (U2)
-    interps = sort([interpolants...,])
-    if interps[end] < 1.0
-        interps = [interps..., 1.0]
-    end
-    if 0.0 < interps[1] < 1.0
-        interps = [0.0, interps...,]
-    end
-    if interps[1] != 0 || interps[end] != 1
-        interps = into01(interps)
-    end
-    return (interps...,)
-end
-
 """
     into01((xs...,))
     into01([xs...,])
@@ -49,6 +28,27 @@ Chebyshev type 1 roots mapped into 0..1, with 0 and 1 appended
 """
 zero_chebroots_one(n::Int) = n >= 0 ? [0.0, chebroots(n)..., 1.0] : throw(DomainError("$n < 0"))
 
+
+function validate_interpolants(interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
+   interpolants[1] == 0 && interpolants[end] == 1 &&
+       minimum(interpolants) == 0 && maximum(interpolants) == 1 && 
+       length(interpolants) == length(unique(interpolants)) ||
+       throw(ErrorException("improper interpolants: $interpolants"))
+end
+
+function fixup(interpolants::U2) where (U2)
+    interps = sort([interpolants...,])
+    if interps[end] < 1.0
+        interps = [interps..., 1.0]
+    end
+    if 0.0 < interps[1] < 1.0
+        interps = [0.0, interps...,]
+    end
+    if interps[1] != 0 || interps[end] != 1
+        interps = into01(interps)
+    end
+    return (interps...,)
+end
 
 # mapping into centripetal curve 
 
