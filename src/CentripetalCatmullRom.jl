@@ -13,7 +13,7 @@ import Polynomials: Poly, polyval, polyder, polyint
 using LinearAlgebra: dot
 
 include("catmullrom.jl")
-include("cetripetal.jl")
+include("centripetal.jl")
 include("interpolant.jl")
 
 end # module CentripetalCatmullRom
