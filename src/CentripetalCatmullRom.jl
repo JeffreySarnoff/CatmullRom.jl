@@ -3,7 +3,7 @@ __precompile__()
 module CentripetalCatmullRom
 
 export catmullrom,
-       uniformsep, chebroots01, zero_chebroots_one 
+       uniformsep, chebroots01, zero_chebroots_one, 
        into01, clamp01
 
 using Polynomials
