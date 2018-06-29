@@ -86,15 +86,28 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
 end
 
 
+    
+#=
+   given four ND points in increasing abcissae order
+   and k+2 interpolant values in 0..1 where 0.0 and 1.0 are the +2
+   determine the k+2 interpolant determined ND points
+   where the first interpolant point is the second ND point
+   and the final interplant point is the third ND point
+=#
 function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
+    validate_interpolants(interpolants)
+    
     polys = catmullrom_polys(pts)
-    ninters = length(interpolants)
+    ninters = length(interpolants)-1
+    
     points = Array{T, 2}(undef, (ninters,D))
+    points[1,:] = pts[2]...,
+    points[end,:] = pts[3]...,
+   
     for col in 1:D
         ply = polys[col]
-        for row in 1:ninters
+        for row in 2:ninters
             value = interpolants[row]
-            0.0 <= value <= 1.0 || throw(DomainError("interpolant value ($value) should be in 0.0:1.0"))
             points[row, col] = polyval(ply, value)
         end
     end
@@ -102,6 +115,7 @@ function catmullrom_points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NT
     return points
 end
 
+# all but the last from catmullrom_points (all except the third ND point)
 catmullrom_points1(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F} =
     catmullrom_points(pts, interpolants)[1:end-1,:]
 
