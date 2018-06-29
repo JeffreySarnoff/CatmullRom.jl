@@ -35,7 +35,7 @@ function hermite_cubic(x0::T, x1::T, dx0::T, dx1::T) where {T}
     return Poly([c0, c1, c2, c3])
 end
 
-# compute nonuniform Catmull-Rom spline over [0, 1]
+# compute Catmull-Rom cubic curve over [0, 1]
 function catmullrom_cubic(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T) where {T}
     # compute tangents when parameterized in [t1,t2]
     t1 = (x1 - x0) / dt0 - (x2 - x0) / (dt0 + dt1) + (x2 - x1) / dt1
@@ -49,6 +49,10 @@ function catmullrom_cubic(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T) wh
     return hermite_cubic(x1, x2, t1, t2)
 end
 
+#=
+   determine the delta_traversal constants for the centripetal parameterization
+      of the Catmull Rom cubic specified by four points (of increasing abcissae) 
+=#
 function prep_centripetal_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
     dt0 = qrtrroot(dot(pts[1], pts[2]))
     dt1 = qrtrroot(dot(pts[2], pts[3]))
