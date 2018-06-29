@@ -4,10 +4,11 @@ module CentripetalCatmullRom
 
 export catmullrom,
        uniformsep, chebroots01, zero_chebroots_one, 
-       into01, clamp01
+       into01, clamp01,
+       Poly, polyval, polyder, polyint
 
 using Polynomials
-import Polynomials: polyval, polyder
+import Polynomials: Poly, polyval, polyder, polyint
 
 using LinearAlgebra: dot
 
