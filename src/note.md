@@ -165,3 +165,108 @@ julia> into01(ans)
  
  
 
+julia> pointsa=[(points[i,:]...,) for i=1:7]
+7-element Array{Tuple{Float64,Float64},1}:
+ (1.0, 1.0)                              
+ (1.0245142001653353, 1.0118687336747505)
+ (1.208558366122857, 1.0779052011567294) 
+ (1.5090845438775495, 1.1105137540145824)
+ (1.8033334561990002, 1.0667591809605317)
+ (1.9772207933291317, 1.0092375152298623)
+ (2.0, 1.0)                              
+
+julia> distances_centripetal(pointsa)
+6-element Array{Float64,1}:
+ 0.16503406151018393
+ 0.44219089218288676
+ 0.5498091437072967 
+ 0.5454211768880193 
+ 0.42796546318842116
+ 0.15678318504323707
+
+julia> ccrpullback = centripetal_pullback(pointsa)
+7-element Array{Float64,1}:
+ 0.0                
+ 0.07215537708957281
+ 0.26548789450484556
+ 0.5058727322072556 
+ 0.7443390847339133 
+ 0.9314520303591936 
+ 1.0     
+ 
+ 
+ julia> ccrpullback = centripetal_pullback(pointsa)
+7-element Array{Float64,1}:
+ 0.0                
+ 0.07215537708957281
+ 0.26548789450484556
+ 0.5058727322072556 
+ 0.7443390847339133 
+ 0.9314520303591936 
+ 1.0                
+
+julia> 
+
+julia> points2=catmullrom((pointseq...,), ccrpullback)
+7×2 Array{Float64,2}:
+ 1.0      1.0    
+ 1.07251  1.03291
+ 1.26925  1.0915 
+ 1.51506  1.11033
+ 1.75463  1.07873
+ 1.93577  1.02503
+ 2.0      1.0    
+
+julia> diff(points)
+┌ Warning: `diff(A::AbstractMatrix)` is deprecated, use `diff(A, dims=1)` instead.
+│   caller = top-level scope at none:0
+└ @ Core none:0
+6×2 Array{Float64,2}:
+ 0.0245142   0.0118687 
+ 0.184044    0.0660365 
+ 0.300526    0.0326086 
+ 0.294249   -0.0437546 
+ 0.173887   -0.0575217 
+ 0.0227792  -0.00923752
+
+julia> diff(diff(points))
+┌ Warning: `diff(A::AbstractMatrix)` is deprecated, use `diff(A, dims=1)` instead.
+│   caller = top-level scope at none:0
+└ @ Core none:0
+┌ Warning: `diff(A::AbstractMatrix)` is deprecated, use `diff(A, dims=1)` instead.
+│   caller = top-level scope at none:0
+└ @ Core none:0
+5×2 Array{Float64,2}:
+  0.15953      0.0541677
+  0.116482    -0.0334279
+ -0.00627727  -0.0763631
+ -0.120362    -0.0137671
+ -0.151108     0.0482842
+
+julia> diff(points2)
+┌ Warning: `diff(A::AbstractMatrix)` is deprecated, use `diff(A, dims=1)` instead.
+│   caller = top-level scope at none:0
+└ @ Core none:0
+6×2 Array{Float64,2}:
+ 0.0725065   0.0329147
+ 0.196744    0.0585876
+ 0.245812    0.0188261
+ 0.239571   -0.0315946
+ 0.181141   -0.0537015
+ 0.0642257  -0.0250323
+
+julia> diff(diff(points2))
+┌ Warning: `diff(A::AbstractMatrix)` is deprecated, use `diff(A, dims=1)` instead.
+│   caller = top-level scope at none:0
+└ @ Core none:0
+┌ Warning: `diff(A::AbstractMatrix)` is deprecated, use `diff(A, dims=1)` instead.
+│   caller = top-level scope at none:0
+└ @ Core none:0
+5×2 Array{Float64,2}:
+  0.124238     0.025673 
+  0.0490683   -0.0397615
+ -0.00624154  -0.0504207
+ -0.0584299   -0.0221069
+ -0.116915     0.0286692
+
+ 
