@@ -164,47 +164,59 @@ end
 
 function catmullrom_5points(pts::NTuple{5, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
     
-    ninterps = length(interpolants)
-    totalinterps = ninterps + (ninterps - 1) # -1 for the shared end|1 point
+    points_per_interpolation = length(interpolants)
+    totalinterps = (5-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
    
     points = Array{T, 2}(undef, (totalinterps,D))
    
-    points[1:ninterps,   :] = catmullrom_4points(pts[1:4], interpolants)
-    points[ninterps:end, :] = catmullrom_4points(pts[2:5], interpolants)
+    points[1:points_per_interpolation,   :] = catmullrom_4points(pts[1:4], interpolants)
+    points[(end-points_per_interpolation+1):end, :] = catmullrom_4points(pts[2:5], interpolants)
    
     return points
 end
 
 function catmullrom_6points(pts::NTuple{6, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
     
-    ninterps = length(interpolants)
-    totalinterps = ninterps + 2*(ninterps - 1) # -1 for the shared end|1 point
+    points_per_interpolation = length(interpolants)
+    totalinterps = (6-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
    
     points = Array{T, 2}(undef, (totalinterps,D))
-  
-    points[1:(ninterps+ninterps-2),   :] = catmullrom_4points(pts[1:4], interpolants)
-    points[(ninterps+ninterps-1):end, :] = catmullrom_4points(pts[3:6], interpolants)
-
+   
+    points[1:points_per_interpolation,   :] = catmullrom_4points(pts[1:4], interpolants)
+    points[points_per_interpolation:(2*points_per_interpolation-1),   :] = catmullrom_4points(pts[2:5], interpolants)
+    points[(end-points_per_interpolation+1):end, :] = catmullrom_4points(pts[3:6], interpolants)
+   
     return points
 end
 
-
 function catmullrom_7points(pts::NTuple{7, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
     
-    ninterps = length(interpolants)
-    totalinterps = ninterps + 3*(ninterps - 1) # -1 for the shared end|1 point
+    points_per_interpolation = length(interpolants)
+    totalinterps = (7-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
    
     points = Array{T, 2}(undef, (totalinterps,D))
    
-    points[1:(ninterps+ninterps-2),   :] = catmullrom_4points(pts[1:4], interpolants)
-    points[(ninterps+ninterps-1):end, :] = catmullrom_5points(pts[3:7], interpolants)
-
+    points[1:points_per_interpolation,   :] = catmullrom_4points(pts[1:4], interpolants)
+    points[points_per_interpolation:(2*points_per_interpolation-1),   :] = catmullrom_4points(pts[2:5], interpolants)
+    points[(2*points_per_interpolation-1):(3*points_per_interpolation-2),   :] = catmullrom_4points(pts[3:6], interpolants)
+    points[(end-points_per_interpolation+1):end, :] = catmullrom_4points(pts[4:7], interpolants)
    
-    points[1:ninterps,:] = catmullrom_4points(pts[1:4], interpolants)
-    points[(1*ninterps):(2*ninterps-1),:] = catmullrom_4points(pts[2:5], interpolants)
-    points[(2*ninterps):(3*ninterps-1),:] = catmullrom_4points(pts[3:6], interpolants)
-    points[(3*ninterps):end,:] = catmullrom_4points(pts[4:7], interpolants)
+    return points
+end
 
+function catmullrom_8points(pts::NTuple{8, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
+    
+    points_per_interpolation = length(interpolants)
+    totalinterps = (8-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
+   
+    points = Array{T, 2}(undef, (totalinterps,D))
+   
+    points[1:points_per_interpolation,   :] = catmullrom_4points(pts[1:4], interpolants)
+    points[points_per_interpolation:(2*points_per_interpolation-1),   :] = catmullrom_4points(pts[2:5], interpolants)
+    points[(2*points_per_interpolation-1):(3*points_per_interpolation-2),   :] = catmullrom_4points(pts[3:6], interpolants)
+    points[(3*points_per_interpolation-2):(4*points_per_interpolation-3),   :] = catmullrom_4points(pts[4:7], interpolants)
+    points[(end-points_per_interpolation+1):end, :] = catmullrom_4points(pts[5:8], interpolants)
+   
     return points
 end
 
