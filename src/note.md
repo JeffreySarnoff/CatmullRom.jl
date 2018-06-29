@@ -96,3 +96,33 @@ julia> tstchebroots01 = [into01(tstchebroots[:,1]) tstchebroots[:,2]]
  1.9788   1.00861
  2.0      1.0    
 
+
+
+
+julia> pointseq=[(0.0, 0.0),(1.0, 1.0),(2.0,1.0),(3.0, 0.0)]
+4-element Array{Tuple{Float64,Float64},1}:
+ (0.0, 0.0)
+ (1.0, 1.0)
+ (2.0, 1.0)
+ (3.0, 0.0)
+
+julia> interpolants=zero_chebroots_one(5)
+7-element Array{Float64,1}:
+ 0.0                
+ 0.02447174185242318
+ 0.2061073738537635 
+ 0.5                
+ 0.7938926261462366 
+ 0.9755282581475768 
+ 1.0                
+
+julia> ccrpoints = catmullrom((pointseq...,), interpolants)
+7×2 Array{Float64,2}:
+ 1.0      1.0    
+ 1.02451  1.01187
+ 1.20856  1.07791
+ 1.50908  1.11051
+ 1.80333  1.06676
+ 1.97722  1.00924
+ 2.0      1.0    
+
