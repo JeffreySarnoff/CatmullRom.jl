@@ -67,13 +67,19 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     dt0, dt1, dt2 = prep_centripetal_catmullrom(pts)
     pt0, pt1, pt2, pt3 = pts
     
-    polys = Vector{Poly}(undef, N)
+    polys = Vector{Poly{eltype(pts[1])}}(undef, N)
 
     for i=1:N
         polys[i] = catmullrom_cubic(pt0[i], pt1[i], pt2[i], pt3[i], dt0, dt1, dt2)
     end
 
     return polys
+end
+
+function catmullrom_polys_dpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+    polys = catmullrom_polys(pts)
+    dpolys = polyder.(polys)
+    return polys, dpolys
 end
 
 
