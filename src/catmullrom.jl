@@ -6,23 +6,23 @@
 
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::NTuple{N,F}) where I, N, D, T, F}
+function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::NTuple{N,F}) where {N, F, I, D, T}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
     return points === 4 ? catmullrom_4points(points, interpolants) : catmullrom_npoints(points, interpolants)
 end
  
-catmullrom(points::AbstractArray{F, N}, interpolants::NTuple{D,T}}) where {F, N, D, T} =
+catmullrom(points::AbstractArray{F, N}, interpolants::NTuple{D,T}) where {F, N, D, T} =
     catmullrom((points...,), interpolants)
 
-catmullrom(points::NTuple{I, NTuple{N,T}}}, interpolants::AbstractArray{F, 1}) where {I, F, N, T} =
+catmullrom(points::NTuple{I, NTuple{N,T}}, interpolants::AbstractArray{F, 1}) where {I, F, N, T} =
     catmullrom(points, (interpolants...,))
 
 catmullrom(points::AbstractArray{T, N}, interpolants::AbstractArray{F, 1}) where {F, N, T} =
     catmullrom((points...,), (interpolants...,))
 
-qrtrroot(x) = sqrt(sqrt(x))
+
 
 # ref https://ideone.com/NoEbVM
 
@@ -76,6 +76,8 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     return polys
 end
 
+
+qrtrroot(x) = sqrt(sqrt(x))
 
 #=
    determine the delta_traversal constants for the centripetal parameterization
