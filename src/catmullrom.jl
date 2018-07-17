@@ -1,4 +1,3 @@
-
 """
     catmullrom(points, interpolants)
 
@@ -7,22 +6,21 @@
 
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, I, N, D, T, F}
+function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::NTuple{N,F}) where I, N, D, T, F}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
-    
-    interps = fixup(interpolants)
-    
-    if npoints == 4
-        return catmullrom_4points(points, interps)
-    end
-    
-   return catmullrom_ipoints(points, interpolants)
+
+    return points === 4 ? catmullrom_4points(points, interpolants) : catmullrom_npoints(points, interpolants)
 end
  
-catmullrom(points::AbstractArray{T, D}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F} =
+catmullrom(points::AbstractArray{F, N}, interpolants::NTuple{D,T}}) where {F, N, D, T} =
     catmullrom((points...,), interpolants)
 
+catmullrom(points::NTuple{I, NTuple{N,T}}}, interpolants::AbstractArray{F, 1}) where {I, F, N, T} =
+    catmullrom(points, (interpolants...,))
+
+catmullrom(points::AbstractArray{T, N}, interpolants::AbstractArray{F, 1}) where {F, N, T} =
+    catmullrom((points...,), (interpolants...,))
 
 qrtrroot(x) = sqrt(sqrt(x))
 
