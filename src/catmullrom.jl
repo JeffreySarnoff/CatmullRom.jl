@@ -6,7 +6,7 @@
 
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::NTuple{N,F}) where {N, F, I, D, T}
+function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::interpolants::Union{A,NTuple{N,F}})) where {A<:AbstractArray, N, F, I, D, T}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
@@ -98,14 +98,14 @@ function prep_centripetal_catmullrom(pts::NTuple{4, NTuple{D,T}}) where {D, T}
 
  
 """
-    catmullrom_ipoints(points, interpolants)
+    catmullrom_npoints(points, interpolants)
 
     `points` is a tuple of points-as-tuples
     `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
 
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom_ipoints(pts::NTuple{I, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, I, N, D, T, F}
+function catmullrom_npoints(pts::NTuple{I, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, I, N, D, T, F}
     
     points_per_interpolation = length(interpolants)
     totalinterps = (I-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
@@ -139,8 +139,6 @@ end
    and the final interplant point is the third ND point
 =#
 function catmullrom_4points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
-    validate_interpolants(interpolants)
-    
     polys = catmullrom_polys(pts)
     ninterps = length(interpolants)
     
