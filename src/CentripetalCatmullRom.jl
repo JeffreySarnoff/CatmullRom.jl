@@ -10,7 +10,7 @@ export catmullrom,
 using Polynomials
 import Polynomials: Poly, polyval, polyder, polyint
 
-import LinearAlgebra: dot
+import LinearAlgebra.dot
 
 include("catmullrom.jl")
 include("centripetal.jl")
