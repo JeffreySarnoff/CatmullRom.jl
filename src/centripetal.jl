@@ -6,6 +6,11 @@
 
 square(x) = x*x
 
+integralofcubic(a::T, b::T, c::T, x) where {T} = (6*a + x * (3*b + (x * (2*c)))) * x / 6
+1/6 x (6 a + x (3 b + 2 c x)) + constant
+
+integralofcubic(k::T, a::T, b::T, c::T) where {T} = Poly([k, a, b / 2, c / 3])
+
 # lineal distance between two points, each point given in Cartesian coordinates
 distance_lineal(point₀, point₁) = sqrt(sum(square.(point₁ .- point₀)))
 
