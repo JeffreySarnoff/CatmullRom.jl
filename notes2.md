@@ -77,3 +77,73 @@ void getEqualDistanceSpline(SimpleSpline& splineSrc, SimpleSpline* splineDest, R
 	}
 	splineDest->recalcTangents();
 }
+
+
+
+
+
+
+
+
+
+There are a few ways to move along at a constant speed along a path whose "segments" are not a constant length - and it's not trivial to make them that way.
+
+I would approach the problem by making a "Mover" of sorts which follows a "Path".
+
+public interface Path<T> {
+   public T getPoint(float delta);
+}
+public class Mover<T> {
+   public Path<T> path;
+   public T position;
+   public T lookahead;
+   public float lookaheadDelta;
+   public float delta;
+   public float speed;
+   public void init() { ... }
+   public void update(float dt) { ... }
+}
+
+(sorry if you haven't learned about generics/templating, just replace T with Vector3)
+
+Most "path" implementations like Catmull-Rom spline can give you a point given a delta value that ranges from 0 to 1. Based off of this the Mover moves along the path looking "lookaheadDelta" ahead and moving towards that point. The smaller this value the smoother the movement, but if it's too small you might make to many path calculations per update.
+
+The update method is important, it tries to move speed*dt units along the path. If the distance between lookahead and the current position is less than this value than you need to iteratively calculate the new lookahead based on the lookaheadDelta and continually move towards it.
+
+It would look something like this:
+
+public void update(float dt) {
+  float move = dt * speed; // units to move
+  while (move > 0.0) {
+    // between current position and target
+    float room = distance( lookahead, position ); 
+    // how much we're actually moving this iteration
+    float actual = Math.min( move, room );
+    // the normalized vector between lookahead and position
+    float direction = (lookahead - position) / room; 
+    // move my position accordingly
+    position += direction * actual;
+    // update move to be the remaining amount we need to move
+    move -= actual;
+    // reset target
+    if (actual != room) {
+      delta += lookaheadDelta;
+      lookahead = path.getPoint(delta);
+    }
+  }
+}
+
+And don't forget about initializing it!
+
+public void init() {  
+  position = path.getPoint(0.0);
+  delta = lookaheadDelta;
+  lookahead = path.getPoint(delta);
+}
+
+Don't forget to add in logic to check when delta >= 1.0 which means you're at the end!
+
+You could even calculate lookaheadDelta based on the estimated length of the spline and the units of your game. I would guess 100 data points would be enough making 0.01 a good value for lookaheadDelta.
+
+You could also cache "direction" and "room" after each lookahead calculation.
+
