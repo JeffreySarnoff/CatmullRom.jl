@@ -19,38 +19,14 @@ end
 uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
 
 # Chebyshev type 1 roots mapped into 0..1
-chebroot01(k::Int, n::Int) = (1 + cospi( (2*(n-k)+1) / (2*n) )) / 2
-chebroots01(n::Int) = n >= 1 ? [chebroot01(k,n) for k=1:n] : throw(DomainError("$n < 1"))
+chebroot_01(k::Int, n::Int) = (1 + cospi( (2*(n-k)+1) / (2*n) )) / 2
+chebroots_01(n::Int) = n >= 1 ? [chebroot_01(k,n) for k=1:n] : throw(DomainError("$n < 1"))
 
 # Chebyshev type 1 roots mapped into 0..1 with 0 and 1 appended
 """
-    zero_chebroots_one(n)
+    chebroots01(n)
 
 
 Chebyshev type 1 roots mapped into 0..1, with 0 and 1 appended
 """
-zero_chebroots_one(n::Int) = n >= 0 ? [0.0, chebroots01(n)..., 1.0] : throw(DomainError("$n < 0"))
-
-
-function validate_interpolants(interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
-   interpolants[1] == 0 && interpolants[end] == 1 &&
-       minimum(interpolants) == 0 && maximum(interpolants) == 1 && 
-       length(interpolants) == length(unique(interpolants)) ||
-       throw(ErrorException("improper interpolants: $interpolants"))
-end
-
-function fixup(interpolants::U2) where (U2)
-    interps = sort([interpolants...,])
-    if interps[end] < 1.0
-        interps = [interps..., 1.0]
-    end
-    if 0.0 < interps[1] < 1.0
-        interps = [0.0, interps...,]
-    end
-    if interps[1] != 0 || interps[end] != 1
-        interps = into01(interps)
-    end
-    return (interps...,)
-end
-
-
+chebroots01(n::Int) = n >= 0 ? [0.0, chebroots_01(n)..., 1.0] : throw(DomainError("$n < 0"))
