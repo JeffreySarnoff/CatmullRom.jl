@@ -6,7 +6,7 @@
 
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::interpolants::Union{A,NTuple{N,F}})) where {A<:AbstractArray, N, F, I, D, T}
+function catmullrom(points::NTuple{I, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}})) where {A<:AbstractArray, N, F, I, D, T}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
