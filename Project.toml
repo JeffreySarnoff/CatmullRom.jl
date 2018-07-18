@@ -5,8 +5,10 @@ uuid = "53996a86-8a42-11e8-3525-6928093bd0d7"
 repo = "https://github.com/JeffreySarnoff/CentripetalCatmullRom.jl.git"
 author = "Jeffrey Sarnoff <jeffrey.sarnoff@gmail.com>"
 license = "MIT"
+version = "v0.0.1"
 
 [deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
 
 [compat]
