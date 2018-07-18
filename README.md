@@ -1,5 +1,11 @@
 #  CentripetalCatmullRom.jl
-Centripetal variant
+
+### Centripetal parameterization for Catmull-Rom cubic interpolants. 
+
+
+----
+
+#### Copyright ©2018 by Jeffrey Sarnoff.  This work is released under The MIT License.
 
 
 -----
