@@ -3,7 +3,7 @@ __precompile__()
 module CentripetalCatmullRom
 
 export catmullrom,
-       uniformsep, chebyshevsep, 
+       uniformsep, chebyshev1sep, chebyshev2sep, 
        into01, clamp01,
        Poly, polyval, polyder, polyint
 
