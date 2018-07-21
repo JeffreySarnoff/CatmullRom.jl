@@ -3,8 +3,9 @@ __precompile__()
 module CentripetalCatmullRom
 
 export catmullrom,
-       uniformsep, chebyshevsep, 
+       uniformsep, chebyshevsep,
        into01, clamp01,
+       ccr_polys, ccr_polys_dpolys, ccr_polys_ipolys, ccr_allpolys,
        Poly, polyval, polyder, polyint
 
 using Polynomials
