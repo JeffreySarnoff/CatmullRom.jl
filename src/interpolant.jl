@@ -32,4 +32,4 @@ Chebyshev type 2 roots mapped into 0..1, with 0 and 1 included
 
 chebyshevsep(5) gives five values: [0.0, b, c, d, 1.0]
 """
-chebyshevsep(n::Int) = n >= 0 ? [0.0, chebroots2_01(n-2)..., 1.0] : throw(DomainError("$n < 0"))
+chebyshevsep(n::Int) = n >= 0 ? chebroots2_01(n) : throw(DomainError("$n < 0"))
