@@ -24,9 +24,11 @@ chebroots_01(n::Int) = n >= 1 ? [chebroot_01(k,n) for k=1:n] : throw(DomainError
 
 # Chebyshev type 1 roots mapped into 0..1 with 0 and 1 appended
 """
-    chebroots01(n)
+    chebyshevsep(n)
 
 
 Chebyshev type 1 roots mapped into 0..1, with 0 and 1 appended
+
+chebyshevsep(5) gives five values: [0.0, a, b, c, 1.0]
 """
-chebroots01(n::Int) = n >= 0 ? [0.0, chebroots_01(n)..., 1.0] : throw(DomainError("$n < 0"))
+chebyshevsep(n::Int) = n >= 0 ? [0.0, chebroots_01(n-2)..., 1.0] : throw(DomainError("$n < 0"))
