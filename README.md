@@ -21,31 +21,31 @@
 ## constructor
 
 - catmullrom(points, interpolants)
-- - `points` is a tuple of points-as-tuples
-- - `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
-- -  yields interpolating points from points[2] through points[end-1] (inclusive)
+    - `points` is a tuple of points-as-tuples
+    - `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
+    -  yields interpolating points from points[2] through points[end-1] (inclusive)
 
 ## interpolation points
 
 - `uniformsep(n)`
-- - [0.0, b, c.., n-2, n-1, 1.0]
-- - `c - b ~= (n-1) - (n-2)` 
-- - _uniformly separated interpolants_
+    - [0.0, b, c.., n-2, n-1, 1.0]
+    - `c - b ~= (n-1) - (n-2)` 
+    - _uniformly separated interpolants_
 
 - `chebyshevsep(n)`
-- - [0.0, b .. n-1, 1.0]
-- - Chebyshev polynomial of the second kind, roots
-- - roots of U(n), mapped into 0.0:1.0
-- - these work better than roots T(n) with centripetal Catmull-Rom curves
+    - [0.0, b .. n-1, 1.0]
+    - Chebyshev polynomial of the second kind, roots
+    - roots of U(n), mapped into 0.0:1.0
+    - these work better than roots T(n) with centripetal Catmull-Rom curves
 
 ## utilities
 
 - `into01((xs...,))`, `into01([xs...,])`
-- - maps values into 0.0:1.0, linearly
-- - minimum(xs) --> 0.0, maximum(xs) --> 1.0
+    - maps values into 0.0:1.0, linearly
+    - minimum(xs) --> 0.0, maximum(xs) --> 1.0
 
 - `clamp01((xs...,))`, `clamp01([xs...,])`
-- - forces values into 0.0..1.0
+    - forces values into 0.0..1.0
 
 ```julia
 julia> using CentripetalCatmullRom
