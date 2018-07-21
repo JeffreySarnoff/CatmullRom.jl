@@ -76,23 +76,23 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     return polys
 end
 
-function catmullrom_polys_derivpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function catmullrom_polysders(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = catmullrom_polys(pts)
     differentiatepolys = polyder.(polys)
     return polys, differentiatepolys
 end
 
-function catmullrom_polys_integpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function catmullrom_polysints(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = catmullrom_polys(pts)
     integratepolys = polyint.(polys)
     return polys, integratepolys
 end
 
-function catmullrom_calcpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function catmullrom_allpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = catmullrom_polys(pts)
     integratepolys = polyint.(polys)
     differentiatepolys = polyder.(polys)
-    return integratepolys, polys, differentiatepolys
+    return polys, differentiatepolys, integratepolys
 end
 
 
