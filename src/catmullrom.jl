@@ -88,7 +88,7 @@ function ccr_polys_ipolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     return polys, integratepolys
 end
 
-function ccr_polys_dpolys_ipolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function ccr_allpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = catmullrom_polys(pts)
     integratepolys = polyint.(polys)
     differentiatepolys = polyder.(polys)
