@@ -63,7 +63,7 @@ end
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
 =#
-function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function ccr_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     dt0, dt1, dt2 = prep_centripetal_catmullrom(pts)
     pt0, pt1, pt2, pt3 = pts
     
@@ -76,19 +76,19 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     return polys
 end
 
-function catmullrom_polysders(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function ccr_polys_dpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = catmullrom_polys(pts)
     differentiatepolys = polyder.(polys)
     return polys, differentiatepolys
 end
 
-function catmullrom_polysints(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function ccr_polys_ipolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = catmullrom_polys(pts)
     integratepolys = polyint.(polys)
     return polys, integratepolys
 end
 
-function catmullrom_allpolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function ccr_polys_dpolys_ipolys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
     polys = catmullrom_polys(pts)
     integratepolys = polyint.(polys)
     differentiatepolys = polyder.(polys)
