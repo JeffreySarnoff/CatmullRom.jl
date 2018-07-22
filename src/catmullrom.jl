@@ -409,7 +409,7 @@ anglesep(pointa, pointb) = acos( dot(pointa, pointb) / sqrt(dot(pointa,pointa) *
 lawofcosines(side1, angle2sides, side2) = side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
  
 function linearsep(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}}
-    result = sqrt(lawofcosines(norm(pointa), angle(pointa, pointb), norm(pointb)))
+    result = sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
     isnan(result) ? max(norm(pointa), norm(pointb)) : result
 end
    
