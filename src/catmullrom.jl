@@ -73,7 +73,7 @@ qrtrroot(x) = sqrt(sqrt(x))
    determine the delta_traversal constants for the centripetal parameterization
       of the Catmull Rom cubic specified by four points (of increasing abcissae) 
 =#
-function prep_centripetal_catmullrom(points::Points) where {M,D,R}
+function prep_centripetal_catmullrom(points::PointSeq) where {M,D,R}
     dt0 = qrtrroot(dot(pts[1], pts[2]))
     dt1 = qrtrroot(dot(pts[2], pts[3]))
     dt2 = qrtrroot(dot(pts[3], pts[4]))
