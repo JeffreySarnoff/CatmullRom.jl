@@ -1,14 +1,16 @@
-function catmullrom_pathparts(points::Vector{NTuple{N,T}};
-                              points_to_interpolate::Int=length(points)*19, 
-                              subsegments_median::Int=0) where {N,T}
-    if !iszero(subsegments_median)
-        points_to_interpolate = (subsegments_median * length(points)) - 1
+function catmullrom_pathparts(points::PointSeq;
+                              points_to_interpolate::Int=19, 
+                              subsegments::Int=0) where {M,D,R}
+    if !iszero(subsegments)
+        points_to_interpolate = subsegments * (length(points) - 1)
+    else
+        points_to_interpolate *= (length(points) - 1)
     end    
     spancounts = catmullrom_onpath(points, points_to_interpolate)
     return spancounts
 end    
 
-function catmullrom_onpath(points::Vector{NTuple{N,T}}, ninterpolants::Int) where {N,T}
+function catmullrom_onpath(points::PointSeq, ninterpolants::Int) where {M,D,R}
     extents = catmullrom_extents(points)
     # use extents to apportion ninterpolants
     relspans = extents .* inv(sum(extents))    # relspans sum to 1
@@ -47,7 +49,7 @@ end
     n points implies n-1 adjacent interpoint segments.
 =#
 
-function catmullrom_extents(points::Vector{NTuple{N,T}}) where {N,T}
+function catmullrom_extents(points::PointSeq) where {M,D,R}
     npoints = length(points)
     result = Vector{T}(npoints - 1)
     result[1]   = linearsep(points[1], points[2])
@@ -65,7 +67,7 @@ end
 
 
         
-@inline function linearsep(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}}
+@inline function linearsep(pointa::OnePoint, pointb::OnePoint) where {D,R}
     sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
 end
 
@@ -77,7 +79,7 @@ end
 #  >>>  use AngleBetweenVectors.jl
 #
 
-function anglesep(pointa::NTuple{N,T}, pointb::NTuple{N,T}) where {N,T}
+function anglesep(pointa::OnePoint, pointb::OnePoint) where {D,R}
     dota = dot(pointa, pointa)
     dotb = dot(pointb, pointb)
     (iszero(dota) || iszero(dotb)) && return zero(T)
@@ -100,11 +102,11 @@ end
     
     this algorithm was developed by Jens Gravesen
 =#
-function rough_trisegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-     ldist12 = linearsep(pts[2], pts[1])
-     ldist23 = linearsep(pts[3], pts[2])
-     ldist34 = linearsep(pts[4], pts[3])
-     ldist14 = linearsep(pts[4], pts[1])
+function rough_trisegment_arclength(points::PointSeq) where {M,D,R}
+     ldist12 = linearsep(points[2], points[1])
+     ldist23 = linearsep(points[3], points[2])
+     ldist34 = linearsep(points[4], points[3])
+     ldist14 = linearsep(points[4], points[1])
      
      linesegments = ldist12 + ldist23 + ldist34
      arclength = (linesegments + ldist14) / 2
@@ -120,11 +122,11 @@ end
        catmullrom_4points 
 =#
 
-function rough_centralsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-     ldist12 = linearsep(pts[2], pts[1])
-     ldist23 = linearsep(pts[3], pts[2])
-     ldist34 = linearsep(pts[4], pts[3])
-     ldist14 = linearsep(pts[4], pts[1])
+function rough_centralsegment_arclength(points::PointSeq) where {M,D,R}
+     ldist12 = linearsep(points[2], points[1])
+     ldist23 = linearsep(points[3], points[2])
+     ldist34 = linearsep(points[4], points[3])
+     ldist14 = linearsep(points[4], points[1])
      
      linesegments = ldist12 + ldist23 + ldist34
      midsegment_proportionalweight  = ldist23 / linesegments
@@ -134,31 +136,3 @@ function rough_centralsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T
     
      return midsegment_arclength
 end
-
-#=
-0.02245448808080272	5.767944580792328e-6	1.0005138773654616
-0.11034730555433708	3.492803405297229e-5	1.000633256844574
-0.20680347495224183	0.0007521441574384058	1.0073005513192965
-0.27722816617416257	0.0007397400132340692	1.0053509654889026
-0.02953427762165981	0.0003211994629658821	1.0219901142372627
-0.02836586860799523	0.0010214234384144927	1.0747079293128807
-0.22249019182783417	0.031536873165516120	1.3303097677111957
-0.28190746915694587	0.030669273789136087	1.244144993512922
-0.01749704778645134	0.007188486833679952	2.3946634969932195
-0.1082295845425749	5.318705844575833e-5	1.0009833394286136
-
-julia> function rough_centralsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-            ldist12 = linearsep(pts[2], pts[1])
-            ldist23 = linearsep(pts[3], pts[2])
-            ldist34 = linearsep(pts[4], pts[3])
-            ldist14 = linearsep(pts[4], pts[1])
-            
-            linesegments = ldist12 + ldist23 + ldist34
-            midsegment_proportionalweight  = ldist23 / linesegments
-
-            arclength = (linesegments + ldist14) / 2
-            midsegment_arclength  = arclength * midsegment_proportionalweight
-         estimated_error  = linesegments - ldist14  ; println(midsegment_arclength,"\t", estimated_error, "\t",inv((midsegment_arclength-estimated_error)/(midsegment_arclength+estimated_error)))
-            return midsegment_arclength
-       end
-=#
