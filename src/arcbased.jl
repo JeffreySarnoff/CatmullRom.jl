@@ -1,3 +1,13 @@
+#=
+    given some adjacency-ordered ND points (at least four)
+    obtain rough estimates of the path-traversal `time`
+    over each curvilinear segment
+    (bounded at start and at end by two [adjacent] points).
+    n points implies n-1 adjacent interpoint segments.
+=#
+
+
+
 @inline function linearsep(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}}
     sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
 end
