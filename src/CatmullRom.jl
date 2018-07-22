@@ -1,6 +1,6 @@
 __precompile__()
 
-module CentripetalCatmullRom
+module CatmullRom
 
 export catmullrom,                      # points, interpolants --> points, interpolated points
 
