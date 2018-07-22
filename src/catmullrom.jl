@@ -382,6 +382,31 @@ function approximate_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
      return arclength   
 end
 
+#=
+    rough approximation to the length of the arc
+       connecting points 2 and 3, this is center arc
+       that is interpolated between with each use of
+       catmullrom_4points 
+=#
+function centerarclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+     ldist12 = linearsep(pts[2], pts[1])
+     ldist23 = linearsep(pts[3], pts[2])
+     ldist34 = linearsep(pts[4], pts[3])
+     ldist14 = linearsep(pts[4], pts[1])
+     
+     linesegments = ldist12 + ldist23 + ldist34
+     arclength = (linesegments + ldist14) / 2
+     # errorest  = linesegments - ldist14
+     arclength *= (ldist23 / linesegments)
+        
+     return arclength   
+end
+
+# fast, approximate angular separation where both points emanate from the same source (e.g. the origin)
+anglesep(pointa, pointb) = acos( dot(pointa, pointb) / sqrt(dot(pointa,pointa) * dot(pointb,pointb)) )
+    
+    
 lawofcosines(side1, angle2sides, side2) = side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
-separation(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}} =
+ 
+linearsep(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}} =
     sqrt(lawofcosines(norm(pointa), angle(pointa, pointb), norm(pointb)))
