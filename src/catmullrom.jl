@@ -414,10 +414,9 @@ function anglesep(pointa::NTuple{N,T}, pointb::NTuple{N,T}) where {N,T}
 end
    
     
-lawofcosines(side1, angle2sides, side2) = side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
+@inline lawofcosines(side1, angle2sides, side2) = side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
  
-function linearsep(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}}
-    result = sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
-    isnan(result) ? max(norm(pointa), norm(pointb)) : result
+@inline function linearsep(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}}
+    sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
 end
    
