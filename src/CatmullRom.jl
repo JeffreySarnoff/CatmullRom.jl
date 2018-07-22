@@ -28,7 +28,7 @@ const TupAsPoint{D,R} = NTuple{D,R} where {D,R}
 const VecAsPoint{R}   = AbstractArray{R,1} where {R}
 
 const TupAsPoints{M,D,R} = NTuple{M, TupAsPoint{D,R}} where {M,D,R}
-const VecAsPoints{R} = AbstractArray{VecAsPoint, 1} where {R}
+const VecAsPoints{R} = AbstractArray{VecAsPoint{R}, 1} where {R}
 
 const TupAsValues{L,F} = NTuple{L,F} where {L,F}
 const VecAsValues{F} = AbstractArray{F,1}
