@@ -18,6 +18,8 @@ end
 # uniform separation in 0..1 inclusive
 uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
 
+# chebyshev T(x) zeros in 0..1 inclusive
+chebyshevsep(n::Int) = n >= 2 ? cheb1zeros₀₁(n) : throw(DomainError("$n < 2"))
 
 
 
@@ -71,7 +73,7 @@ cheb4zerosₛ(n) = [cheb4zeroₛ(n,k) for k=1:n]
 # bounded by 0,1
 cheb4zeros₀₁(n) = [0.0, [cheb4zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
-
+₀₁
 # extrema
 
 # extrema of T(x)
