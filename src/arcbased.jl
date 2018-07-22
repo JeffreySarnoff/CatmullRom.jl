@@ -33,7 +33,7 @@ end
     
     this algorithm was developed by Jens Gravesen
 =#
-function approximate_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function rough_trisegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
      ldist12 = linearsep(pts[2], pts[1])
      ldist23 = linearsep(pts[3], pts[2])
      ldist34 = linearsep(pts[4], pts[3])
@@ -41,7 +41,7 @@ function approximate_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
      
      linesegments = ldist12 + ldist23 + ldist34
      arclength = (linesegments + ldist14) / 2
-     # errorest  = linesegments - ldist14
+     # estimated_error  = linesegments - ldist14
      
      return arclength   
 end
@@ -52,16 +52,19 @@ end
        that is interpolated between with each use of
        catmullrom_4points 
 =#
-function central_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+
+function rough_midsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
      ldist12 = linearsep(pts[2], pts[1])
      ldist23 = linearsep(pts[3], pts[2])
      ldist34 = linearsep(pts[4], pts[3])
      ldist14 = linearsep(pts[4], pts[1])
      
      linesegments = ldist12 + ldist23 + ldist34
+     midsegment_proportionalweight  = ldist23 / linesegments
+
      arclength = (linesegments + ldist14) / 2
-     # errorest  = linesegments - ldist14
-     arclength *= (ldist23 / linesegments)
-        
-     return arclength   
+     midsegment_arclength  = arclength * midsegment_proportionalweight
+    
+     return midsegment_arclength
 end
+
