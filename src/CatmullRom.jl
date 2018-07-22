@@ -31,7 +31,7 @@ const TupAsPoints{M,D,R} = NTuple{M, TupAsPoint{D,R}} where {M,D,R}
 const VecAsPoints{R} = AbstractArray{VecAsPoint, 1} where {R}
 
 const TupAsValues{L,F} = NTuple{L,F} where {L,F}
-const VecAsValues{F} = AbstractArray{F,1|
+const VecAsValues{F} = AbstractArray{F,1}
 
 const OnePoint{D,R}   = Union{TupAsPoint,  VecAsPoint}  where {D,R}
 const PointSeq{M,D,R} = Union{TupAsPoints, VecAsPoints} where {M,D,R}
