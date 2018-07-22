@@ -6,8 +6,24 @@
     n points implies n-1 adjacent interpoint segments.
 =#
 
+function extents_along_curve(points::Vector{NTuple{N,T}}) where {N,T}
+    npoints = length(points)
+    result = Vector{undef, T}(npoints - 1)
+    result[1]   = linearsep(points[1], points[2])
+    result[end] = linearsep(points[npoints-1], points[npoints])
+    
+    ngroupsof4 = npoints - 3
+    for idx in 1:ngroupsof4
+        fourpoints = points[idx:idx+3]
+        arclength = rough_centralsegment_arclength(fourpoints)
+        result[idx+1] = arclength
+    end
+
+    return result
+end
 
 
+        
 @inline function linearsep(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}}
     sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
 end
@@ -63,7 +79,7 @@ end
        catmullrom_4points 
 =#
 
-function rough_midsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+function rough_centralsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
      ldist12 = linearsep(pts[2], pts[1])
      ldist23 = linearsep(pts[3], pts[2])
      ldist34 = linearsep(pts[4], pts[3])
