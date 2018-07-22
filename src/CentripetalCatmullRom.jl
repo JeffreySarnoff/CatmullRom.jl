@@ -15,5 +15,6 @@ import LinearAlgebra: dot, norm
 
 include("catmullrom.jl")
 include("interpolant.jl")
+include("arcbased.jl")
 
 end # module CentripetalCatmullRom
