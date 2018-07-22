@@ -1,3 +1,18 @@
+function interpolants_along_curve(points::Vector{NTuple{N,T}}, ninterpolants::Int) where {N,T}
+    extents = extents_along_curve(points)
+    # use extents to apportion ninterpolants
+    relspans = extents * inv(sum(extents))    # relspans sum to 1
+    spancounts = trunc(Int, round((relspans .* ninterpolants), RoundNearest))
+    
+    while sum(spancounts) > ninterpolants
+        idx = findfirst(spancounts .== maximum(spancounts))
+        spancounts[idx] -= 1
+    end
+    
+    return spancounts
+end
+
+
 #=
     given some adjacency-ordered ND points (at least four)
     obtain rough estimates of the path-traversal `time`
