@@ -56,27 +56,6 @@ function hermite_cubic(x0::T, x1::T, dx0::T, dx1::T) where {T}
     return Poly([c0, c1, c2, c3])
 end
 
-# fast  Catmull-Rom spline interpolator, adapted from:from http://www.paulinternet.nl/?page=bicubic
-
-function catmullrom_interpolate(p::NTuple{4, NTuple{N,T}}, x::T) where {N,T}
-    p[2] + 0.5 * x * ( cubicterp_a(p) + x * ( cubicterp_b(p) + x * cubicterp_c(p) ) )
-end
-
-@inline cubicterp_a(p) = (p[3] - p[1])
-@inline cubicterp_b(p) = (2.0*p[1] - 5.0*p[2] + 4.0*p[3] - p[4])
-@inline cubicterp_c(p) = (3.0*(p[2] - p[3]) + p[4] - p[1])
-
-function catmullrom_interpolate(p1::P, p2::P, p3::P, p4::P, x::T) where {P,T}
-    p2 + 0.5 * x * ( cubicterp_a(p1,p3) + 
-                     x * ( cubicterp_b(p1,p2,p3,p4) + 
-                           x * cubicterp_c(p1,p2,p3,p4) ) )
-end
-
-@inline cubicterp_a(p1::P, p3::P) where {P} = (p3 - p1)
-@inline cubicterp_b(p1::P, p2::P, p3::P, p4::P) where {P} = (2.0*p1 - 5.0*p2 + 4.0*p3 - p4)
-@inline cubicterp_c(p1::P, p2::P, p3::P, p4::P) where {P} = (3.0*(p2 - p3) + p4 - p1)
-
-
 
 #=
    given four x-ordinate sequenced ND points
@@ -96,8 +75,6 @@ function catmullrom_polys(pts::NTuple{4, NTuple{N,T}}) where {N, T}
 
     return polys
 end
-
-
 
 
 qrtrroot(x) = sqrt(sqrt(x))
@@ -162,7 +139,7 @@ end
    and the final interplant point is the third ND point
 =#
 function catmullrom_4points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
-    polys = ccr_polys(pts)
+    polys = catmullrom_polys(pts)
     ninterps = length(interpolants)
     
     points = Array{T, 2}(undef, (ninterps,D))
@@ -185,24 +162,13 @@ function catmullrom_4points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,N
 end
 
 
+functon catmullrom_morepolys(points; deriv1::Bool=false, deriv2::Bool=false, integ1::Bool=false)
+    polys = catmullrom_polys(points)
     
+    d1polys = deriv1 ? polyder.(polys)    : nothing 
+    d2polys = deriv2 ? polyder.(d1polys)  : nothing
+    i1polys = integ1 ? polyint.(polys)    : nothing
 
-function catmullrom_polys_d01(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-    polys = catmullrom_polys(pts)
-    d1polys = polyder.(polys)
-    return polys, d1polys
+    result = (polys, d1polys, d2polys, i1polys)
+    return result
 end
-
-function catmullrom_polys_d012(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-    polys = catmullrom_polys(pts)
-    d1polys = polyder.(polys)
-    d2polys = polyder.(d1polys)
-    return polys, d1polys, d2polys
-end
-
-function catmullrom_polys_i01(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-    polys = catmullrom_polys(pts)
-    i1polys = polyint.(polys)
-    return polys, i1polys
-end
-
