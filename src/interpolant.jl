@@ -35,7 +35,7 @@ cheb1zeroₛ(n,k) = (cospi((n-k+0.5)/n) + 1)/2
 cheb1zerosₛ(n) = [cheb1zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb1zeros₀₁(n) = [0.0, [cheb1zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
+cheb1zerosᵤ(n) = [0.0, [cheb1zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
 # zeros of U(x)
 
@@ -47,7 +47,7 @@ cheb2zeroₛ(n,k) = (cospi((n-k+1)/(n+1)) + 1)/2
 cheb2zerosₛ(n) = [cheb2zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb2zeros₀₁(n) = [0.0, [cheb2zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
+cheb2zerosᵤ(n) = [0.0, [cheb2zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
 # zeros of V(x)
 
@@ -59,7 +59,7 @@ cheb3zeroₛ(n,k) = (cospi((n-k+0.5)/(n+0.5)) + 1)/2
 cheb3zerosₛ(n) = [cheb3zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb3zeros₀₁(n) = [0.0, [cheb3zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
+cheb3zerosᵤ(n) = [0.0, [cheb3zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
 # zeros of W(x)
 
@@ -71,7 +71,7 @@ cheb4zeroₛ(n,k) = (cospi((n-k+1)/(n+0.5)) + 1)/2
 cheb4zerosₛ(n) = [cheb4zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb4zeros₀₁(n) = [0.0, [cheb4zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
+cheb4zerosᵤ(n) = [0.0, [cheb4zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
 ₀₁
 # extrema
@@ -86,7 +86,7 @@ cheb1extremaₛ(n,k) = (cospi((n-k)/n) + 1)/2
 cheb1extremaₛ(n) = [cheb1extremaₛ(n-1,k) for k=0:n-1]
 
 # bounded by 0,1
-cheb1extrema₀₁(n) = [cheb1extremaₛ(n-1,k) for k=0:n-1]
+cheb1extremaᵤ(n) = [cheb1extremaₛ(n-1,k) for k=0:n-1]
 
 # extrema of sqrt(1-x^2) * U(x)
 
@@ -98,7 +98,7 @@ cheb2extremaₛ(n,k) = (cospi((2*(n-k)+1)/(2*(n+1)))+1)/2
 cheb2extremaₛ(n) = [cheb2extremaₛ(n-1,k) for k=0:n-1]
 
 # bounded by 0,1
-cheb2extrema₀₁(n) = [0.0, [cheb2extremaₛ(n-3,k) for k=0:n-3]..., 1.0]
+cheb2extremaᵤ(n) = [0.0, [cheb2extremaₛ(n-3,k) for k=0:n-3]..., 1.0]
 
 
 # extrema of sqrt(1+x) * V(x)
@@ -111,7 +111,7 @@ cheb3extremaₛ(n,k) = (cospi((2*(n-k))/(2*n+1)) + 1)/2
 cheb3extremaₛ(n) = [cheb3extremaₛ(n,k) for k=0:n-1]
 
 # bounded by 0,1
-cheb3extrema₀₁(n) = [0.0, [cheb3extremaₛ(n-2,k) for k=0:n-3]..., 1.0]
+cheb3extremaᵤ(n) = [0.0, [cheb3extremaₛ(n-2,k) for k=0:n-3]..., 1.0]
 
 # extrema of sqrt(1-x) * W(x)
 
@@ -123,4 +123,4 @@ cheb4extremaₛ(n,k) = (cospi((2*(n-k)+1)/(2*n+1)) + 1)/2
 cheb4extremaₛ(n) = [cheb4extremaₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb4extrema₀₁(n) = [0.0, [cheb4extremaₛ(n-2,k) for k=1:n-2]..., 1.0]
+cheb4extremaᵤ(n) = [0.0, [cheb4extremaₛ(n-2,k) for k=1:n-2]..., 1.0]
