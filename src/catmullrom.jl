@@ -403,8 +403,16 @@ function centerarclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
 end
 
 # fast, approximate angular separation where both points emanate from the same source (e.g. the origin)
-anglesep(pointa, pointb) = acos( dot(pointa, pointb) / sqrt(dot(pointa,pointa) * dot(pointb,pointb)) )
+function anglesep(pointa::NTuple{N,T}, pointb::NTuple{N,T}) where {N,T}
+    dota = dot(pointa, pointa)
+    dotb = dot(pointb, pointb)
+    iszero(dota) || iszero(dotb) && return zero(T)
     
+    dotb = sqrt(dota * dotb)
+    dota = dot(pointa, pointb)
+    acos( dota / dotb )
+end
+   
     
 lawofcosines(side1, angle2sides, side2) = side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
  
