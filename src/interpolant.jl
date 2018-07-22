@@ -29,7 +29,7 @@ cheb1zero(n,k) = cospi((n-k+0.5)/n)
 cheb1zeros(n) = [cheb1zero(n,k) for k=1:n]
 
 # shifted
-cheb1zeroₛ(n,k) = (cheb1zero(n,k)/2) + 0.5
+cheb1zeroₛ(n,k) = (cospi((n-k+0.5)/n) + 1)/2
 cheb1zerosₛ(n) = [cheb1zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
@@ -41,11 +41,10 @@ cheb2zero(n,k) = cospi((n-k+1)/(n+1))
 cheb2zeros(n) = [cheb2zero(n,k) for k=1:n]
 
 # shifted
-cheb2zeroₛ(n,k) = (cheb2zero(n,k)/2) + 0.5
+cheb2zeroₛ(n,k) = (cospi((n-k+1)/(n+1)) + 1)/2
 cheb2zerosₛ(n) = [cheb2zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb2zero₀₁(n,k) = (cheb2zero(n,k)/2) + 0.5
 cheb2zeros₀₁(n) = [0.0, [cheb2zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
 # zeros of V(x)
@@ -54,11 +53,10 @@ cheb3zero(n,k) = cospi((n-k+0.5)/(n+0.5))
 cheb3zeros(n) = [cheb3zero(n,k) for k=1:n]
 
 # shifted
-cheb3zeroₛ(n,k) = (cheb3zero(n,k)/2) + 0.5
+cheb3zeroₛ(n,k) = (cospi((n-k+0.5)/(n+0.5)) + 1)/2
 cheb3zerosₛ(n) = [cheb3zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb3zero₀₁(n,k) = (cheb3zero(n,k)/2) + 0.5
 cheb3zeros₀₁(n) = [0.0, [cheb3zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
 # zeros of W(x)
@@ -67,11 +65,10 @@ cheb4zero(n,k) = cospi((n-k+1)/(n+0.5))
 cheb4zeros(n) = [cheb4zero(n,k) for k=1:n]
 
 # shifted
-cheb4zeroₛ(n,k) = (cheb4zero(n,k)/2) + 0.5
+cheb4zeroₛ(n,k) = (cospi((n-k+1)/(n+0.5)) + 1)/2
 cheb4zerosₛ(n) = [cheb4zeroₛ(n,k) for k=1:n]
 
 # bounded by 0,1
-cheb4zero₀₁(n,k) = (cheb4zero(n,k)/2) + 0.5
 cheb4zeros₀₁(n) = [0.0, [cheb4zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
 
@@ -83,19 +80,19 @@ cheb1extrema(n,k) = cospi((n-k)/n)
 cheb1extrema(n) = [cheb1extrema(n-1,k) for k=0:n-1]
 
 # shifted
-cheb1extremaₛ(n,k) = cospi((n-k)/(2*n))
+cheb1extremaₛ(n,k) = (cospi((n-k)/n) + 1)/2
 cheb1extremaₛ(n) = [cheb1extremaₛ(n-1,k) for k=0:n-1]
 
 # bounded by 0,1
-cheb1extremaₛ(n) = [cheb1extremaₛ(n-1,k) for k=0:n-1]
+cheb1extrema₀₁(n) = [cheb1extremaₛ(n-1,k) for k=0:n-1]
 
 # extrema of sqrt(1-x^2) * U(x)
 
 cheb2extrema(n,k) = cospi((2*(n-k)+1)/(2*(n+1)))
-cheb2extrema(n) = [cheb2extrema(n,k) for k=0:n]
+cheb2extrema(n) = [cheb2extrema(n-1,k) for k=0:n-1]
 
 # shifted
-cheb2extremaₛ(n,k) = cospi((2*(n-k)+1)/(2*(n+1)))/2 + 0.5
+cheb2extremaₛ(n,k) = (cospi((2*(n-k)+1)/(2*(n+1)))+1)/2
 cheb2extremaₛ(n) = [cheb2extremaₛ(n-1,k) for k=0:n-1]
 
 # bounded by 0,1
@@ -108,7 +105,7 @@ cheb3extrema(n,k) = cospi((2*(n-k))/(2*n+1))
 cheb3extrema(n) = [cheb3extrema(n,k) for k=0:n-1]
 
 # shifted
-cheb3extremaₛ(n,k) = cospi((2*(n-k))/(2*n+1))/2 + 0.5
+cheb3extremaₛ(n,k) = (cospi((2*(n-k))/(2*n+1)) + 1)/2
 cheb3extremaₛ(n) = [cheb3extremaₛ(n,k) for k=0:n-1]
 
 # bounded by 0,1
@@ -120,25 +117,8 @@ cheb4extrema(n,k) = cospi((2*(n-k)+1)/(2*n+1))
 cheb4extrema(n) = [cheb4extrema(n,k) for k=1:n]
 
 # shifted
-cheb4extremaₛ(n,k) = cospi((2*(n-k)+1)/(2*n+1))/2 + 0.5
+cheb4extremaₛ(n,k) = (cospi((2*(n-k)+1)/(2*n+1)) + 1)/2
 cheb4extremaₛ(n) = [cheb4extremaₛ(n,k) for k=1:n]
 
 # bounded by 0,1
 cheb4extrema₀₁(n) = [0.0, [cheb4extremaₛ(n-2,k) for k=1:n-2]..., 1.0]
-
-
-# roots of the Chebyshev polynomials of the second kind, mapped into 0..1
-
-chebroot2_01(k::Int, n::Int) = (1-cospi((k-1)/(n-1)))/2
-chebroots2_01(n::Int) = n >= 1 ? [chebroot2_01(k,n) for k=1:n] : throw(DomainError("$n < 1"))
-
-# Chebyshev type 2 roots mapped into 0..1 with 0 and 1 included
-"""
-    chebyshevsep(n)
-
-
-Chebyshev type 2 roots mapped into 0..1, with 0 and 1 included
-
-chebyshevsep(5) gives five values: [0.0, b, c, d, 1.0]
-"""
-chebyshevsep(n::Int) = n >= 0 ? chebroots2_01(n) : throw(DomainError("$n < 0"))
