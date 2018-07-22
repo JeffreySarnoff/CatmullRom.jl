@@ -20,6 +20,7 @@ uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n 
 # chebyshev T(x) zeros in 0..1 inclusive
 chebyshevsep(n::Int) = n >= 2 ? cheb1zerosᵤ(n) : throw(DomainError("$n < 2"))
 
+# roots of Chebyshev polynomials (types 1,2,3,4)
 
 # zeros of T(x)
 
@@ -69,8 +70,8 @@ cheb4zerosₛ(n) = [cheb4zeroₛ(n,k) for k=1:n]
 # bounded by 0,1
 cheb4zerosᵤ(n) = [0.0, [cheb4zeroₛ(n-2,k) for k=1:n-2]..., 1.0]
 
-₀₁
-# extrema
+
+# extrema of _weighted_ Chebyshev polynomials (types 1,2,3,4)
 
 # extrema of T(x)
 
