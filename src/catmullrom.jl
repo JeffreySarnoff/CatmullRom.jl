@@ -6,7 +6,7 @@
 
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom(points::PointSeq, interpolants::ValueSeq) where {L,F,M,D,R}
+function catmullrom(points::PointSeq{M,D,R}, interpolants::ValueSeq{L,F}) where {L,F,M,D,R}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
@@ -53,7 +53,7 @@ end
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
 =#
-function catmullrom_polys(points::PointSeq) where {M,D,R}
+function catmullrom_polys(points::PointSeq{M,D,R}) where {M,D,R}
     dt0, dt1, dt2 = prep_centripetal_catmullrom(points)
     pt0, pt1, pt2, pt3 = pts
     
@@ -73,7 +73,7 @@ qrtrroot(x) = sqrt(sqrt(x))
    determine the delta_traversal constants for the centripetal parameterization
       of the Catmull Rom cubic specified by four points (of increasing abcissae) 
 =#
-function prep_centripetal_catmullrom(points::PointSeq) where {M,D,R}
+function prep_centripetal_catmullrom(points::PointSeq{M,D,R}) where {M,D,R}
     dt0 = qrtrroot(dot(pts[1], pts[2]))
     dt1 = qrtrroot(dot(pts[2], pts[3]))
     dt2 = qrtrroot(dot(pts[3], pts[4]))
@@ -95,7 +95,7 @@ function prep_centripetal_catmullrom(points::PointSeq) where {M,D,R}
 
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom_npoints(points::PointsSeq, interpolants::ValueSeq) where {L,F,M,D,R}
+function catmullrom_npoints(points::PointSeq{M,D,R}, interpolants::ValueSeq{L,F}) where {L,F,M,D,R}
     points_per_interpolation = length(interpolants)
     totalinterps = (I-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
     
@@ -127,7 +127,7 @@ end
    where the first interpolant point is the second ND point
    and the final interplant point is the third ND point
 =#
-function catmullrom_4points(points::NTuple{4, NTuple{D,T}}, interpolants::Union{A,NTuple{N,F}}) where {A<:AbstractArray, N, D, T, F}
+function catmullrom_4points(points::PointSeq{M,D,R}, interpolants::ValueSeq{L,F}) where {L,F,M,D,R}
     polys = catmullrom_polys(points)
     ninterps = length(interpolants)
     
@@ -151,7 +151,7 @@ function catmullrom_4points(points::NTuple{4, NTuple{D,T}}, interpolants::Union{
 end
 
 
-function catmullrom_allpolys(points::PointSeq; 
+function catmullrom_allpolys(points::PointSeq{M,D,R}; 
                              deriv1::Bool=false, deriv2::Bool=false, integ1::Bool=false) where {M,D,R}
     polys = catmullrom_polys(points)
     
