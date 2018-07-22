@@ -1,8 +1,10 @@
-function catmullrom_pathparts(points::Vector{NTuple{N,T}}; subdivisions::Int=64) where {N,T}
-    nspans = length(points) - 1
-    # each span gets at least 3: 0.0, mid, 1.0; -1 corrects overlap
-    npoints2fit  = nspans * subdivisions
-    spancounts = catmullrom_onpath(points, npoints2fit)
+function catmullrom_pathparts(points::Vector{NTuple{N,T}};
+                              points_to_interpolate::Int=length(points)*19, 
+                              subsegments_median::Int=0) where {N,T}
+    if !iszero(subsegments_median)
+        points_to_interpolate = (subsegments_median * length(points)) - 1
+    end    
+    spancounts = catmullrom_onpath(points, points_to_interpolate)
     return spancounts
 end    
 
@@ -20,13 +22,17 @@ function catmullrom_onpath(points::Vector{NTuple{N,T}}, ninterpolants::Int) wher
         idx = findfirst(spancounts .== minimum(spancounts))
         spancounts[idx] += 1
         sum(spancounts) < ninterpolants &&
-           spancounts[findlast(spancounts .== minimum(spancounts))] += 1
+           let idx = findlast(spancounts .== minimum(spancounts));
+               spancounts[idx] += 1
+           end
     end
     while sum(spancounts) > ninterpolants
         idx = findfirst(spancounts .== maximum(spancounts))
         spancounts[idx] -= 1
         sum(spancounts) > ninterpolants &&
-           spancounts[findlast(spancounts .== minimum(spancounts))] -= 1
+           let idx = findlast(spancounts .== maximum(spancounts));
+               spancounts[idx] -= 1
+           end
     end
     
     return spancounts
