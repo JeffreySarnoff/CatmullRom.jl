@@ -1,6 +1,7 @@
+@inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
+
 """
     into01((xs...,))
-    into01([xs...,])
 
 maps values into 0.0:1.0 (minimum(xs) --> 0.0, maximum(xs) --> 1.0)
 """
@@ -8,18 +9,16 @@ function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
     mn, mx = minimum(values), maximum(values)
     delta = mx .- mn
     delta = sqrt(sum(map(x->x*x, delta)))
-    result = collect((v .- mn)./delta for v in values)
-    #result = map(clamp01, result)
+    result = collect(clamp01((v .- mn)./delta) for v in values)
     return result
 end
 
-@inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
 
 # uniform separation in 0..1 inclusive
 uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
 
 # chebyshev T(x) zeros in 0..1 inclusive
-chebyshevsep(n::Int) = n >= 2 ? cheb1zeros₀₁(n) : throw(DomainError("$n < 2"))
+chebyshevsep(n::Int) = n >= 2 ? cheb1zerosᵤ(n) : throw(DomainError("$n < 2"))
 
 
 
