@@ -1,12 +1,16 @@
 function interpolants_along_curve(points::Vector{NTuple{N,T}}, ninterpolants::Int) where {N,T}
     extents = extents_along_curve(points)
     # use extents to apportion ninterpolants
-    relspans = extents * inv(sum(extents))    # relspans sum to 1
-    spancounts = trunc(Int, round((relspans .* ninterpolants), RoundNearest))
+    relspans = extents .* inv(sum(extents))    # relspans sum to 1
+    spancounts = trunc.(Int, round.((relspans .* ninterpolants), RoundNearest))
     
     while sum(spancounts) > ninterpolants
         idx = findfirst(spancounts .== maximum(spancounts))
         spancounts[idx] -= 1
+    end
+    while sum(spancounts) < ninterpolants
+        idx = findfirst(spancounts .== minimum(spancounts))
+        spancounts[idx] += 1
     end
     
     return spancounts
@@ -29,7 +33,7 @@ function extents_along_curve(points::Vector{NTuple{N,T}}) where {N,T}
     
     ngroupsof4 = npoints - 3
     for idx in 1:ngroupsof4
-        fourpoints = points[idx:idx+3]
+        fourpoints = (points[idx:idx+3]...,)
         arclength = rough_centralsegment_arclength(fourpoints)
         result[idx+1] = arclength
     end
@@ -54,7 +58,7 @@ end
 function anglesep(pointa::NTuple{N,T}, pointb::NTuple{N,T}) where {N,T}
     dota = dot(pointa, pointa)
     dotb = dot(pointb, pointb)
-    iszero(dota) || iszero(dotb) && return zero(T)
+    (iszero(dota) || iszero(dotb)) && return zero(T)
     
     dotb = sqrt(dota * dotb)
     dota = dot(pointa, pointb)
