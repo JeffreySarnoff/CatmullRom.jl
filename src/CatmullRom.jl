@@ -4,6 +4,7 @@ module CatmullRom
 
 export catmullrom,                      # points, interpolants --> points, interpolated points
 
+       catmullrom_allpolys,             # obtain the interpolating polynomial, 1st, 2nd derivatives, integral  
        catmullrom_extents,              # rough and inexact pathlengths (arc traversals)
                                         #    covering curvilinear segments between points 
        uniformsep,                      # gen your interpolant values for uniform spacing 
