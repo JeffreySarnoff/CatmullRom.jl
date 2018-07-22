@@ -12,13 +12,21 @@ function catmullrom_onpath(points::Vector{NTuple{N,T}}, ninterpolants::Int) wher
     relspans = extents .* inv(sum(extents))    # relspans sum to 1
     spancounts = trunc.(Int, round.((relspans .* ninterpolants), RoundNearest))
     
-    while sum(spancounts) > ninterpolants
-        idx = findfirst(spancounts .== maximum(spancounts))
-        spancounts[idx] -= 1
+    if any(iszero.(spancounts))
+        spancounts = spancounts .+ 1
     end
+    
     while sum(spancounts) < ninterpolants
         idx = findfirst(spancounts .== minimum(spancounts))
         spancounts[idx] += 1
+        sum(spancounts) < ninterpolants &&
+           spancounts[findlast(spancounts .== minimum(spancounts))] += 1
+    end
+    while sum(spancounts) > ninterpolants
+        idx = findfirst(spancounts .== maximum(spancounts))
+        spancounts[idx] -= 1
+        sum(spancounts) > ninterpolants &&
+           spancounts[findlast(spancounts .== minimum(spancounts))] -= 1
     end
     
     return spancounts
