@@ -370,10 +370,10 @@ end
     this algorithm was developed by Jens Gravesen
 =#
 function approximate_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
-     ldist12 = separation(pts[2], pts[1])
-     ldist23 = separation(pts[3], pts[2])
-     ldist34 = separation(pts[4], pts[3])
-     ldist14 = separation(pts[4], pts[1])
+     ldist12 = linearsep(pts[2], pts[1])
+     ldist23 = linearsep(pts[3], pts[2])
+     ldist34 = linearsep(pts[4], pts[3])
+     ldist14 = linearsep(pts[4], pts[1])
      
      linesegments = ldist12 + ldist23 + ldist34
      arclength = (linesegments + ldist14) / 2
