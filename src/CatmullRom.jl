@@ -33,9 +33,9 @@ const VecAsPoints{R} = AbstractArray{VecAsPoint, 1} where {R}
 const TupAsValues{L,F} = NTuple{L,F} where {L,F}
 const VecAsValues{F} = AbstractArray{F,1}
 
-const OnePoint{D,R}   = Union{TupAsPoint,  VecAsPoint}  where {D,R}
-const PointSeq{M,D,R} = Union{TupAsPoints, VecAsPoints} where {M,D,R}
-const ValueSeq{L,F}   = Union{TupAsValues, VecAsValues} where {L,F}
+const OnePoint{D,R}   = Union{TupAsPoint{D,R},  VecAsPoint{R}}  where {D,R}
+const PointSeq{M,D,R} = Union{TupAsPoints{M,D,R}, VecAsPoints{R}} where {M,D,R}
+const ValueSeq{L,F}   = Union{TupAsValues{L,F}, VecAsValues{F}} where {L,F}
 
 
 include("catmullrom.jl")
