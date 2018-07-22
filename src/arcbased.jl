@@ -113,3 +113,30 @@ function rough_centralsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T
      return midsegment_arclength
 end
 
+#=
+0.02245448808080272	5.767944580792328e-6	1.0005138773654616
+0.11034730555433708	3.492803405297229e-5	1.000633256844574
+0.20680347495224183	0.0007521441574384058	1.0073005513192965
+0.27722816617416257	0.0007397400132340692	1.0053509654889026
+0.02953427762165981	0.0003211994629658821	1.0219901142372627
+0.02836586860799523	0.0010214234384144927	1.0747079293128807
+0.22249019182783417	0.031536873165516120	1.3303097677111957
+0.28190746915694587	0.030669273789136087	1.244144993512922
+0.01749704778645134	0.007188486833679952	2.3946634969932195
+0.1082295845425749	5.318705844575833e-5	1.0009833394286136
+
+julia> function rough_centralsegment_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+            ldist12 = linearsep(pts[2], pts[1])
+            ldist23 = linearsep(pts[3], pts[2])
+            ldist34 = linearsep(pts[4], pts[3])
+            ldist14 = linearsep(pts[4], pts[1])
+            
+            linesegments = ldist12 + ldist23 + ldist34
+            midsegment_proportionalweight  = ldist23 / linesegments
+
+            arclength = (linesegments + ldist14) / 2
+            midsegment_arclength  = arclength * midsegment_proportionalweight
+         estimated_error  = linesegments - ldist14  ; println(midsegment_arclength,"\t", estimated_error, "\t",inv((midsegment_arclength-estimated_error)/(midsegment_arclength+estimated_error)))
+            return midsegment_arclength
+       end
+=#
