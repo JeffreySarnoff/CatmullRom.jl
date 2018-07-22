@@ -56,6 +56,27 @@ function hermite_cubic(x0::T, x1::T, dx0::T, dx1::T) where {T}
     return Poly([c0, c1, c2, c3])
 end
 
+# fast  Catmull-Rom spline interpolator, adapted from:from http://www.paulinternet.nl/?page=bicubic
+
+function catmullrom_interpolate(p::NTuple{4, NTuple{N,T}}, x::T) where {N,T}
+    p[2] + 0.5 * x * ( cubicterp_a(p) + x * ( cubicterp_b(p) + x * cubicterp_c(p) ) )
+end
+
+@inline cubicterp_a(p) = (p[3] - p[1])
+@inline cubicterp_b(p) = (2.0*p[1] - 5.0*p[2] + 4.0*p[3] - p[4])
+@inline cubicterp_c(p) = (3.0*(p[2] - p[3]) + p[4] - p[1])
+
+function catmullrom_interpolate(p1::P, p2::P, p3::P, p4::P, x::T) where {P,T}
+    p2 + 0.5 * x * ( cubicterp_a(p1,p3) + 
+                     x * ( cubicterp_b(p1,p2,p3,p4) + 
+                           x * cubicterp_c(p1,p2,p3,p4) ) )
+end
+
+@inline cubicterp_a(p1::P, p3::P) where {P} = (p3 - p1)
+@inline cubicterp_b(p1::P, p2::P, p3::P, p4::P) where {P} = (2.0*p1 - 5.0*p2 + 4.0*p3 - p4)
+@inline cubicterp_c(p1::P, p2::P, p3::P, p4::P) where {P} = (3.0*(p2 - p3) + p4 - p1)
+
+
 
 #=
    given four x-ordinate sequenced ND points
