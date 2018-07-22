@@ -1,4 +1,4 @@
-function catmullrom_pathparts(points::PointSeq;
+function catmullrom_pathparts(points::PointSeq{M,D,R};
                               points_to_interpolate::Int=19, 
                               subsegments::Int=0) where {M,D,R}
     if !iszero(subsegments)
@@ -10,7 +10,7 @@ function catmullrom_pathparts(points::PointSeq;
     return spancounts
 end    
 
-function catmullrom_onpath(points::PointSeq, ninterpolants::Int) where {M,D,R}
+function catmullrom_onpath(points::PointSeq{M,D,R}, ninterpolants::Int) where {M,D,R}
     extents = catmullrom_extents(points)
     # use extents to apportion ninterpolants
     relspans = extents .* inv(sum(extents))    # relspans sum to 1
@@ -49,7 +49,7 @@ end
     n points implies n-1 adjacent interpoint segments.
 =#
 
-function catmullrom_extents(points::PointSeq) where {M,D,R}
+function catmullrom_extents(points::PointSeq{M,D,R}) where {M,D,R}
     npoints = length(points)
     result = Vector{T}(npoints - 1)
     result[1]   = linearsep(points[1], points[2])
@@ -67,7 +67,7 @@ end
 
 
         
-@inline function linearsep(pointa::OnePoint, pointb::OnePoint) where {D,R}
+@inline function linearsep(pointa::OnePoint{D,R}, pointb::OnePoint{D,R}) where {D,R}
     sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
 end
 
@@ -79,7 +79,7 @@ end
 #  >>>  use AngleBetweenVectors.jl
 #
 
-function anglesep(pointa::OnePoint, pointb::OnePoint) where {D,R}
+function anglesep(pointa::OnePoint{D,R}, pointb::OnePoint{D,R}) where {D,R}
     dota = dot(pointa, pointa)
     dotb = dot(pointb, pointb)
     (iszero(dota) || iszero(dotb)) && return zero(T)
@@ -102,7 +102,7 @@ end
     
     this algorithm was developed by Jens Gravesen
 =#
-function rough_trisegment_arclength(points::PointSeq) where {M,D,R}
+function rough_trisegment_arclength(points::PointSeq{M,D,R}) where {M,D,R}
      ldist12 = linearsep(points[2], points[1])
      ldist23 = linearsep(points[3], points[2])
      ldist34 = linearsep(points[4], points[3])
@@ -122,7 +122,7 @@ end
        catmullrom_4points 
 =#
 
-function rough_centralsegment_arclength(points::PointSeq) where {M,D,R}
+function rough_centralsegment_arclength(points::PointSeq{M,D,R}) where {M,D,R}
      ldist12 = linearsep(points[2], points[1])
      ldist23 = linearsep(points[3], points[2])
      ldist34 = linearsep(points[4], points[3])
