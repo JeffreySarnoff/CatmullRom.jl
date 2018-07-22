@@ -273,9 +273,6 @@ function catmullrom_4points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,N
     return points
 end
 
-    return polys, differentiatepolys, integratepolys
-end
-
 
 qrtrroot(x) = sqrt(sqrt(x))
 
@@ -332,8 +329,8 @@ function catmullrom_npoints(pts::NTuple{I, NTuple{D,T}}, interpolants::Union{A,N
 end
 
 #=
-   given four ND points in increasing abcissae order
-   and k+2 interpolant values in 0..1 where 0.0 and 1.0 are the +2
+   given four ND points in increasing arc-travel order
+   and k+2 interpolant values in 0..1 where 0.0 and 1.0 are the `+2`
    determine the k+2 interpolant determined ND points
    where the first interpolant point is the second ND point
    and the final interplant point is the third ND point
@@ -360,3 +357,31 @@ function catmullrom_4points(pts::NTuple{4, NTuple{D,T}}, interpolants::Union{A,N
 
     return points
 end
+
+    
+    
+    
+#=
+    Given 4 ND points, roughly approximate the arclength
+    of the centripetal Catmull-Rom curvilinear segment 
+    that would be determined by two bounding points
+    and the tangents they determine.
+    
+    this algorithm was developed by Jens Gravesen
+=#
+function approximate_arclength(pts::NTuple{4, NTuple{N,T}}) where {N, T}
+     ldist12 = separation(pts[2], pts[1])
+     ldist23 = separation(pts[3], pts[2])
+     ldist34 = separation(pts[4], pts[3])
+     ldist14 = separation(pts[4], pts[1])
+     
+     linesegments = ldist12 + ldist23 + ldist34
+     arclength = (linesegments + ldist14) / 2
+     # errorest  = linesegments - ldist14
+     
+     return arclength   
+end
+
+lawofcosines(side1, angle2sides, side2) = side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
+separation(pointa::P, pointb::P) where {N,T, P<:NTuple{N,T}} =
+    sqrt(lawofcosines(norm(pointa), angle(pointa, pointb), norm(pointb)))
