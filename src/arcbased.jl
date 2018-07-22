@@ -7,7 +7,7 @@ function catmullrom_pathparts(points::Vector{NTuple{N,T}}; subdivisions::Int=64)
 end    
 
 function catmullrom_onpath(points::Vector{NTuple{N,T}}, ninterpolants::Int) where {N,T}
-    extents = extents_along_curve(points)
+    extents = catmullrom_extents(points)
     # use extents to apportion ninterpolants
     relspans = extents .* inv(sum(extents))    # relspans sum to 1
     spancounts = trunc.(Int, round.((relspans .* ninterpolants), RoundNearest))
@@ -33,7 +33,7 @@ end
     n points implies n-1 adjacent interpoint segments.
 =#
 
-function extents_along_curve(points::Vector{NTuple{N,T}}) where {N,T}
+function catmullrom_extents(points::Vector{NTuple{N,T}}) where {N,T}
     npoints = length(points)
     result = Vector{T}(npoints - 1)
     result[1]   = linearsep(points[1], points[2])
