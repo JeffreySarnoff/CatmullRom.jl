@@ -23,7 +23,7 @@ end
 
 function extents_along_curve(points::Vector{NTuple{N,T}}) where {N,T}
     npoints = length(points)
-    result = Vector{undef, T}(npoints - 1)
+    result = Vector{T}(npoints - 1)
     result[1]   = linearsep(points[1], points[2])
     result[end] = linearsep(points[npoints-1], points[npoints])
     
