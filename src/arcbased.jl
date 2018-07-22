@@ -1,8 +1,8 @@
 function catmullrom_pathparts(points::Vector{NTuple{N,T}}; subdivisions::Int=64) where {N,T}
     nspans = length(points) - 1
     # each span gets at least 3: 0.0, mid, 1.0; -1 corrects overlap
-    ninterpolants  = (nspans * (subdivisions + 2)) - 1
-    spancounts = catmullrom_onpath(points, ninterpolants)
+    npoints2fit  = nspans * subdivisions
+    spancounts = catmullrom_onpath(points, npoints2fit)
     return spancounts
 end    
 
