@@ -21,9 +21,6 @@ uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n 
 chebyshevsep(n::Int) = n >= 2 ? cheb1zerosᵤ(n) : throw(DomainError("$n < 2"))
 
 
-
-
-
 # zeros of T(x)
 
 cheb1zero(n,k) = cospi((n-k+0.5)/n)
