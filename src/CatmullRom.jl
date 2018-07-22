@@ -34,7 +34,7 @@ const VecAsValues{F} = AbstractArray{F,1|
 
 const OnePoint{D,R}   = Union{TupAsPoint,  VecAsPoint}  where {D,R}
 const PointSeq{M,D,R} = Union{TupAsPoints, VecAsPoints} where {M,D,R}
-const ValueSeq{L,T}   = Union{TupAsValues, VecAsValues} where {L,T}
+const ValueSeq{L,F}   = Union{TupAsValues, VecAsValues} where {L,F}
 
 
 include("catmullrom.jl")
