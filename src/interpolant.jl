@@ -18,7 +18,7 @@ end
 uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
 
 # chebyshev T(x) zeros in 0..1 inclusive
-chebyshevsep(n::Int) = n >= 2 ? cheb1zerosᵤ(n) : throw(DomainError("$n < 2"))
+chebyshevsep(n::Int) = n >= 2 ? chebTzeros01(n) : throw(DomainError("$n < 2"))
 
 # roots of Chebyshev polynomials (T,U,V,W)
 #    shifted from [-1,+1] into [0,+1]
