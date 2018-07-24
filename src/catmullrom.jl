@@ -99,7 +99,7 @@ function catmullrom_npoints(points::PointSeq{M,D,R}, interpolants::ValueSeq{L,F}
     points_per_interpolation = length(interpolants)
     totalinterps = (I-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
     
-    allpoints = Array{T, 2}(undef, (totalinterps,D))
+    allpoints = Array{R, 2}(undef, (totalinterps,D))
    
     niters = I - 5
    
