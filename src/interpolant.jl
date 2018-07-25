@@ -29,7 +29,7 @@ function thiele3(point1, point2, point3, x)
     t2 = -(point2[1] - point3[1]) * t2 + t1
     t2 = inv(t2)
     t2 = (point1[1] - point3[1]) * t2 - point1[2] + point2[2]
-    t2 = inv(t2_
+    t2 = inv(t2)
     t1 = -(point2[1] - x) * t2 + t1
     t1 = inv(t1)
     return (-(point1[1] - x) * t1 + point1[2])
