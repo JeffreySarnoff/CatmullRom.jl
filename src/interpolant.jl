@@ -13,6 +13,27 @@ function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
     return result
 end
 
+function prepoint(point1, point2)
+    point1 - (point2 - point1)/8
+end
+function postpoint(point1, point2)
+    point2 + (point2 - point1)/8
+end
+
+function thiele3(point1, point2, point3, x)
+    t1 = point1[2] - point2[2]
+    t2 = point2[2] - point3[2]
+    t1 = inv(t1)
+    t2 = inv(t2)
+    t1 = (point1[1] - point2[1]) * t1
+    t2 = -(point2[1] - point3[1]) * t2 + t1
+    t2 = inv(t2)
+    t2 = (point1[1] - point3[1]) * t2 - point1[2] + point2[2]
+    t2 = inv(t2_
+    t1 = -(point2[1] - x) * t2 + t1
+    t1 = inv(t1)
+    return (-(point1[1] - x) * t1 + point1[2])
+end
 
 # uniform separation in 0..1 inclusive
 uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
