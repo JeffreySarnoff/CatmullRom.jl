@@ -1,5 +1,3 @@
-
-
 function catmullrom_pathparts(points::PointSeq{M,D,R};
                               points_to_interpolate::Int=19,
                               subsegments::Int=0) where {M,D,R}
@@ -53,7 +51,7 @@ end
 
 function catmullrom_extents(points::PointSeq{M,D,R}) where {M,D,R}
     npoints = length(points)
-    result = Vector{R}(npoints - 1)
+    result = Vector{R}(undef, npoints - 1)
     result[1]   = linearsep(points[1], points[2])
     result[end] = linearsep(points[npoints-1], points[npoints])
 
