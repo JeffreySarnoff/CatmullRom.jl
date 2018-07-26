@@ -52,13 +52,13 @@ end
 function catmullrom_extents(points::PointSeq{M,D,R}) where {M,D,R}
     npoints = length(points)
     result = Vector{R}(undef, npoints - 1)
-    result[1]   = linearsep(points[1], points[2])
-    result[end] = linearsep(points[npoints-1], points[npoints])
+    result[1]   = linearseparation(points[1], points[2])
+    result[end] = linearseparation(points[npoints-1], points[npoints])
 
     ngroupsof4 = npoints - 3
     for idx in 1:ngroupsof4
         fourpoints = (points[idx:idx+3]...,)
-        arclength = rough_centralsegment_arclength(fourpoints)
+        arclength = approximate_arclength(fourpoints) #  for central segment
         result[idx+1] = arclength
     end
 
