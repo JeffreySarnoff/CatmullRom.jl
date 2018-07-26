@@ -4,6 +4,7 @@ const ValueSeq{L,F}    = Union{TupOfValues{L,F}, VecOfValues{F}} where {L,F}
 
 const TupAsPoint{D,R} = NTuple{D,R} where {D,R}
 const VecAsPoint{R}   = Vector{R}   where {R}
+const OnePoint{D,R}   = Union{TupAsPoint, VecAsPoint} where {D,R}
 
 const TupOfTupPoints{M,D,R} = NTuple{M, TupAsPoint{D,R}} where {M,D,R}
 const TupOfVecPoints{M,R}   = NTuple{M, VecAsPoint{R}}   where {M,R}
