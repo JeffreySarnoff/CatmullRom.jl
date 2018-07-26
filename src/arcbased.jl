@@ -53,7 +53,7 @@ end
 
 function catmullrom_extents(points::PointSeq{M,D,R}) where {M,D,R}
     npoints = length(points)
-    result = Vector{T}(npoints - 1)
+    result = Vector{R}(npoints - 1)
     result[1]   = linearsep(points[1], points[2])
     result[end] = linearsep(points[npoints-1], points[npoints])
 
