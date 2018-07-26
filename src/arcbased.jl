@@ -66,10 +66,38 @@ function catmullrom_extents(points::PointSeq{M,D,R}) where {M,D,R}
 end
 
 
-        
-@inline function linearsep(pointa::OnePoint{D,R}, pointb::OnePoint{D,R}) where {D,R}
-    sqrt(lawofcosines(norm(pointa), anglesep(pointa, pointb), norm(pointb)))
+#=
+    Given 4 ND points, roughly approximate the arclength
+    of the centripetal Catmull-Rom curvilinear segment
+    that would be determined by two bounding points
+    and the tangents they determine.
+
+    this algorithm was developed by Jens Gravesen
+=#
+function approximate_arclength(points::PointSeq) where {M,D,R}
+     ldist12 = linearseparation(points[2], points[1])
+     ldist23 = linearseparation(points[3], points[2])
+     ldist34 = linearseparation(points[4], points[3])
+     ldist14 = linearseparation(points[4], points[1])
+
+     linesegments = ldist12 + ldist23 + ldist34
+     arclength = (linesegments + ldist14) * ldist23
+     arclength /= 2 * linesegments
+  
+     # arclength = (linesegments + ldist14) / 2
+     # arclength *=  ldist23 / linesegments
+     # errorest  = linesegments - ldist14
+
+     return arclength
 end
+
+
+linearseparation(a::OnePoint, b::OnePoint) where {D,R} =
+    sqrt(lawofcosines(norm(a), anglesep(a, b), norm(b)))
+
+lawofcosines(side1, anglebetween, side2) =
+    side1*side1 + side2*side2 - side1*side2 * 2*cos(anglebetween)
+
 
 # relatively fast determination of angular separation
 #    UNCHECKED PRECONDITION:
@@ -79,7 +107,7 @@ end
 #  >>>  use AngleBetweenVectors.jl
 #
 
-function anglesep(pointa::OnePoint{D,R}, pointb::OnePoint{D,R}) where {D,R}
+function anglesep(pointa::OnePoint, pointb::OnePoint) where {D,R}
     dota = dot(pointa, pointa)
     dotb = dot(pointb, pointb)
     (iszero(dota) || iszero(dotb)) && return zero(T)
@@ -89,31 +117,6 @@ function anglesep(pointa::OnePoint{D,R}, pointb::OnePoint{D,R}) where {D,R}
     acos( dota / dotb )
 end
     
-@inline lawofcosines(side1, angle2sides, side2) =
-    side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
-   
-
-    
-#=
-    Given 4 ND points, roughly approximate the arclength
-    of the centripetal Catmull-Rom curvilinear segment 
-    that would be determined by two bounding points
-    and the tangents they determine.
-    
-    this algorithm was developed by Jens Gravesen
-=#
-function rough_trisegment_arclength(points::PointSeq{M,D,R}) where {M,D,R}
-     ldist12 = linearsep(points[2], points[1])
-     ldist23 = linearsep(points[3], points[2])
-     ldist34 = linearsep(points[4], points[3])
-     ldist14 = linearsep(points[4], points[1])
-     
-     linesegments = ldist12 + ldist23 + ldist34
-     arclength = (linesegments + ldist14) / 2
-     # estimated_error  = linesegments - ldist14
-     
-     return arclength   
-end
 
 #=
     rough approximation to the length of the arc
@@ -121,7 +124,7 @@ end
        that is interpolated between with each use of
        catmullrom_4points 
 =#
-
+#=
 function rough_centralsegment_arclength(points::PointSeq{M,D,R}) where {M,D,R}
      ldist12 = linearsep(points[2], points[1])
      ldist23 = linearsep(points[3], points[2])
@@ -136,3 +139,4 @@ function rough_centralsegment_arclength(points::PointSeq{M,D,R}) where {M,D,R}
     
      return midsegment_arclength
 end
+=#
