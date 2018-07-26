@@ -1,6 +1,6 @@
 const TupOfValues{L,F} = NTuple{L,F} where {L,F}
 const VecOfValues{F}   = Vector{F} where {F}
-const ValueSeq{L,F}    = Union{TupAsValues{L,F}, VecAsValues{F}} where {L,F}
+const ValueSeq{L,F}    = Union{TupOfValues{L,F}, VecOfValues{F}} where {L,F}
 
 const TupAsPoint{D,R} = NTuple{D,R} where {D,R}
 const VecAsPoint{R}   = Vector{R}   where {R}
