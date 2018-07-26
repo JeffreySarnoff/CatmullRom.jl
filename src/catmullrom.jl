@@ -133,7 +133,6 @@ function catmullrom_4points(pts::P, interpolants::Union{NTuple{N,F},Vector{R}}) 
     return points
 end
 
-
 #=
    given four x-ordinate sequenced ND points
    obtain N polys, parameterized over [0,1]
@@ -155,33 +154,6 @@ function catmullrom_polys(points::PointSeq) where {M,D,R}
 
     return polys
 end
-
-#=
-    Given 4 ND points, roughly approximate the arclength
-    of the centripetal Catmull-Rom curvilinear segment
-    that would be determined by two bounding points
-    and the tangents they determine.
-
-    this algorithm was developed by Jens Gravesen
-=#
-function approximate_arclength(points::P) where
-     {I,D,R<:Real, P<:Union{NTuple{I, NTuple{D,R}}, Vector{NTuple{D,R}}, Vector{Vector{R}}}}
-     ldist12 = separation(points[2], points[1])
-     ldist23 = separation(points[3], points[2])
-     ldist34 = separation(points[4], points[3])
-     ldist14 = separation(points[4], points[1])
-
-     linesegments = ldist12 + ldist23 + ldist34
-     arclength = (linesegments + ldist14) / 2
-     # errorest  = linesegments - ldist14
-
-     return arclength
-end
-
-separation(pointa::OnePoint, pointb::OnePoint) where {D,R} =
-    sqrt(lawofcosines(norm(pointa), angle(pointa, pointb), norm(pointb)))
-
-lawofcosines(side1, angle2sides, side2) = side1*side1 + side2*side2 - side1*side2 * 2*cos(angle2sides)
 
 function catmullrom_allpolys(points::PointSeq, deriv1::Bool=false, deriv2::Bool=false, integ1::Bool=false) where {M,D,R}
     polys = catmullrom_polys(points)
