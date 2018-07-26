@@ -3,6 +3,7 @@ __precompile__()
 module CatmullRom
 
 export catmullrom,    # points, interpolants --> points, interpolated points
+       into01,
        Poly, polyval, polyder, polyint  # reexported
 
 using Polynomials
