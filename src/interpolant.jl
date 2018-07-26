@@ -51,7 +51,7 @@ function prepoint(point1, point2, point3)
         point[idx] = thiele3(p1, p2, p3, xpre)
     end
 
-    return point
+    return (point...,)
 end
 
 
@@ -75,7 +75,7 @@ function postpoint(point1, point2, point3)
         point[idx] = thiele3(p1, p2, p3, xpost)
     end
 
-    return point
+    return (point...,)
 end
 
 function thiele3(point1, point2, point3, x)
