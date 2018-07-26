@@ -17,7 +17,7 @@ import Polynomials: Poly, polyval, polyder, polyint
 
 import LinearAlgebra: dot, norm
 
-
+include("unions.jl")
 include("catmullrom.jl")
 include("interpolant.jl")
 include("arcbased.jl")
