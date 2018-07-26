@@ -141,7 +141,7 @@ end
 =#
 function catmullrom_polys(points::PointSeq) where {M,D,R}
     length(points) == 4 || throw(DomainError("exactly four points are required"))
-    
+
     dt0, dt1, dt2 = prep_centripetal_catmullrom(points)
     pt0, pt1, pt2, pt3 = points
 
@@ -157,8 +157,8 @@ end
 
 function catmullrom_allpolys(points::PointSeq, deriv1::Bool=false, deriv2::Bool=false, integ1::Bool=false) where {M,D,R}
     polys = catmullrom_polys(points)
-    
-    d1polys = deriv1 ? polyder.(polys)    : nothing 
+
+    d1polys = deriv1 ? polyder.(polys)    : nothing
     d2polys = deriv2 ? polyder.(d1polys)  : nothing
     i1polys = integ1 ? polyint.(polys)    : nothing
 
