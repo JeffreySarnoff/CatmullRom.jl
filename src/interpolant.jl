@@ -1,3 +1,6 @@
+# uniform separation in 0..1 inclusive
+uniformspacing(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
+
 @inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
 
 """
@@ -110,5 +113,3 @@ function thiele4(point1, point2, point3, point4, x)
     return (-(point1[1] - x) * t1 + point1[2])
 end
 
-# uniform separation in 0..1 inclusive
-uniformsep(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
