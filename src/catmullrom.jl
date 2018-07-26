@@ -14,13 +14,33 @@ function catmullrom(points::PointSeq, interpolants::ValueSeq; allpoints::Bool=tr
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
-    
-    return points === 4 ? catmullrom_4points(points, interpolants) : catmullrom_npoints(points, interpolants)
+    return if allpoints
+               # length(points) > 4
+               catmullrom_npoints(augmentends(points), interpolants)
+           elseif npoints > 4
+               catmullrom_npoints(points, interpolants)
+           else
+               catmullrom_4points(points, interpolants)
+           end
 end
 
 function catmullrom(points::PointSeq, ninterpolants::Int; allpoints::Bool=true) where {M,D,R}
     interpolants = uniformspacing(ninterpolants)
     return catmullrom(points, interpolants, allpoints)
+end
+
+@inline function augmentends(points::PointSeq) where {M,D,R}
+    if typeof(points[1]) <: Tuple)
+        pre = prepoint(points[1:3]...,)
+        post = postpoint(xys[end-2:end]...,)
+    elseif typeof(points[1]) <: Vector
+        pre = [prepoint(points[1:3]...,)...,]
+        post = [postpoint(xys[end-2:end]...,)...,]
+    else
+        throw(DomainError(string("unhandled point type: ",typeof(points[1])))
+    end
+    
+    return [pre, points..., post]
 end
 
 # ref https://ideone.com/NoEbVM
