@@ -1,7 +1,9 @@
 """
     catmullrom(points, interpolants)
+
     `points` is a tuple/vector of points-as-tuples/vectors 
     `interpolants` is a tuple/vector of values from 0.0 to 1.0 (inclusive)
+
 interpolating points from points[2] through points[end-1] (inclusive)
 """
 function catmullrom(points::PointSeq, interpolants::ValueSeq) where {M,D,R,L,F}
