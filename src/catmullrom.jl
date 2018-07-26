@@ -1,16 +1,26 @@
 """
-    catmullrom(points, interpolants)
+    catmullrom(points, interpolants; allpoints::Bool=true)
+    catmullrom(points, ninterpolants::Int; allpoints::Bool=true)
 
     `points` is a tuple/vector of points-as-tuples/vectors 
     `interpolants` is a tuple/vector of values from 0.0 to 1.0 (inclusive)
 
-interpolating points from points[2] through points[end-1] (inclusive)
+all of the interpolants are applied to each segment
+
+allpoints==false: interpolating from points[2] through points[end-1]
+allpoints==true:  interpolating from points[1] through points[end]
 """
-function catmullrom(points::PointSeq, interpolants::ValueSeq) where {M,D,R,L,F}
+function catmullrom(points::PointSeq, interpolants::ValueSeq; allpoints::Bool=true) where {M,D,R,L,F}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
+    
     return points === 4 ? catmullrom_4points(points, interpolants) : catmullrom_npoints(points, interpolants)
+end
+
+function catmullrom(points::PointSeq, ninterpolants::Int; allpoints::Bool=true) where {M,D,R}
+    interpolants = uniformspacing(ninterpolants)
+    return catmullrom(points, interpolants, allpoints)
 end
 
 # ref https://ideone.com/NoEbVM
