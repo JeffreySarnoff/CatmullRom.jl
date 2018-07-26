@@ -56,7 +56,7 @@ function postpoint(point1, point2, point3)
     dimen = length(point1)
     xpost = point3[1] + (point3[1] - point2[1])/8
 
-    point = Vector{typeof(xpre)}(undef, dimen)
+    point = Vector{typeof(xpost)}(undef, dimen)
     point[1] = xpost
     p1 = point1[1:2]
     p2 = point2[1:2]
