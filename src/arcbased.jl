@@ -1,25 +1,27 @@
+
+
 function catmullrom_pathparts(points::PointSeq{M,D,R};
-                              points_to_interpolate::Int=19, 
+                              points_to_interpolate::Int=19,
                               subsegments::Int=0) where {M,D,R}
     if !iszero(subsegments)
         points_to_interpolate = subsegments * (length(points) - 1)
     else
         points_to_interpolate *= (length(points) - 1)
-    end    
+    end
     spancounts = catmullrom_onpath(points, points_to_interpolate)
     return spancounts
-end    
+end
 
 function catmullrom_onpath(points::PointSeq{M,D,R}, ninterpolants::Int) where {M,D,R}
     extents = catmullrom_extents(points)
     # use extents to apportion ninterpolants
     relspans = extents .* inv(sum(extents))    # relspans sum to 1
     spancounts = trunc.(Int, round.((relspans .* ninterpolants), RoundNearest))
-    
+
     if any(iszero.(spancounts))
         spancounts = spancounts .+ 1
     end
-    
+
     while sum(spancounts) < ninterpolants
         idx = findfirst(spancounts .== minimum(spancounts))
         spancounts[idx] += 1
@@ -36,7 +38,7 @@ function catmullrom_onpath(points::PointSeq{M,D,R}, ninterpolants::Int) where {M
                spancounts[idx] -= 1
            end
     end
-    
+
     return spancounts
 end
 
@@ -54,7 +56,7 @@ function catmullrom_extents(points::PointSeq{M,D,R}) where {M,D,R}
     result = Vector{T}(npoints - 1)
     result[1]   = linearsep(points[1], points[2])
     result[end] = linearsep(points[npoints-1], points[npoints])
-    
+
     ngroupsof4 = npoints - 3
     for idx in 1:ngroupsof4
         fourpoints = (points[idx:idx+3]...,)
@@ -71,7 +73,6 @@ end
     of the centripetal Catmull-Rom curvilinear segment
     that would be determined by two bounding points
     and the tangents they determine.
-
     this algorithm was developed by Jens Gravesen
 =#
 function approximate_arclength(points::PointSeq) where {M,D,R}
@@ -83,7 +84,7 @@ function approximate_arclength(points::PointSeq) where {M,D,R}
      linesegments = ldist12 + ldist23 + ldist34
      arclength = (linesegments + ldist14) * ldist23
      arclength /= 2 * linesegments
-  
+
      # arclength = (linesegments + ldist14) / 2
      # arclength *=  ldist23 / linesegments
      # errorest  = linesegments - ldist14
@@ -111,18 +112,18 @@ function anglesep(pointa::OnePoint, pointb::OnePoint) where {D,R}
     dota = dot(pointa, pointa)
     dotb = dot(pointb, pointb)
     (iszero(dota) || iszero(dotb)) && return zero(T)
-    
+
     dotb = sqrt(dota * dotb)
     dota = dot(pointa, pointb)
     acos( dota / dotb )
 end
-    
+
 
 #=
     rough approximation to the length of the arc
        connecting points 2 and 3, this is center arc
        that is interpolated between with each use of
-       catmullrom_4points 
+       catmullrom_4points
 =#
 #=
 function rough_centralsegment_arclength(points::PointSeq{M,D,R}) where {M,D,R}
@@ -130,13 +131,12 @@ function rough_centralsegment_arclength(points::PointSeq{M,D,R}) where {M,D,R}
      ldist23 = linearsep(points[3], points[2])
      ldist34 = linearsep(points[4], points[3])
      ldist14 = linearsep(points[4], points[1])
-     
+
      linesegments = ldist12 + ldist23 + ldist34
      midsegment_proportionalweight  = ldist23 / linesegments
-
      arclength = (linesegments + ldist14) / 2
      midsegment_arclength  = arclength * midsegment_proportionalweight
-    
+
      return midsegment_arclength
 end
 =#
