@@ -11,5 +11,6 @@ const TupOfVecPoints{M,R}   = NTuple{M, VecAsPoint{R}}   where {M,R}
 const VecOfTupPoints{D,R}   = Vector{TupAsPoint{D,R}}    where {D,R}
 const VecOfVecPoints{R}     = Vector{VecAsPoint{R}}      where {R}
 
-const PointSeq{M,D,R}  = Union{TupOfTupPoints{M,D,R}, TupOfVecPoints{M,R}, 
-                               VecOfTupPoints{D,R}, VecOfVecPoints{R}} where {M,D,R}
+const PointSeq{M,D,R}  =
+    Union{TupOfTupPoints{M,D,R}, TupOfVecPoints{M,R},
+          VecOfTupPoints{D,R}, VecOfVecPoints{R}} where {M,D,R}
