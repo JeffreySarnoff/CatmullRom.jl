@@ -13,46 +13,60 @@ function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
     return result
 end
 
+
+@inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
+
+"""
+    into01((xs...,))
+maps values into 0.0:1.0 (minimum(xs) --> 0.0, maximum(xs) --> 1.0)
+"""
+function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
+    mn, mx = minimum(values), maximum(values)
+    delta = mx .- mn
+    delta = sqrt(sum(map(x->x*x, delta)))
+    result = collect(clamp01((v .- mn)./delta) for v in values)
+    return result
+end
+
 function prepoint(point1, point2, point3)
     dimen = length(point1)
     xpre = point1[1] - (point2[1] - point1[1])/8
-    
+
     point = Vector{typeof(xpre)}(undef, dimen)
     point[1] = xpre
     p1 = point1[1:2]
     p2 = point2[1:2]
     p3 = point3[1:2]
     point[2] = thiele3(p1, p2, p3, xpre)
-    
+
     for idx=3:dimen
         p1[2] = point1[idx]
         p2[2] = point2[idx]
         p3[2] = point3[idx]
         point[idx] = thiele3(p1, p2, p3, xpre)
     end
-    
+
     return point
 end
-
 
 function postpoint(point1, point2, point3)
     dimen = length(point1)
     xpost = point3[1] + (point3[1] - point2[1])/8
-    
+
     point = Vector{typeof(xpre)}(undef, dimen)
     point[1] = xpost
     p1 = point1[1:2]
     p2 = point2[1:2]
     p3 = point3[1:2]
     point[2] = thiele3(p1, p2, p3, xpost)
-    
+
     for idx=3:dimen
         p1[2] = point1[idx]
         p2[2] = point2[idx]
         p3[2] = point3[idx]
         point[idx] = thiele3(p1, p2, p3, xpost)
     end
-    
+
     return point
 end
 
