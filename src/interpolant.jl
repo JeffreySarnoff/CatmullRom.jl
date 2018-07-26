@@ -31,6 +31,8 @@ function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
     return result
 end
 
+# julia> pre=CatmullRom.prepoint(xys[1:3]...,);
+
 function prepoint(point1, point2, point3)
     dimen = length(point1)
     xpre = point1[1] - (point2[1] - point1[1])/8
@@ -51,6 +53,9 @@ function prepoint(point1, point2, point3)
 
     return point
 end
+
+
+# julia> post=postpoint(xys[end-2:end]...,);
 
 function postpoint(point1, point2, point3)
     dimen = length(point1)
