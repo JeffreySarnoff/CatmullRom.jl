@@ -34,7 +34,7 @@ function prepoint(fn::Function, point1, point2, point3)
     p1 = point1[1:2]
     p2 = point2[1:2]
     p3 = point3[1:2]
-    point[2] = thiele3(p1, p2, p3, xpre)
+    point[2] = fn(p1, p2, p3, xpre)
 
     for idx=3:dimen
         p1[2] = point1[idx]
@@ -58,7 +58,7 @@ function postpoint(fn::Function, point1, point2, point3)
     p1 = point1[1:2]
     p2 = point2[1:2]
     p3 = point3[1:2]
-    point[2] = thiele3(p1, p2, p3, xpost)
+    point[2] = fn(p1, p2, p3, xpost)
 
     for idx=3:dimen
         p1[2] = point1[idx]
@@ -68,6 +68,17 @@ function postpoint(fn::Function, point1, point2, point3)
     end
 
     return (point...,)
+end
+
+function linear(pt1, pt2, pt3, x) # one of the points is ignored
+    if x <= pt1[1] 
+        res = [pt1 .- (pt1[1] .- x)./(pt2 .- pt1)...,]; res[1] = x
+    elseif x >= pt3[1]
+        res = [pt3 .+ (x .- pt3[1])./(pt3 .- pt2)...,]; res[1] = x
+    else
+        throw(DomainError(string(pt1," ",pt2," ",pt3," ",x)))
+    end
+    return (res...,)
 end
 
 function quadratic(pt1, pt2, pt3, x)
@@ -92,6 +103,10 @@ function quadratic(pt1, pt2, pt3, x)
     bb = r - n - q
     res = (s * (aa * x + bb))
 
+    if any(!isfinite.(res...,))
+        res = linear(point1, point2, point3, x)
+    end
+        
     return res
 end
 
@@ -107,7 +122,13 @@ function thiele3(point1, point2, point3, x)
     t2 = inv(t2)
     t1 = -(point2[1] - x) * t2 + t1
     t1 = inv(t1)
-    return (-(point1[1] - x) * t1 + point1[2])
+    res = (-(point1[1] - x) * t1 + point1[2])
+    
+    if any(!isfinite.(res...,))
+        res = quadratic(point1, point2, point3, x)
+    end
+    
+    return res
 end
 
 function thiele4(point1, point2, point3, point4, x)
