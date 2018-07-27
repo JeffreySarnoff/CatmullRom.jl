@@ -17,20 +17,6 @@ function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
 end
 
 
-@inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
-
-"""
-    into01((xs...,))
-maps values into 0.0:1.0 (minimum(xs) --> 0.0, maximum(xs) --> 1.0)
-"""
-function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
-    mn, mx = minimum(values), maximum(values)
-    delta = mx .- mn
-    delta = sqrt(sum(map(x->x*x, delta)))
-    result = collect(clamp01((v .- mn)./delta) for v in values)
-    return result
-end
-
 # julia> pre=CatmullRom.prepoint(xys[1:3]...,);
 
 function prepoint(point1, point2, point3)
