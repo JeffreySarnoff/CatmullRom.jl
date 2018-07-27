@@ -1,20 +1,20 @@
 """
-    catmullrom(points, interpolants; allpoints::Bool=true)
-    catmullrom(points, ninterpolants::Int; allpoints::Bool=true)
+    catmullrom(points, interpolants; endpoints::Symbol=Thiele3)
+    catmullrom(points, ninterpolants::Int; endpoints::Symbol=Thiele3)
 
     `points` is a tuple/vector of points-as-tuples/vectors
     `interpolants` is a tuple/vector of values from 0.0 to 1.0 (inclusive)
 
 all of the interpolants are applied to each segment
 
-allpoints==false: interpolating from points[2] through points[end-1]
-allpoints==true:  interpolating from points[1] through points[end]
+endpoints==Omit: interpolating from points[2] through points[end-1]
+endpoints==Thiele3:  interpolating from points[1] through points[end]
 """
 function catmullrom(points::PointSeq, interpolants::ValueSeq; allpoints::Bool=true) where {M,D,R,L,F}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
-    return if allpoints
+    return if endpoints === Thiele3
                T = typeof(points[1]) <: Tuple ? Tuple : Vector
                catmullrom_npoints(augmentends(T, points), interpolants)
            elseif npoints > 4
