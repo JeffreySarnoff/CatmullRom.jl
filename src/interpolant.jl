@@ -1,5 +1,11 @@
 # uniform separation in 0..1 inclusive
-uniformspacing(n::Int) = n >= 2 ? collect(0.0:inv(n-1):1.0) : throw(DomainError("$n < 2"))
+
+"""
+    uniformspacing(n::Int)
+
+generate n values uniformly spaced between 0..1 (n does not count including of 0,1) 
+"""
+uniformspacing(n::Int) = n >= 0 ? collect(0.0:inv((n+2)-1):1.0) : throw(DomainError("$n < 0"))
 
 @inline clamp01(x::T) where {T<:Real} = clamp(x, zero(T), one(T))
 
