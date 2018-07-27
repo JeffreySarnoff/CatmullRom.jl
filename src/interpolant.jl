@@ -68,11 +68,20 @@ function postpoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P
     return (point...,)
 end
 
+function linear(pt1, pt2, x)
+    a = (pt1[2] - pt2[2]) * x
+    b = (pt1[1]*pt2[2] - pt1[2]*pt2[1])
+    den = pt1[1] - pt2[1]
+    return (a + b) / den
+end
+
 function linear(pt1, pt2, pt3, x) # one of the points is ignored
-    if x <= pt1[1] 
-        res = [pt1 .- (pt1[1] .- x)./(pt2 .- pt1)...,]; res[1] = x
-    elseif x >= pt3[1]
-        res = [pt3 .+ (x .- pt3[1])./(pt3 .- pt2)...,]; res[1] = x
+    if (x < pt1[1] < pt2[1]) || (x > pt1[1] > pt2[1])
+        res = linear(pt1, pt2, x)
+    elseif (pt2[1] < pt3[1] < x) || (pt2[1] > pt3[1] > x)
+        res = linear(pt3, pt2, x)
+    elseif (pt3[1] < x < pt1[1]) || (pt3[1] > x > pt1[1]) 
+        res = linear(pt1, pt3, x)
     else
         throw(DomainError(string(pt1," ",pt2," ",pt3," ",x)))
     end
