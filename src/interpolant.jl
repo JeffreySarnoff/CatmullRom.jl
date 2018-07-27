@@ -1,5 +1,3 @@
-# uniform separation in 0..1 inclusive
-
 """
     uniformspacing(n::Int)
 
