@@ -3,7 +3,7 @@ __precompile__()
 module CatmullRom
 
 export catmullrom,    # points, interpolants --> points, interpolated points
-       Quadratic, Thiele3, Omit,
+       Omit, Linear, Quadratic, Thiele3
        uniformspacing, into01,
        Poly, polyval, polyder, polyint  # reexported
 
