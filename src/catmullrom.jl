@@ -118,7 +118,7 @@ function catmullrom_npoints(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,
     for k in 1:niters
         sub₂ = sub₁ - 1
         mul₂ = mul₁ + 1
-        points[(mul₁ * points_per_interpolation + sub₁):(mul₂ * points_per_interpolation + sub₂), :] =
+        points[(mul₁ * points_per_interpolation + sub₁):(mul₂ * points_per_interpolation + sub₂), :] .=
             catmullrom_4points(pts[idx₁:idx₂], interpolants)
         idx₁ += 1; idx₂ += 1;
         sub₁, mul₁ = sub₂, mul₂
