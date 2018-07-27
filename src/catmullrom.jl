@@ -29,27 +29,35 @@ function catmullrom(points::PointSeq, ninterpolants::Int; endpoints::Symbol=Thie
 end
 
 @inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq, closed) where {M,D,R}
-    if closed
-        pre  = prepoint(endpoints, points[end-1], points[1], points[2])
-        post = postpoint(endpoints, points[end-2], points[end-1], points[1])
-        [pre, points[1:end]..., post]
-    else
+    if !closed
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
-        [pre, points[1:end]..., post]
+    else
+        pre1  = prepoint(endpoints, points[end-1], points[1], points[2])
+        pre2  = prepoint(endpoints, points[end-2], points[end-1], points[1])
+        pre   = (pre1 .+ pre2)./2
+        post1 = postpoint(endpoints, points[end-2], points[end-1], points[1])
+        post2 = postpoint(endpoints, points[end-1], points[1], points[2])
+        post   = (post1 .+ post2)./2
     end
+    
+    return [pre, points[1:end]..., post]
 end
 
 @inline function augmentends(::Type{Vector}, endpoints::Symbol, points::PointSeq, closed) where {M,D,R}
-    if closed
-        pre  = prepoint(endpoints, points[end-1], points[1], points[2])
-        post = postpoint(endpoints, points[end-2], points[end-1], points[1])
-        [pre, points[1:end]..., post]
-    else
+    if !closed
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
-        [pre, points[1:end]..., post]
+    else
+        pre1  = prepoint(endpoints, points[end-1], points[1], points[2])
+        pre2  = prepoint(endpoints, points[end-2], points[end-1], points[1])
+        pre   = (pre1 .+ pre2)./2
+        post1 = postpoint(endpoints, points[end-2], points[end-1], points[1])
+        post2 = postpoint(endpoints, points[end-1], points[1], points[2])
+        post   = (post1 .+ post2)./2
     end
+    
+    return [pre, points[1:end]..., post]
 end
 
 
