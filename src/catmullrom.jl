@@ -1,6 +1,6 @@
 """
-    catmullrom(points, interpolants; endpoints::Symbol=Thiele3)
-    catmullrom(points, ninterpolants::Int; endpoints::Symbol=Thiele3)
+    catmullrom(points, interpolants; endpoints::Symbol=Thiele3, closed::Bool=false)
+    catmullrom(points, ninterpolants::Int; endpoints::Symbol=Thiele3, closed::Bool=false)
 
     `points` is a tuple/vector of points-as-tuples/vectors
     `interpolants` is a tuple/vector of values from 0.0 to 1.0 (inclusive)
@@ -10,7 +10,7 @@ all of the interpolants are applied to each segment
 endpoints==Omit: interpolating from points[2] through points[end-1]
 endpoints==Thiele3:  interpolating from points[1] through points[end]
 """
-function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=Thiele3) where {M,D,R,L,F}
+function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=Thiele3, closed::Bool=false) where {M,D,R,L,F}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
@@ -18,7 +18,8 @@ function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=
                npoints > 4 ? catmullrom_npoints(points, interpolants) : catmullrom_4points(points, interpolants)
            else
                T = typeof(points[1]) <: Tuple ? Tuple : Vector
-               catmullrom_npoints(augmentends(T, endpointfn[endpoints], points), interpolants)
+               points = augmentends(T, endpointfn[endpoints], points, closed)
+               catmullrom_npoints(points, interpolants)
            end
 end
 
@@ -27,16 +28,25 @@ function catmullrom(points::PointSeq, ninterpolants::Int; allpoints::Bool=true) 
     return catmullrom(points, interpolants, allpoints)
 end
 
-@inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq) where {M,D,R}
-    pre  = prepoint(endpoints, points[1:3]...,)
-    post = postpoint(endpoints, points[end-2:end]...,)
-
+@inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq, closed) where {M,D,R}
+    if closed
+        pre  = prepoint(endpoints, points[end], points[1], points[2])
+        post = postpoint(endpoints, points[end-1], points[end], points[1])
+    else
+        pre  = prepoint(endpoints, points[1:3]...,)
+        post = postpoint(endpoints, points[end-2:end]...,)
+    end
     return [pre, points..., post]
 end
 
-@inline function augmentends(::Type{Vector}, endpoints::Symbol, points::PointSeq) where {M,D,R}
-    pre  = [prepoint(endpoints, points[1:3]...,)...,]
-    post = [postpoint(endpoints, points[end-2:end]...,)...,]
+@inline function augmentends(::Type{Vector}, endpoints::Symbol, points::PointSeq, closed) where {M,D,R}
+    if closed
+        pre  = prepoint(endpoints, points[end], points[1], points[2])
+        post = postpoint(endpoints, points[end-1], points[end], points[1])
+    else
+        pre  = prepoint(endpoints, points[1:3]...,)
+        post = postpoint(endpoints, points[end-2:end]...,)
+    end
 
     return [pre, points..., post]
 end
