@@ -10,7 +10,7 @@ all of the interpolants are applied to each segment
 endpoints==Omit: interpolating from points[2] through points[end-1]
 endpoints==Thiele3:  interpolating from points[1] through points[end]
 """
-function catmullrom(points::PointSeq, interpolants::ValueSeq; allpoints::Bool=true) where {M,D,R,L,F}
+function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=Thiele3) where {M,D,R,L,F}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
