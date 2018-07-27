@@ -1,3 +1,6 @@
+const Open   = :Open
+const Closed = :Closed
+
 const Linear    = :Linear
 const Quadratic = :Quadratic
 const Thiele3   = :Thiele3
