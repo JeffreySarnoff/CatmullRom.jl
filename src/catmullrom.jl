@@ -33,7 +33,7 @@ end
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
     else
-        pre   = (points[end] .+ points[1])/2
+        pre   = (points[end] .+ points[1])./2
         post  = pre
     end
     
@@ -45,7 +45,7 @@ end
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
     else
-        pre   = (points[end] .+ points[1])/2
+        pre   = (points[end] .+ points[1])./2
         post  = pre
     end
     
