@@ -37,7 +37,7 @@ end
         pre = [prepoint(points[1:3]...,)...,]
         post = [postpoint(xys[end-2:end]...,)...,]
     else
-        throw(DomainError(string("unhandled point type: ",typeof(points[1])))
+        throw(DomainError(string("unhandled point type: ",typeof(points[1]))
     end
     
     return [pre, points..., post]
