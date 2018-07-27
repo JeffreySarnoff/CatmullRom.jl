@@ -1,4 +1,4 @@
-#  CentripetalCatmullRom.jl
+# CatmullRom.jl
 
 ### Centripetal parameterization for Catmull-Rom cubic interpolants. 
 
