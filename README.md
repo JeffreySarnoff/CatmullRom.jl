@@ -80,12 +80,12 @@ by Cem Yuksel, Scott Schaefer, John Keyser
 
 ----
 
-[travis-img]: https://travis-ci.org/JeffreySarnoff/CentripetalCatmullRom.jl.svg?branch=master
-[travis-url]: https://travis-ci.org/JeffreySarnoff/CentripetalCatmullRom.jl
+[travis-img]: https://travis-ci.org/JeffreySarnoff/CatmullRom.jl.svg?branch=master
+[travis-url]: https://travis-ci.org/JeffreySarnoff/CatmullRom.jl
 
 
 
-[pkg-0.6-img]: http://pkg.julialang.org/badges/CentripetalCatmullRom_0.6.svg
-[pkg-0.6-url]: http://pkg.julialang.org/?pkg=CentripetalCatmullRom&ver=0.6
-[pkg-0.7-img]: http://pkg.julialang.org/badges/CentripetalCatmullRom_0.7.svg
-[pkg-0.7-url]: http://pkg.julialang.org/?pkg=CentripetalCatmullRom&ver=0.7
+[pkg-0.6-img]: http://pkg.julialang.org/badges/CatmullRom_0.6.svg
+[pkg-0.6-url]: http://pkg.julialang.org/?pkg=CatmullRom&ver=0.6
+[pkg-0.7-img]: http://pkg.julialang.org/badges/CatmullRom_0.7.svg
+[pkg-0.7-url]: http://pkg.julialang.org/?pkg=CatmullRom&ver=0.7
