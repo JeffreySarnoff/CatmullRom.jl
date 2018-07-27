@@ -85,7 +85,7 @@ function linear(pt1, pt2, pt3, x) # one of the points is ignored
     else
         throw(DomainError(string(pt1," ",pt2," ",pt3," ",x)))
     end
-    return (res...,)
+    return res
 end
 
 function quadratic(pt1, pt2, pt3, x)
