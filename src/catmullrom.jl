@@ -23,32 +23,33 @@ function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=
            end
 end
 
-function catmullrom(points::PointSeq, ninterpolants::Int; allpoints::Bool=true) where {M,D,R}
+function catmullrom(points::PointSeq, ninterpolants::Int; endpoints::Symbol=Thiele3, closed::Bool=false) where {M,D,R}
     interpolants = uniformspacing(ninterpolants)
-    return catmullrom(points, interpolants, allpoints)
+    return catmullrom(points, interpolants, endpoints, closed)
 end
 
 @inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq, closed) where {M,D,R}
     if closed
-        pre  = prepoint(endpoints, points[end], points[1], points[2])
-        post = postpoint(endpoints, points[end-1], points[end], points[1])
+        pre  = prepoint(endpoints, points[end-1], points[1], points[2])
+        post = postpoint(endpoints, points[end-2], points[end-1], points[1])
+        [pre, points[1:end-1]..., post]
     else
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
+        [pre, points[1:end]..., post]
     end
-    return [pre, points..., post]
 end
 
 @inline function augmentends(::Type{Vector}, endpoints::Symbol, points::PointSeq, closed) where {M,D,R}
     if closed
-        pre  = prepoint(endpoints, points[end], points[1], points[2])
-        post = postpoint(endpoints, points[end-1], points[end], points[1])
+        pre  = prepoint(endpoints, points[end-1], points[1], points[2])
+        post = postpoint(endpoints, points[end-2], points[end-1], points[1])
+        [pre, points[1:end-1]..., post]
     else
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
+        [pre, points[1:end]..., post]
     end
-
-    return [pre, points..., post]
 end
 
 
