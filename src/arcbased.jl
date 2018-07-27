@@ -1,5 +1,5 @@
-function catmullrom_pathparts(points::PointSeq, points_to_interpolate::Int=19) where {M,D,R}
-    points_to_interpolate *= (length(points) - 1)
+function catmullrom_pathparts(points::PointSeq, avg_points_per_segment::Int=19) where {M,D,R}
+    points_to_interpolate = avg_points_per_segment * (length(points) - 1)
     spancounts = catmullrom_onpath(points, points_to_interpolate)
     return spancounts
 end
