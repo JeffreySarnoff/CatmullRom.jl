@@ -12,7 +12,7 @@ uniformspacing(n::Int) = n >= 0 ? collect(0.0:inv((n+2)-1):1.0) : throw(DomainEr
 
 maps values into 0.0:1.0 (minimum(xs) --> 0.0, maximum(xs) --> 1.0)
 """
-function into01(values::U) where {N,T, U<:Union{NTuple{N,T}, Vector{T}}}
+function into01(values::ValueSeq) where {F,L}
     mn, mx = minimum(values), maximum(values)
     delta = mx .- mn
     delta = sqrt(sum(map(x->x*x, delta)))
@@ -23,7 +23,7 @@ end
 
 # julia> pre=CatmullRom.prepoint(xys[1:3]...,);
 
-function prepoint(fn::Function, point1, point2, point3)
+function prepoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P<:OnePoint}
     dimen = length(point1)
     xpre = point1[1] - (point2[1] - point1[1])/8
 
@@ -47,7 +47,7 @@ end
 
 # julia> post=postpoint(xys[end-2:end]...,);
 
-function postpoint(fn::Function, point1, point2, point3)
+function postpoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P<:OnePoint}
     dimen = length(point1)
     xpost = point3[1] + (point3[1] - point2[1])/8
 
@@ -102,7 +102,7 @@ function quadratic(pt1, pt2, pt3, x)
     res = (s * (aa * x + bb))
 
     if any(!isfinite.(res...,))
-        res = linear(point1, point2, point3, x)
+        res = linear(pt1, pt2, pt3, x)
     end
         
     return res
