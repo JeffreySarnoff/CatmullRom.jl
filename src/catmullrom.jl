@@ -2,7 +2,7 @@
     catmullrom(points, interpolants; allpoints::Bool=true)
     catmullrom(points, ninterpolants::Int; allpoints::Bool=true)
 
-    `points` is a tuple/vector of points-as-tuples/vectors 
+    `points` is a tuple/vector of points-as-tuples/vectors
     `interpolants` is a tuple/vector of values from 0.0 to 1.0 (inclusive)
 
 all of the interpolants are applied to each segment
@@ -32,7 +32,7 @@ end
 @inline function augmentends(::Type{Tuple}, points::PointSeq) where {M,D,R}
     pre  = prepoint(points[1:3]...,)
     post = postpoint(points[end-2:end]...,)
-    
+
     return [pre, points..., post]
 end
 
@@ -107,12 +107,12 @@ function catmullrom_npoints(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,
     totalinterps = (npoints-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
 
     dimen = length(pts[1])
-    T = typeof(pts[1][1])
-    points = Array{T, 2}(undef, (totalinterps,dimen))
+    T = NTuple{dimen, typeof(pts[1][1])}
+    points = Array{T, 1}(undef, totalinterps)
 
     niters = npoints - 5
 
-    points[1:points_per_interpolation,   :] .= catmullrom_4points(pts[1:4], interpolants)
+    points[1:points_per_interpolation, :] .= catmullrom_4points(pts[1:4], interpolants)
 
     idx₁ = 2; idx₂ = idx₁ + 3; sub₁ = 0; mul₁ = 1
     for k in 1:niters
