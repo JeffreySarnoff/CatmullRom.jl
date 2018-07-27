@@ -32,7 +32,7 @@ end
     if closed
         pre  = prepoint(endpoints, points[end-1], points[1], points[2])
         post = postpoint(endpoints, points[end-2], points[end-1], points[1])
-        [pre, points[1:end-1]..., post]
+        [pre, points[1:end]..., post]
     else
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
@@ -44,7 +44,7 @@ end
     if closed
         pre  = prepoint(endpoints, points[end-1], points[1], points[2])
         post = postpoint(endpoints, points[end-2], points[end-1], points[1])
-        [pre, points[1:end-1]..., post]
+        [pre, points[1:end]..., post]
     else
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
