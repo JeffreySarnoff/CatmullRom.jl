@@ -158,7 +158,7 @@ function catmullrom_4points(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,
         end
     end
 
-    return (points...,)
+    return [(points[i,:]...,) for i=1:size(points)[1]]
 end
 
 #=
