@@ -107,7 +107,7 @@ function catmullrom_npoints(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,
     totalinterps = (npoints-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
 
     dimen = length(pts[1])
-    points = Array{R, 2}(undef, (totalinterps,dimen))
+    points = Array{typeof(pts[1][1]), 2}(undef, (totalinterps,dimen))
 
     niters = npoints - 5
 
@@ -139,7 +139,7 @@ function catmullrom_4points(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,
     polys = catmullrom_polys(pts)
     ninterps = length(interpolants)
     dimen = length(pts[1])
-    points = Array{R, 2}(undef, (ninterps, dimen))
+    points = Array{typeof(pts[1][1]), 2}(undef, (ninterps, dimen))
     for col in 1:dimen
         points[1, col] = pts[2][col]
         points[end, col] = pts[3][col]
