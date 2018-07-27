@@ -4,7 +4,7 @@ function catmullrom_pathparts(points::PointSeq, points_to_interpolate::Int=19) w
     return spancounts
 end
 
-function catmullrom_onpath(points::PointSeq{M,D,R}, ninterpolants::Int) where {M,D,R}
+function catmullrom_onpath(points::PointSeq, ninterpolants::Int) where {M,D,R}
     extents = catmullrom_extents(points)
     # use extents to apportion ninterpolants
     relspans = extents .* inv(sum(extents))    # relspans sum to 1
@@ -43,7 +43,7 @@ end
     n points implies n-1 adjacent interpoint segments.
 =#
 
-function catmullrom_extents(points::PointSeq{M,D,R}) where {M,D,R}
+function catmullrom_extents(points::PointSeq) where {M,D,R}
     npoints = length(points)
     result = Vector{R}(undef, npoints - 1)
     result[1]   = linearseparation(points[1], points[2])
