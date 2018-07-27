@@ -33,12 +33,8 @@ end
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
     else
-        pre1  = prepoint(endpoints, points[end-1], points[1], points[2])
-        pre2  = prepoint(endpoints, points[end-2], points[end-1], points[1])
-        pre   = (pre1 .+ pre2)./2
-        post1 = postpoint(endpoints, points[end-2], points[end-1], points[1])
-        post2 = postpoint(endpoints, points[end-1], points[1], points[2])
-        post   = (post1 .+ post2)./2
+        pre   = (points[end] .+ points[1])/2
+        post  = pre
     end
     
     return [pre, points[1:end]..., post]
@@ -49,12 +45,8 @@ end
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
     else
-        pre1  = prepoint(endpoints, points[end-1], points[1], points[2])
-        pre2  = prepoint(endpoints, points[end-2], points[end-1], points[1])
-        pre   = (pre1 .+ pre2)./2
-        post1 = postpoint(endpoints, points[end-2], points[end-1], points[1])
-        post2 = postpoint(endpoints, points[end-1], points[1], points[2])
-        post   = (post1 .+ post2)./2
+        pre   = (points[end] .+ points[1])/2
+        post  = pre
     end
     
     return [pre, points[1:end]..., post]
