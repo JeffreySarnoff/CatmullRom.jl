@@ -12,11 +12,7 @@ import Polynomials: Poly, polyval, polyder, polyint
 
 import LinearAlgebra: dot, norm
 
-const Linear    = :Linear
-const Quadratic = :Quadratic
-const Thiele3   = :Thiele3
-const Omit      = :Omit
-
+include("consts.jl")
 include("unions.jl")
 include("catmullrom.jl")
 include("interpolant.jl")
