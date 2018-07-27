@@ -1,7 +1,7 @@
 """
-    catmullrom(points, interpolants; endpoints::Symbol=Thiele3, closed::Bool=false)
-    catmullrom(points, ninterpolants::Int; endpoints::Symbol=Thiele3, closed::Bool=false)
-
+     catmullrom(points, ninterpolants::Int; endpoints::Symbol=Thiele3, closed::Bool=false)
+     catmullrom(points, interpolants; endpoints::Symbol=Thiele3, closed::Bool=false)
+   
     `points` is a tuple/vector of points-as-tuples/vectors
     `interpolants` is a tuple/vector of values from 0.0 to 1.0 (inclusive)
 
