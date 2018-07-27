@@ -4,7 +4,6 @@ module CatmullRom
 
 export catmullrom,    # points, interpolants --> points, interpolated points
        Omit, Linear, Quadratic, Thiele3,
-       Open, Closed,
        uniformspacing, into01,
        Poly, polyval, polyder, polyint  # reexported
 
