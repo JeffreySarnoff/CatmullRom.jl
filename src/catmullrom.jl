@@ -1,3 +1,5 @@
+const endpointfn = Dict([:Linear => linear, :Quadratic => quadratic, :Thiele3 => thiele3])
+
 """
     catmullrom(points, interpolants; endpoints::Symbol=Thiele3)
     catmullrom(points, ninterpolants::Int; endpoints::Symbol=Thiele3)
