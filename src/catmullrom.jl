@@ -23,9 +23,9 @@ function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=
            end
 end
 
-function catmullrom(points::PointSeq, ninterpolants::Int; endpoints::Symbol=Thiele3, closed::Bool=false) where {M,D,R}
+function catmullrom(points::PointSeq, ninterpolants::Integer; endpoints::Symbol=Thiele3, closed::Bool=false) where {M,D,R}
     interpolants = uniformspacing(ninterpolants)
-    return catmullrom(points, interpolants, endpoints, closed)
+    return catmullrom(points, interpolants, endpoints=endpoints, closed=closed)
 end
 
 @inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq, closed) where {M,D,R}
