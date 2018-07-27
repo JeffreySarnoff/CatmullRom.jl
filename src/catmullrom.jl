@@ -30,18 +30,19 @@ function catmullrom(points::PointSeq, ninterpolants::Int; allpoints::Bool=true) 
 end
 
 @inline function augmentends(points::PointSeq) where {M,D,R}
-    if typeof(points[1]) <: Tuple)
-        pre = prepoint(points[1:3]...,)
-        post = postpoint(xys[end-2:end]...,)
+    if typeof(points[1]) <: Tuple
+       pre = prepoint(points[1:3]...,)
+       post = postpoint(xys[end-2:end]...,)
     elseif typeof(points[1]) <: Vector
-        pre = [prepoint(points[1:3]...,)...,]
-        post = [postpoint(xys[end-2:end]...,)...,]
+       pre = [prepoint(points[1:3]...,)...,]
+       post = [postpoint(xys[end-2:end]...,)...,]
     else
-        throw(DomainError(string("unhandled point type: ",typeof(points[1]))
+       throw(DomainError(string("unhandled point type: ",typeof(points[1]))))
     end
-    
+
     return [pre, points..., post]
 end
+
 
 # ref https://ideone.com/NoEbVM
 
