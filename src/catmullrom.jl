@@ -1,3 +1,5 @@
+const endpointfn = Dict([:Linear => linear, :Quadratic => quadratic, :Thiele3 => thiele3])
+
 """
     catmullrom(points, interpolants; endpoints::Symbol=Thiele3)
     catmullrom(points, ninterpolants::Int; endpoints::Symbol=Thiele3)
@@ -14,13 +16,11 @@ function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
-    return if endpoints === Thiele3
-               T = typeof(points[1]) <: Tuple ? Tuple : Vector
-               catmullrom_npoints(augmentends(T, points), interpolants)
-           elseif npoints > 4
-               catmullrom_npoints(points, interpolants)
+    return if endpoints === Omit
+               npoints > 4 ? catmullrom_npoints(points, interpolants) : catmullrom_4points(points, interpolants)
            else
-               catmullrom_4points(points, interpolants)
+               T = typeof(points[1]) <: Tuple ? Tuple : Vector
+               catmullrom_npoints(augmentends(T, endpointfn[endpoints], points), interpolants)
            end
 end
 
@@ -29,16 +29,16 @@ function catmullrom(points::PointSeq, ninterpolants::Int; allpoints::Bool=true) 
     return catmullrom(points, interpolants, allpoints)
 end
 
-@inline function augmentends(::Type{Tuple}, points::PointSeq) where {M,D,R}
-    pre  = prepoint(points[1:3]...,)
-    post = postpoint(points[end-2:end]...,)
+@inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq) where {M,D,R}
+    pre  = prepoint(endpoints, points[1:3]...,)
+    post = postpoint(endpoints, points[end-2:end]...,)
 
     return [pre, points..., post]
 end
 
-@inline function augmentends(::Type{Vector}, points::PointSeq) where {M,D,R}
-    pre  = [prepoint(points[1:3]...,)...,]
-    post = [postpoint(points[end-2:end]...,)...,]
+@inline function augmentends(::Type{Vector}, endpoints::Symbol, points::PointSeq) where {M,D,R}
+    pre  = [prepoint(endpoints, points[1:3]...,)...,]
+    post = [postpoint(endpoints, points[end-2:end]...,)...,]
 
     return [pre, points..., post]
 end
