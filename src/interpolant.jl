@@ -25,7 +25,7 @@ end
 
 # julia> pre=CatmullRom.prepoint(xys[1:3]...,);
 
-function prepoint(point1, point2, point3)
+function prepoint(fn::Function, point1, point2, point3)
     dimen = length(point1)
     xpre = point1[1] - (point2[1] - point1[1])/8
 
@@ -40,7 +40,7 @@ function prepoint(point1, point2, point3)
         p1[2] = point1[idx]
         p2[2] = point2[idx]
         p3[2] = point3[idx]
-        point[idx] = thiele3(p1, p2, p3, xpre)
+        point[idx] = fn(p1, p2, p3, xpre)
     end
 
     return (point...,)
@@ -49,7 +49,7 @@ end
 
 # julia> post=postpoint(xys[end-2:end]...,);
 
-function postpoint(point1, point2, point3)
+function postpoint(fn::Function, point1, point2, point3)
     dimen = length(point1)
     xpost = point3[1] + (point3[1] - point2[1])/8
 
@@ -64,10 +64,35 @@ function postpoint(point1, point2, point3)
         p1[2] = point1[idx]
         p2[2] = point2[idx]
         p3[2] = point3[idx]
-        point[idx] = thiele3(p1, p2, p3, xpost)
+        point[idx] = fn(p1, p2, p3, xpost)
     end
 
     return (point...,)
+end
+
+function quadratic(pt1, pt2, pt3, x)
+    t1 = pt2[1] - pt1[1]
+    t2 = pt1[1] - pt3[1]
+    t3 = pt3[1] - pt2[1]
+    t4 = t2 * pt2[2]
+    t5 = pt3[1]*pt3[1]
+    t6 = pt2[1]*pt2[1]
+    t7 = pt1[1]*pt1[1]
+    
+    s = -(inv(t1) * inv(t2) * inv(t3))    
+    
+    a = (pt1[2] * t3 + pt3[2] * t1 + t4) * x 
+    b = t5 * (pt1[2] - pt2[2])
+    c = t6 * (pt3[2] - pt1[2])
+    d = t7 * (pt2[2] - pt3[2])
+    q = t6 * (pt1[2] * pt3[1] - pt3[2] * pt1[1])
+    r = t4 * pt1[1] * pt3[1]
+    n = (-pt1[2] * t5 + pt3[2] * t7) * pt2[1]
+    aa = a - b - c - d
+    bb = r - n - q
+    res = (s * (aa * x + bb))
+
+    return res
 end
 
 function thiele3(point1, point2, point3, x)
