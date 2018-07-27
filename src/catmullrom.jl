@@ -15,8 +15,8 @@ function catmullrom(points::PointSeq, interpolants::ValueSeq; allpoints::Bool=tr
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
     return if allpoints
-               # length(points) > 4
-               catmullrom_npoints(augmentends(points), interpolants)
+               T = typeof(points[1]) <: Tuple ? Tuple : Vector
+               catmullrom_npoints(augmentends(T, points), interpolants)
            elseif npoints > 4
                catmullrom_npoints(points, interpolants)
            else
@@ -29,16 +29,16 @@ function catmullrom(points::PointSeq, ninterpolants::Int; allpoints::Bool=true) 
     return catmullrom(points, interpolants, allpoints)
 end
 
-@inline function augmentends(points::PointSeq) where {M,D,R}
-    if typeof(points[1]) <: Tuple
-       pre = prepoint(points[1:3]...,)
-       post = postpoint(xys[end-2:end]...,)
-    elseif typeof(points[1]) <: Vector
-       pre = [prepoint(points[1:3]...,)...,]
-       post = [postpoint(xys[end-2:end]...,)...,]
-    else
-       throw(DomainError(string("unhandled point type: ",typeof(points[1]))))
-    end
+@inline function augmentends(::Type{Tuple}, points::PointSeq) where {M,D,R}
+    pre  = prepoint(points[1:3]...,)
+    post = postpoint(points[end-2:end]...,)
+    
+    return [pre, points..., post]
+end
+
+@inline function augmentends(::Type{Vector}, points::PointSeq) where {M,D,R}
+    pre  = [prepoint(points[1:3]...,)...,]
+    post = [postpoint(points[end-2:end]...,)...,]
 
     return [pre, points..., post]
 end
