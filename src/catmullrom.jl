@@ -76,17 +76,13 @@ function hermite_cubic(x0::T, x1::T, dx0::T, dx1::T) where {T}
     return Poly([c0, c1, c2, c3])
 end
 
-
-
-
 qrtrroot(x) = sqrt(sqrt(x))
 
 #=
    determine the delta_traversal constants for the centripetal parameterization
       of the Catmull Rom cubic specified by four points (of increasing abcissae)
 =#
-function prep_centripetal_catmullrom(points::P) where
-     {I,D,R<:Real, P<:Union{NTuple{I, NTuple{D,R}}, Vector{NTuple{D,R}}, Vector{Vector{R}}}}
+function prep_centripetal_catmullrom(points::PointSeq) where {M,D,R}
     dt0 = qrtrroot(dot(points[1], points[2]))
     dt1 = qrtrroot(dot(points[2], points[3]))
     dt2 = qrtrroot(dot(points[3], points[4]))
@@ -99,15 +95,13 @@ function prep_centripetal_catmullrom(points::P) where
     return dt0, dt1, dt2
  end
 
-
 """
     catmullrom_npoints(points, interpolants)
     `points` is a tuple of points-as-tuples
     `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom_npoints(pts::P, interpolants::Union{NTuple{N,F},Vector{F}}) where
-     {I,D,N,R,F<:Real, P<:Union{NTuple{I, NTuple{D,R}}, Vector{NTuple{D,R}}, Vector{Vector{R}}}}
+function catmullrom_npoints(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,L,F}
     npoints = length(pts)
     points_per_interpolation = length(interpolants)
     totalinterps = (npoints-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
@@ -141,8 +135,7 @@ end
    where the first interpolant point is the second ND point
    and the final interplant point is the third ND point
 =#
-function catmullrom_4points(pts::P, interpolants::Union{NTuple{N,F},Vector{R}}) where
-     {D,N,R<:Real,F<:Real, P<:Union{NTuple{4, NTuple{D,R}}, Vector{NTuple{D,R}}, Vector{Vector{R}}}}
+function catmullrom_4points(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,L,F}
     polys = catmullrom_polys(pts)
     ninterps = length(interpolants)
     dimen = length(pts[1])
@@ -162,7 +155,7 @@ function catmullrom_4points(pts::P, interpolants::Union{NTuple{N,F},Vector{R}}) 
         end
     end
 
-    return points
+    return (points...,)
 end
 
 #=
