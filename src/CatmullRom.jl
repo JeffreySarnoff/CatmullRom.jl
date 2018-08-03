@@ -12,7 +12,7 @@ import LinearAlgebra: dot, norm
 
 include("consts.jl")
 include("unions.jl")
-include("catmullrom.jl")
+include("centripetal_catmullrom.jl")
 include("interpolant.jl")
 
 end # module CentripetalCatmullRom
