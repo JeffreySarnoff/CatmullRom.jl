@@ -1,7 +1,7 @@
 desc = "Well-behaved and performant interpolation through points in 2D, 3D .. ManyD."
 keywords = ["Catmull-Rom", "spline", "cubic", "interpolation", "centripetal"]
 name = "CatmullRom"
-uuid = "8cec4794-8dba-11e8-1ccf-e96e7e90db5c"
+uuid = "5b5b35a2-003c-5b99-bc04-a964994dd816"
 repo = "https://github.com/JeffreySarnoff/CatmullRom.jl.git"
 author = "Jeffrey Sarnoff <jeffrey.sarnoff@gmail.com>"
 license = "MIT"
