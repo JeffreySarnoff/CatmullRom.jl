@@ -1,6 +1,8 @@
 using CatmullRom
 using Test
 
+include("interpolants")
+
 points2D = ((0.0, 0.0), (0.25, 2.0), (0.75, 2.0), (1.0, 0.0))
 points3D = ((0.0, 0.0, 0.0), (0.25, 2.0, 0.5), (1.75, 2.0, 1.0), (1.0, 0.0, 0.0))
 
