@@ -10,7 +10,7 @@ all of the interpolants are applied to each segment
 endpoints==Omit: interpolating from points[2] through points[end-1]
 endpoints==Thiele3:  interpolating from points[1] through points[end]
 """
-function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=Thiele3, closed::Bool=false) where {M,D,R,L,F}
+function catmullrom(points::PointSeq{N,T}, interpolants::ValueSeq{M,S}; endpoints::Symbol=Thiele3, closed::Bool=false) where {N,T, M,S}
     npoints = length(points)
     npoints < 4 && throw(ErrorException("at least four points are required"))
 
@@ -23,12 +23,12 @@ function catmullrom(points::PointSeq, interpolants::ValueSeq; endpoints::Symbol=
            end
 end
 
-function catmullrom(points::PointSeq, ninterpolants::Integer; endpoints::Symbol=Thiele3, closed::Bool=false) where {M,D,R}
+function catmullrom(points::PointSeq{N,T}, ninterpolants::Integer; endpoints::Symbol=Thiele3, closed::Bool=false) where {N,T}
     interpolants = uniformspacing(ninterpolants)
     return catmullrom(points, interpolants, endpoints=endpoints, closed=closed)
 end
 
-@inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq, closed) where {M,D,R}
+@inline function augmentends(::Type{Tuple}, endpoints::Function, points::PointSeq{N,T}, closed) where {N,T}
     if !closed
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
@@ -44,7 +44,7 @@ end
      return [pre..., points[1:end]..., post...,]
 end
 
-@inline function augmentends(::Type{Vector}, endpoints::Symbol, points::PointSeq, closed) where {M,D,R}
+@inline function augmentends(::Type{Vector}, endpoints::Symbol, points::PointSeq{N,T}, closed) where {N,T}
     if !closed
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
@@ -95,7 +95,7 @@ qrtrroot(x) = sqrt(sqrt(x))
    determine the delta_traversal constants for the centripetal parameterization
       of the Catmull Rom cubic specified by four points (of increasing abcissae)
 =#
-function prep_centripetal_catmullrom(points::PointSeq) where {M,D,R}
+function prep_centripetal_catmullrom(points::PointSeq) where {N,T}
     dt0 = qrtrroot(dot(points[1], points[2]))
     dt1 = qrtrroot(dot(points[2], points[3]))
     dt2 = qrtrroot(dot(points[3], points[4]))
@@ -114,7 +114,7 @@ function prep_centripetal_catmullrom(points::PointSeq) where {M,D,R}
     `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
 interpolating points from points[2] through points[end-1] (inclusive)
 """
-function catmullrom_npoints(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,L,F}
+function catmullrom_npoints(pts::PointSeq{N,T}, interpolants::ValueSeq{M,S}) where {N,T, M,S}
     npoints = length(pts)
     points_per_interpolation = length(interpolants)
     totalinterps = (npoints-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
@@ -149,7 +149,7 @@ end
    where the first interpolant point is the second ND point
    and the final interplant point is the third ND point
 =#
-function catmullrom_4points(pts::PointSeq, interpolants::ValueSeq) where {M,D,R,L,F}
+function catmullrom_4points(pts::PointSeq{N,T}, interpolants::ValueSeq{M,S}) where {N,T, M,S}
     polys = catmullrom_polys(pts)
     totalinterps = length(interpolants)
     dimen = length(pts[1])
@@ -180,7 +180,7 @@ end
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
 =#
-function catmullrom_polys(points::PointSeq) where {M,D,R}
+function catmullrom_polys(points::PointSeq) where {N,T}
     length(points) == 4 || throw(DomainError("exactly four points are required"))
 
     dt0, dt1, dt2 = prep_centripetal_catmullrom(points)
@@ -196,7 +196,7 @@ function catmullrom_polys(points::PointSeq) where {M,D,R}
     return polys
 end
 
-function catmullrom_allpolys(points::PointSeq, deriv1::Bool=false, deriv2::Bool=false, integ1::Bool=false) where {M,D,R}
+function catmullrom_allpolys(points::PointSeq, deriv1::Bool=false, deriv2::Bool=false, integ1::Bool=false) where {N,T}
     polys = catmullrom_polys(points)
 
     d1polys = deriv1 ? polyder.(polys)    : nothing
