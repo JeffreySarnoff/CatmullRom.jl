@@ -48,9 +48,9 @@
     - forces values into 0.0..1.0
 
 ```julia
-julia> using CentripetalCatmullRom
+julia> using CatmullRom
 
-julia> interpolants = collect
+julia> interpolants = uniform(2)
 julia> points2D = ([(sinpi(x),cospi(x)) for x=0.0f0:(0.25f0/3.0f0):0.25f0]...,)
 ((0.0f0, 1.0f0), (0.25881904f0, 0.9659258f0), (0.5f0, 0.8660254f0), (0.70710677f0, 0.70710677f0))
 
@@ -71,7 +71,6 @@ Each interval is square root of the Euclidean distance between the points.
 ### Refs
 
 [Parameterization and Applications of Catmull-Rom Curves](http://www.cemyuksel.com/research/catmullrom_param/catmullrom_cad.pdf)
-by Cem Yuksel, Scott Schaefer, John Keyser
 
 [The Centripetal Catmull-Rom Spline](https://howlingpixel.com/wiki/Centripetal_Catmull%E2%80%93Rom_spline)
 
