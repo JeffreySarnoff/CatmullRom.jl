@@ -25,6 +25,6 @@ end
                    (2, [1/3, 2/3]),
                    (3, [1/4, 2/4, 3/4]),
                  )
-        @eval within01($X) === $Z
+        @eval CatmullRom.within01($X) === $Z
     end
 end
