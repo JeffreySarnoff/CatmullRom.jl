@@ -41,7 +41,7 @@ end
         =#
     end
     
-     return ((pre..., points[1:end]..., post...,),)
+     return (pre..., points[1:end]..., post...,)
 end
 
 @inline function augmentends(::Type{Vector}, endpoints::Symbol, points::Items{N,T}, closed) where {N,T}
@@ -53,7 +53,7 @@ end
         post = points[1:3]
     end
     
-     return ((pre..., points[1:end]..., post...,),)
+     return (pre..., points[1:end]..., post...,)
 end
 
 
