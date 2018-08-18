@@ -27,12 +27,12 @@
 
 ## interpolation points
 
-- `uniformsep(n)`
+- `uniform01(n)`
     - [0.0, b, c.., n-2, n-1, 1.0]
     - `c - b ~= (n-1) - (n-2)` 
     - _uniformly separated interpolants_
 
-- `chebyshevsep(n)`
+- `chebyshev01(n)`
     - [0.0, b .. n-1, 1.0]
     - Chebyshev polynomial of the second kind, roots
     - roots of U(n), mapped into 0.0:1.0
@@ -59,7 +59,8 @@ julia> polys = catmullrom_polys(points2D)
  Poly(0.25881904f0 + 0.25f0*x - 0.00060100853f0*x^2 - 0.008218035f0*x^3)   
  Poly(0.9659258f0 - 0.06698731f0*x - 0.03631732f0*x^2 + 0.0034040362f0*x^3)
 
-julia> catmullrom(points2D,
+julia> catmullrom(points2D, interpolants)
+
 ```
 -----
 
