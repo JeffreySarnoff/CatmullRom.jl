@@ -50,7 +50,7 @@
 ```julia
 julia> using CatmullRom
 
-julia> interpolants = uniform(2)
+julia> interpolants = uniform01(2)
 julia> points2D = ([(sinpi(x),cospi(x)) for x=0.0f0:(0.25f0/3.0f0):0.25f0]...,)
 ((0.0f0, 1.0f0), (0.25881904f0, 0.9659258f0), (0.5f0, 0.8660254f0), (0.70710677f0, 0.70710677f0))
 
