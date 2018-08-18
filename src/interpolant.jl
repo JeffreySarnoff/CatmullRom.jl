@@ -39,7 +39,7 @@ function into01(unitrange::UnitRange{T}) where {T}
     return LinRange(0.0, 1.0, span)
 end
 
-function into01(values::U) where {U<:Union{AbstractVector{T}, NTuple{N,T}}) where {N,T}
+function into01(values::U) where {U<:Union{AbstractVector{T}, NTuple{N,T}}} where {N,T}
     valuemin = minimum(values)
     span = maximum(values) - valuemin
     delta = sqrt(sum(map(x->x*x, span)))
