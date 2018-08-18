@@ -27,7 +27,7 @@ generate n >= 2 values uniformly spaced from 0..1, includes 0, 1
     uniform01(3) == [0.0, 0.5, 1.0]
     uniform01(4) == [0.0, 1/3, 2/3, 1.0]
 """
-uniform01(n::Int) = LinRange(0.0, 1.0, max(2,n))
+uniform01(n::Int) = collect(LinRange(0.0, 1.0, max(2,n)))
 
 """
     into01((xs...,))
@@ -36,7 +36,7 @@ maps values into 0.0:1.0 (minimum(xs) --> 0.0, maximum(xs) --> 1.0)
 """
 function into01(unitrange::UnitRange{T}) where {T}
     span = unitrange.stop - unitrange.start
-    return LinRange(0.0, 1.0, span)
+    return collect(LinRange(0.0, 1.0, span))
 end
 
 function into01(values::U) where {U<:Union{AbstractVector{T}, NTuple{N,T}}} where {N,T}
