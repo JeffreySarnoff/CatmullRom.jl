@@ -68,7 +68,7 @@ function prepoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P<
         point[idx] = fn(p1, p2, p3, xpre)
     end
 
-    return (point...,)
+    return point
 end
 
 
@@ -92,7 +92,7 @@ function postpoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P
         point[idx] = fn(p1, p2, p3, xpost)
     end
 
-    return (point...,)
+    return point
 end
 
 function linear(pt1, pt2, x)
