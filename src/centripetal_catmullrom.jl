@@ -180,7 +180,7 @@ end
    interpolating from p1 to p2 inclusive
    one poly for each coordinate axis
 =#
-function catmullrom_polys(points::Items{N,T}, interpolants::Items{M,S}) where {N,T}
+function catmullrom_polys(points::Items{N,T}, interpolants::Items{M,S}) where {N,T,M,S}
     length(points) == 4 || throw(DomainError("exactly four points are required"))
 
     dt0, dt1, dt2 = prep_centripetal_catmullrom(points)
