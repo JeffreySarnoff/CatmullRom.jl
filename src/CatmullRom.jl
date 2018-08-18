@@ -2,7 +2,7 @@ module CatmullRom
 
 export catmullrom,    # points, interpolants --> points, interpolated points
        Omit, Linear, Quadratic, Thiele3,
-       uniformspacing, into01,
+       uniformspacing, into01, clamp01,
        Poly, polyval, polyder, polyint  # reexported
 
 using Polynomials
