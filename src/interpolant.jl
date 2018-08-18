@@ -15,7 +15,7 @@ generate n >= 0 values uniformly spaced inside 0..1, excludes 0, 1
     within01(1) == [1/2]
     within01(2) == [1/3, 2/3]
 """
-within01(n::Int) = collect(0.0:inv(n-1):1.0)
+within01(n::Int) = collect(0.0:inv(n+1):1.0)[2:end-1]
 
 """
     uniform01(n::Int)
