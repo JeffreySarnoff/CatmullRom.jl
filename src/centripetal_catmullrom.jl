@@ -17,8 +17,8 @@ function catmullrom(points::NTuple{N,NTuple{M,T}}, interpolants::NTuple{L,S}; en
     return if endpoints === Omit
                npoints > 4 ? catmullrom_npoints(points, interpolants) : catmullrom_4points(points, interpolants)
            else
-               Y = typeof(points[1]) <: Tuple ? Tuple : Vector
-               points = augmentends(Y, endpointfn[endpoints], points, closed)
+               TY = typeof(points[1]) <: Tuple ? Tuple : Vector
+               points = augmentends(TY, endpointfn[endpoints], points, closed)
                catmullrom_npoints(points, interpolants)
            end
 end
@@ -120,8 +120,8 @@ function catmullrom_npoints(pts::NTuple{N,NTuple{M,T}}, interpolants::NTuple{L,S
     totalinterps = (npoints-4+1)*(points_per_interpolation - 1) + 1 # -1 for the shared end|1 point
 
     dimen = length(pts[1])
-    Y = NTuple{dimen, typeof(pts[1][1])}
-    points = Array{Y, 1}(undef, totalinterps)
+    TY = NTuple{dimen, typeof(pts[1][1])}
+    points = Array{TY, 1}(undef, totalinterps)
 
     niters = npoints - 5
 
@@ -153,8 +153,8 @@ function catmullrom_4points(pts::NTuple{N,NTuple{M,T}}, interpolants::NTuple{L,S
     polys = catmullrom_polys(pts)
     totalinterps = length(interpolants)
     dimen = length(pts[1])
-    Y = typeof(pts[1][1])
-    points = Array{Y, 2}(undef, (totalinterps,dimen))
+    TY = typeof(pts[1][1])
+    points = Array{TY, 2}(undef, (totalinterps,dimen))
 
     for col in 1:dimen
         points[1, col] = pts[2][col]
