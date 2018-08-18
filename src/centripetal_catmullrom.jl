@@ -24,7 +24,7 @@ function catmullrom(points::Items{N,T}, interpolants::Items{N,T}; endpoints::Sym
 end
 
 function catmullrom(points::Items{N,T}, ninterpolants::Integer; endpoints::Symbol=Thiele3, closed::Bool=false) where {N,T}
-    interpolants = uniformspacing(ninterpolants)
+    interpolants = uniform01(ninterpolants)
     return catmullrom(points, interpolants, endpoints=endpoints, closed=closed)
 end
 
