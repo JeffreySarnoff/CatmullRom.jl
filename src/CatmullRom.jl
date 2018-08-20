@@ -22,6 +22,7 @@ import LinearAlgebra: dot, norm
 include("consts.jl")
 include("extrapolate.jl")
 include("interpolant.jl")
+include("augment_boundaries.jl")
 include("centripetal_catmullrom.jl")
 
 end # module CentripetalCatmullRom
