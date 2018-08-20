@@ -10,7 +10,7 @@ see @ref(catmullrom) for use.
 module CatmullRom
 
 export catmullrom,    # points, interpolants --> points, interpolated points
-       Omit, Linear, Quadratic, Thiele3,
+       Omit, Linear, Quadratic, Thiele3, Thiele4,
        uniform01, into01, clamp01,
        Poly, polyval, polyder, polyint  # reexported
 
