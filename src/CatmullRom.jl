@@ -20,8 +20,8 @@ import Polynomials: Poly, polyval, polyder, polyint
 import LinearAlgebra: dot, norm
 
 include("consts.jl")
-include("unions.jl")
-include("centripetal_catmullrom.jl")
+include("extrapolate.jl")
 include("interpolant.jl")
+include("centripetal_catmullrom.jl")
 
 end # module CentripetalCatmullRom
