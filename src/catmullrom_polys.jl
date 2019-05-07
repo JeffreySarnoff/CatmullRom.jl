@@ -32,9 +32,6 @@ end
 qrtrroot(x) = sqrt(sqrt(x))
 
 
-
-
-
 function catmullrom_allpolys(points::Points{N,T}, deriv1::Bool=false, deriv2::Bool=false, integ1::Bool=false) where {N,T}
     polys = catmullrom_polys(points)
 
