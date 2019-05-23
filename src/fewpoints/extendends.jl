@@ -1,4 +1,15 @@
-@inline function augmentends(::Type{Tuple}, endpoints::Function, points::Points{N,T}, closed) where {N,T}
+function extend_ends(extender, firstpoints, lastpoints)
+    return  firstpoint(extender, firstpoints[1:3]...,), 
+            finalpoint(extender, finalpoints[1:3]...,)
+end
+
+function extend_ends(extender, points)
+    return firstpoint(extender, points[1:3]...,),
+           finalpoint(extender, points[end-2:end]...,)
+end
+
+
+#=    
     if !closed
         pre  = prepoint(endpoints, points[1:3]...,)
         post = postpoint(endpoints, points[end-2:end]...,)
@@ -10,27 +21,10 @@
         post  = (points[end] .+ points[end] .+ points[1])./3
         =#
     end
-
-    return [(pre...,), points[1:end]..., (post...,)]
-end
-
-@inline function augmentends(::Type{Vector}, endpoints::Symbol, points::Points{N,T}, closed) where {N,T}
-    if !closed
-        pre  = prepoint(endpoints, points[1:3]...,)
-        post = postpoint(endpoints, points[end-2:end]...,)
-    else
-        pre  = points[end-2:end]
-        post = points[1:3]
-    end
-
-    return [(pre...,), points[1:end]..., (post...,)]
-end
+=#
 
 
-
-# julia> pre=CatmullRom.prepoint(xys[1:3]...,);
-
-function prepoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P<:OnePoint}
+function firstpoint(fn::F, point1::P, point2::P, point3::P) where {P, F<:Function}
     dimen = length(point1)
     xpre = point1[1] - (point2[1] - point1[1])/8
 
@@ -51,10 +45,7 @@ function prepoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P<
     return point
 end
 
-
-# julia> post=postpoint(xys[end-2:end]...,);
-
-function postpoint(fn::F, point1::P, point2::P, point3::P) where {F<:Function, P<:OnePoint}
+function finalpoint(fn::F, point1::P, point2::P, point3::P) :: {P, F<:FUNCTION}
     dimen = length(point1)
     xpost = point3[1] + (point3[1] - point2[1])/8
 
