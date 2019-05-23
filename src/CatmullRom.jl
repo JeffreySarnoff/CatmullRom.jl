@@ -9,10 +9,11 @@ module CatmullRom
 
 export catmullrom,
        # extrapolate just beyond endpoints from 2 or 3 given, adjacent points
-       reflect, linear, quadratic, thiele3    # appropriate for interpolation
-
+       reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
+       
 include("fewpoints/twopoints.jl")
 include("fewpoints/threepoints.jl")
+include("fewpoints/fourpoints.jl")
 
 
 end # CatmullRom
