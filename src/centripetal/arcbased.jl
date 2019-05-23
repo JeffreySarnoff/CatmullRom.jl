@@ -1,10 +1,10 @@
-function catmullrom_pathparts(points::PointSeq, avg_points_per_segment::Int=19) where {M,D,R}
+function catmullrom_pathparts(points::P, avg_points_per_segment::Int=19) where {P}
     points_to_interpolate = avg_points_per_segment * (length(points) - 1)
     spancounts = catmullrom_onpath(points, points_to_interpolate)
     return spancounts
 end
 
-function catmullrom_onpath(points::PointSeq, ninterpolants::Int) where {M,D,R}
+function catmullrom_onpath(points::P, ninterpolants::Int) where {P}
     extents = catmullrom_extents(points)
     # use extents to apportion ninterpolants
     relspans = extents .* inv(sum(extents))    # relspans sum to 1
@@ -43,7 +43,7 @@ end
     n points implies n-1 adjacent interpoint segments.
 =#
 
-function catmullrom_extents(points::PointSeq) where {M,D,R}
+function catmullrom_extents(points::P) where {p}
     npoints = length(points)
     result = Vector{R}(undef, npoints - 1)
     result[1]   = linearseparation(points[1], points[2])
@@ -67,7 +67,7 @@ end
     and the tangents they determine.
     this algorithm was developed by Jens Gravesen
 =#
-function approximate_arclength(points::PointSeq) where {M,D,R}
+function approximate_arclength(points::P) where {P}
      ldist12 = linearseparation(points[2], points[1])
      ldist23 = linearseparation(points[3], points[2])
      ldist34 = linearseparation(points[4], points[3])
@@ -85,7 +85,7 @@ function approximate_arclength(points::PointSeq) where {M,D,R}
 end
 
 
-linearseparation(a::OnePoint, b::OnePoint) where {D,R} =
+linearseparation(a::P1, b::P1) where {P1} =
     sqrt(lawofcosines(norm(a), anglesep(a, b), norm(b)))
 
 lawofcosines(side1, anglebetween, side2) =
@@ -100,7 +100,7 @@ lawofcosines(side1, anglebetween, side2) =
 #  >>>  use AngleBetweenVectors.jl
 #
 
-function anglesep(pointa::OnePoint, pointb::OnePoint) where {D,R}
+function anglesep(pointa::P1, pointb::P1) where {P1}
     dota = dot(pointa, pointa)
     dotb = dot(pointb, pointb)
     (iszero(dota) || iszero(dotb)) && return zero(T)
