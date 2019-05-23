@@ -1,14 +1,13 @@
 """
     CatmullRom
 
-This package provides open and closed centripetal Catmull-Rom splines.
-The centripetal parameterization of Catmull-Rom splines works best in use:
-it does not crimp and provides a useful amount of relative taughtness.
+Interpolate using the centripetal parameterization of Catmull-Rom splines.
+This is the form that does not crimp, provides taughtness, and looks good.
 """
 module CatmullRom
 
-export catmullrom, augmentends,
-       # extrapolate just beyond endpoints from 2 or 3 given, adjacent points
+export catmullrom,
+       extendends,   # extrapolate just beyond endpoints from adjacent points
        reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
 
 include("centripetal/catmullrom.jl")
