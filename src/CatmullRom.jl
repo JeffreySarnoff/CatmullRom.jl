@@ -6,8 +6,8 @@ This is the form that does not crimp, provides taughtness, and looks good.
 """
 module CatmullRom
 
-export catmullrom,
-       extendbounds # extrapolate just beyond endpoints from adjacent points
+export catmullrom,    # populates with points placed between those given
+       extendbounds   # extrapolate just beyond endpoints from adjacent points
 
 # available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
 # reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
