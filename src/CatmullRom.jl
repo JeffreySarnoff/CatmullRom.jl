@@ -7,7 +7,7 @@ This is the form that does not crimp, provides taughtness, and looks good.
 module CatmullRom
 
 export catmullrom,
-       extendends,   # extrapolate just beyond endpoints from adjacent points
+       extendbounds, # extrapolate just beyond endpoints from adjacent points
        reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
 
 include("centripetal/catmullrom.jl")
