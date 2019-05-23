@@ -13,7 +13,7 @@ export catmullrom,
 include("centripetal/catmullrom.jl")
 include("centripetal/arcbased.jl")
 
-include("fewpoints/augmentends.jl")
+include("fewpoints/extendbounds.jl")
 include("fewpoints/twopoints.jl")
 include("fewpoints/threepoints.jl")
 include("fewpoints/fourpoints.jl")
