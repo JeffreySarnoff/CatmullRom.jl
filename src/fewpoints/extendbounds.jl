@@ -1,13 +1,26 @@
-function extendbounds(extender, firstpoints, lastpoints)
+function extendbounds(extender::FUNCTION, 
+                      firstpoints::T, finalpoints::T) where {T}
     return  firstpoint(extender, firstpoints[1:3]...,), 
             finalpoint(extender, finalpoints[1:3]...,)
 end
 
-function extendbounds(extender, points)
+function extendbounds(extender::FUNCTION,
+                      points)    
     return firstpoint(extender, points[1:3]...,),
            finalpoint(extender, points[end-2:end]...,)
 end
 
+function extendbounds(firstextender::FUNCTION, finalextender::FUNCTION,
+                      firstpoints, finalpoints)
+    return  firstpoint(firstextender, firstpoints[1:3]...,), 
+            finalpoint(finalextender, finalpoints[1:3]...,)
+end
+
+function extendbounds(firstextender::FUNCTION, finalextender::FUNCTION,
+                      points)
+    return firstpoint(firstextender, points[1:3]...,),
+           finalpoint(finalextender, points[end-2:end]...,)
+end
 
 #=    
     if !closed
