@@ -1,29 +1,18 @@
 """
-   CatmullRom
+    CatmullRom
 
 This package provides open and closed centripetal Catmull-Rom splines.
 The centripetal parameterization of Catmull-Rom splines works best in use:
 it does not crimp and provides a useful amount of relative taughtness.
-
-see @ref(catmullrom) for use.
 """
 module CatmullRom
 
-export catmullrom,    # points, interpolants --> points, interpolated points
-       Omit, Linear, Quadratic, Thiele3, Thiele4,
-       uniform01, into01, clamp01,
-       Poly, polyval, polyder, polyint  # reexported
+export catmullrom,
+       # extrapolate just beyond endpoints from 2 or 3 given, adjacent points
+       reflect, linear, quadratic, thiele3    # appropriate for interpolation
 
-using Polynomials
-import Polynomials: Poly, polyval, polyder, polyint
+include("fewpoints/twopoints.jl")
+include("fewpoints/threepoints.jl")
 
-import LinearAlgebra: dot, norm
 
-include("consts.jl")
-include("extrapolate.jl")
-include("interpolant.jl")
-include("augment_boundaries.jl")
-include("catmullrom_polys.jl")
-include("centripetal_catmullrom.jl")
-
-end # module CentripetalCatmullRom
+end # CatmullRom
