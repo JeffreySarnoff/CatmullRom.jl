@@ -1,9 +1,9 @@
-function extend_ends(extender, firstpoints, lastpoints)
+function extendbounds(extender, firstpoints, lastpoints)
     return  firstpoint(extender, firstpoints[1:3]...,), 
             finalpoint(extender, finalpoints[1:3]...,)
 end
 
-function extend_ends(extender, points)
+function extendbounds(extender, points)
     return firstpoint(extender, points[1:3]...,),
            finalpoint(extender, points[end-2:end]...,)
 end
