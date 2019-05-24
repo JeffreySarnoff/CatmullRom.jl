@@ -43,7 +43,7 @@ end
     n points implies n-1 adjacent interpoint segments.
 =#
 
-function catmullrom_extents(points::P) where {p}
+function catmullrom_extents(points::P) where {P}
     npoints = length(points)
     result = Vector{R}(undef, npoints - 1)
     result[1]   = linearseparation(points[1], points[2])
