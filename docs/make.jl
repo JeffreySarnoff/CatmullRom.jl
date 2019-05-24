@@ -8,7 +8,7 @@ makedocs(
         "Overview" => "index.md",
         "Guide" => "guide.md",
         "Notes" => "notes.md",
-        "Refs" => "references.md"
+        "References" => "references.md"
     ]
 )
 
