@@ -1,7 +1,12 @@
+"""
+    catmullrom(  points_along_curve,    howmany_more_interpoint)
+                 «in traversal order»  «interpolants introduced»
 
 """
-    catmullrom( points_in_sequence,
-                interpoint_segments,
+
+
+"""
+    catmullrom( points_along_curve, segments_between_points,
                ; iterator = false   )
 
 Given abcissa-sequenced path of points, and
