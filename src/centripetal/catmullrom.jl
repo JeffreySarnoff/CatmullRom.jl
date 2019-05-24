@@ -1,6 +1,6 @@
 """
-    catmullrom(  points_along_curve,    howmany_more_interpoint)
-                 «in traversal order»  «interpolants introduced»
+    catmullrom(  points_along_curve,    howmany_more_interpoint    )
+                 «in traversal order»  «interpolants per neighbors»
 
 """
 
