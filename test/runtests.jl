@@ -2,7 +2,7 @@ using CatmullRom
 using Test
 
 include("interpolants.jl")
-
+#=
 points2D = ((0.0, 0.0), (0.25, 2.0), (0.75, 2.0), (1.0, 0.0))
 points3D = ((0.0, 0.0, 0.0), (0.25, 2.0, 0.5), (1.75, 2.0, 1.0), (1.0, 0.0, 0.0))
 
@@ -20,3 +20,4 @@ points2D = ((0.0, 0.0), (0.25, 2.0), (0.5, 3.0), (0.75, 2.0), (1.0, 0.0))
 pts2D = catmullrom(points2D, interpolants, endpoints=Omit)
 @test pts2D[6,:][1] == (0.5, 3.0)
 @test Float32.(pts2D[5,:][1]) == (0.45015842f0, 2.9427261f0)
+=#
