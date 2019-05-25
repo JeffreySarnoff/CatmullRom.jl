@@ -9,8 +9,7 @@ Approaching the Unit Circle
 
 given₁ = [ (x= 1.0, y= 0.0), (x= 0.0, y= 1.0), (x= -1.0, y=0 .0), (x= 0.0, y= -1.0) ]
 
-xs = first.(given₁)
-ys = final.(given₁)
+xs = first.(given₁), ys = final.(given₁)
 
 Is that too coarse a list? Are there too few points given to support our purpose?
 
