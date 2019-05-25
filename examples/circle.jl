@@ -18,10 +18,9 @@ given₂ = [ (x=  1.0, y=  0.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  �
            (x= -1.0, y=  0.0), (-√3/2, -1/2), (-√2/2, -√2/2), (-1/2, -√3/2),
            (x=  0.0, y= -1.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  √3/2) ]
 
-xs, ys = given₁
-xs, ys = given₁
+xsc, = given₁
+ys = given₁
 
 
 How many intermediating points should be introduced between adjacent point pairs?
-
-s
+"""
