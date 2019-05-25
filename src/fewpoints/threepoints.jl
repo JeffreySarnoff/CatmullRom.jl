@@ -21,7 +21,7 @@ function quadratic(pt₁x, pt₂x, pt₃x, pt₁y, pt₂y, pt₃y, x)
     t1 = pt₂x - pt₁x
     t2 = pt₁x - pt₃x
     t3 = pt₃x - pt₂x
-    t4 = t2 * pt₂y
+    t4 = t2   * pt₂y
     t5 = pt₃x * pt₃x
     t6 = pt₂x * pt₂x
     t7 = pt₁x * pt₁x
@@ -33,7 +33,7 @@ function quadratic(pt₁x, pt₂x, pt₃x, pt₁y, pt₂y, pt₃y, x)
     c = t6 * (pt₃y - pt₁y)
     d = t7 * (pt₂y - pt₃y)
     q = t6 * (pt₁y * pt₃x - pt₃y * pt₁x)
-    r = t4 * pt₁x * pt₃x
+    r = t4 *  pt₁x * pt₃x
     n = (-pt₁y * t5 + pt₃y * t7) * pt₂x
     aa = a - b - c - d
     bb = r - n - q
