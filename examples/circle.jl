@@ -20,9 +20,9 @@ given₂ = [ (x=  1.0, y=  0.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  �
            (x= -1.0, y=  0.0), (-√3/2, -1/2), (-√2/2, -√2/2), (-1/2, -√3/2),
            (x=  0.0, y= -1.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  √3/2) ]
 
-xs = given₁
-ys = given₂
+xs = getfirst.(given₁); ys = getlast.(given₁)
+ys = getfirst.(given₂); getfirst.(
 
 
-How many intermediating points should be introduced between adjacent point pairs?
-"""
+How many intermediating points should be introduced between adjacent point pairs? given₂?
+
