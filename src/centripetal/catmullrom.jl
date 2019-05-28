@@ -1,5 +1,5 @@
 """
-    catmullrom(  points_along_curve, interpolants_between_points )
+    catmullrom(  points_along_curve, n_interpolants_between_points )
                ; iterator = false   )
 
 Given abcissa-sequenced path of points, and
@@ -19,7 +19,7 @@ instructs the return of explict coordinate values.
 When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
-function catmullrom(points, nbetween; iterator=false)
+function catmullrom(points, nbetween::Int; iterator:Bool=false)
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
     # include the given points (knots) for poly generation
@@ -42,6 +42,12 @@ function catmullrom(points, nbetween; iterator=false)
 
     return iterator ? crpoints : collect.(crpoints)
 end
+
+catmullrom(points::Array{NT,1}, nbetween::Int; iterator::Bool=false) where {NT<:NamedTuple} =
+    catmullrom(Tuple.(points), nbetween, iterator=iterator)
+
+catmullrom(points::NTuple{N,NT}, nbetween::Int; iterator::Bool=false) where {N, NT<:NamedTuple} =
+    catmullrom(Tuple.(points), nbetween, iterator=iterator)
 
 """
     catmullrom_polys(points)
