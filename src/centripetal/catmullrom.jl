@@ -1,5 +1,5 @@
 """
-    catmullrom(  points_along_curve, n_interpolants_between_points )
+    catmullrom(  points_along_curve, n_between_points )
                ; iterator = false   )
 
 Given abcissa-sequenced path of points, and
