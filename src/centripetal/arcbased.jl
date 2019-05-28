@@ -1,3 +1,18 @@
+function cr2bezier(p0,p1,p2,p3)
+    b0 = p1
+    b3 = p2
+    d1 = norm(p1 .- p0); d1a = sqrt(d1)
+    d2 = norm(p2 .- p1); d2a = sqrt(d2)
+    d3 = norm(p3 .- p2); d3a = sqrt(d3)
+    b1n = @. (d1 * p2) - (d2 * p0) + ((2*d1 + 3*d1a*d2a+d2) * p1)
+    b1d = 3*d1a*(d1a+d2a)
+    b1 = b1n ./ b1d
+    b2n = @. (d3 * p1) - (d2 * p3) + ((2*d3 + 3*d3a*d2a+d2) * p2)
+    b2d = 3*d3a*(d3a+d2a)
+    b2 = b2n ./ b2d
+    return b0,b1,b2,b3
+end
+
 function catmullrom_pathparts(points::P, avg_points_per_segment::Int=19) where {P}
     points_to_interpolate = avg_points_per_segment * (length(points) - 1)
     spancounts = catmullrom_onpath(points, points_to_interpolate)
