@@ -8,7 +8,9 @@ xs = [fx(t) for t=0.0:0.02:1.0]
 ys = [fy(t) for t=0.0:0.02:1.0]
 xys = collect(zip(xs,ys))
 
-xys = [xys[end-1], xys..., xys[2]]
+if isapprox(xs[1], xs[end])
+   xys = [xys[end-1], xys..., xys[2]]
+end
 cxs,cys = catmullrom(xys, 7)
 plot(cxs,cys, size=(500,500))
   
