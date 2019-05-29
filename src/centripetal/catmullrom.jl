@@ -20,7 +20,17 @@ When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
 function catmullrom(points::V, nbetween::Int; 
-                    augment::Bool=true, iterator::Bool=false) where {V}
+                    augment::Bool=true, iterator::Bool=false) where {T,V<:AbstractArray{T}}
+    ncoords  = length(points[1])
+    vals = catmullrom_core(points, nbetween, augment=augment)
+    crpoints = (Iterators.flatten).(
+                      [vals[:,i] for i=1:ncoords])
+
+    return iterator ? crpoints : collect.(crpoints)
+end
+
+function catmullrom_core(points::V, nbetween::Int; 
+                         augment::Bool=true) where {V}
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
     
@@ -43,10 +53,7 @@ function catmullrom(points::V, nbetween::Int;
     finalcoords = reshape(map(x->[x], endval), 1, ncoords)
     vals = vcat(vals, finalcoords)
 
-    crpoints = (Iterators.flatten).(
-                      [vals[:,i] for i=1:ncoords])
-
-    return iterator ? crpoints : collect.(crpoints)
+    return vals
 end
 
 catmullrom(points::Array{NT,1}, nbetween::Int; augment::Bool=true, iterator::Bool=false) where {NT<:NamedTuple} =
