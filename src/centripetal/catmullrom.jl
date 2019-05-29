@@ -49,10 +49,10 @@ function catmullrom(points, nbetween::Int;
     return iterator ? crpoints : collect.(crpoints)
 end
 
-catmullrom(points::Array{NT,1}, nbetween::Int; iterator::Bool=false) where {NT<:NamedTuple} =
+catmullrom(points::Array{NT,1}, nbetween::Int; augment::Bool=true, iterator::Bool=false) where {NT<:NamedTuple} =
     catmullrom(Tuple.(points), nbetween, iterator=iterator)
 
-catmullrom(points::NTuple{N,NT}, nbetween::Int; iterator::Bool=false) where {N, NT<:NamedTuple} =
+catmullrom(points::NTuple{N,NT}, nbetween::Int; augment::Bool=true, iterator::Bool=false) where {N, NT<:NamedTuple} =
     catmullrom(Tuple.(points), nbetween, iterator=iterator)
 
 """
