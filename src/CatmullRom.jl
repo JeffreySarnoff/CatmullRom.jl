@@ -13,6 +13,7 @@ export catmullrom,    # populates with points placed between those given
 # reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
 
 include("centripetal/catmullrom.jl")
+include("centripetal/support.jl")
 include("centripetal/arcbased.jl")
 
 include("fewpoints/twopoints.jl")
