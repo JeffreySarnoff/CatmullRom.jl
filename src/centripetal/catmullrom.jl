@@ -20,7 +20,7 @@ When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
 function catmullrom(points::V, nbetween::Int; 
-                    augment::Bool=true, iterator::Bool=false) where {V<:POINTS}
+                    augment::Bool=true, iterator::Bool=false) where {V}
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
     
@@ -61,7 +61,7 @@ catmullrom(points::NTuple{N,NT}, nbetween::Int; augment::Bool=true, iterator::Bo
 Traverse a sequence of points (coordinates in 2,3,..n dims),
 obtaining interpolatory centripetal Catmull-Rom polynomials.
 """
-function catmullrom_polys(points::V) where {V<:POINTS}
+function catmullrom_polys(points::V) where {V}
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
 
