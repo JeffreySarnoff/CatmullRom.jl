@@ -1,9 +1,9 @@
 function reflectback(pt₁::T, pt₂::T; scale=0.001) where {T}
-   @. pt₁ - ((pt₂ - pt₁) * scale)
+   return @. pt₁ - ((pt₂ - pt₁) * scale)
 end
 
 function reflectforward(pt₁::T, pt₂::T; scale=0.001) where {T}
-    return @. pt₂ - ((pt₁ - pt₂) * scale)
+    return @. pt₂ + ((pt₂ - pt₁) * scale)
 end
 
 linear(pt₁, pt₂, x) =
