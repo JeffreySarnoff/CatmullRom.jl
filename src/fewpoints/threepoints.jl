@@ -45,7 +45,7 @@ end
 
 function thiele3(pt₁, pt₂, pt₃, x)
     result = thiele3(pt₁[1], pt₂[1], pt₃[1],
-                      pt₁[2:end], pt₂[2:end], pt₃[2:end], x)
+                     pt₁[2:end], pt₂[2:end], pt₃[2:end], x)
     # check for degenerate case
     if !(all(isfinite.(result)))
         result = quadratic(pt₁, pt₂, pt₃, x)
