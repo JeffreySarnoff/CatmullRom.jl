@@ -20,13 +20,14 @@ When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
 function catmullrom(points, nbetween::Int; 
-                    augmented::Bool=true, iterator::Bool=false)
+                    augment::Bool=true, iterator::Bool=false)
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
     
-    if augmented
-        points = augment(points)
+    if augment
+        points = augment_points(points)
     end
+    
     # include the given points (knots) for poly generation
     nthrough = nbetween + 2  # include both endpoints
 
