@@ -8,6 +8,8 @@ module CatmullRom
 
 export catmullrom     # populates with points placed between those given
 
+using Polynomials
+
 # available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
 # reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
 
