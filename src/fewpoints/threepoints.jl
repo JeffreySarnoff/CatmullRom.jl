@@ -12,7 +12,7 @@ function quadratic(pt₁, pt₂, pt₃, x)
                        pt₁[2:end], pt₂[2:end], pt₃[2:end], x)
     # check for degenerate case
     if !(all(isfinite.(result)))
-		result = linear(pt₁, pt₂, pt₃, x)
+	result = linear(pt₁, pt₂, pt₃, x)
     end
 	return result
 end
