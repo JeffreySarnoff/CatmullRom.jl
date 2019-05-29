@@ -1,4 +1,4 @@
-function cr2bezier(p0,p1,p2,p3)
+function cr2bezier(p0, p1, p2, p3)
     b0 = p1
     b3 = p2
     d1 = norm(p1 .- p0); d1a = sqrt(d1)
@@ -10,7 +10,14 @@ function cr2bezier(p0,p1,p2,p3)
     b2n = @. (d3 * p1) - (d2 * p3) + ((2*d3 + 3*d3a*d2a+d2) * p2)
     b2d = 3*d3a*(d3a+d2a)
     b2 = b2n ./ b2d
-    return b0,b1,b2,b3
+    return b0, b1, b2, b3
+end
+
+function cr2arclen(p0, p1, p2, p3)
+    b0, b1, b2, b3 = cr2bezier(p0, p1, p2, p3)
+    corddist = norm(b3 .- b0)
+    bezdist = norm(b1 .- b0) + norm(b2 .- b1) + norm(b3 .- b2)
+    return (corddist + bezdist) * 0.5
 end
 
 function catmullrom_pathparts(points::P, avg_points_per_segment::Int=19) where {P}
