@@ -1,6 +1,6 @@
 """
     catmullrom(  points_along_curve, n_between_points )
-               ; iterator = false   )
+               ; augment = true, iterator = false   )
 
 Given abcissa-sequenced path of points, and
 the number of subdivisions to be fit inbetween
@@ -19,9 +19,14 @@ instructs the return of explict coordinate values.
 When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
-function catmullrom(points, nbetween::Int; iterator::Bool=false)
+function catmullrom(points, nbetween::Int; 
+                    augmented::Bool=true, iterator::Bool=false)
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
+    
+    if augmented
+        points = augment(points)
+    end
     # include the given points (knots) for poly generation
     nthrough = nbetween + 2  # include both endpoints
 
