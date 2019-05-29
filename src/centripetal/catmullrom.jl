@@ -61,7 +61,7 @@ catmullrom(points::NTuple{N,NT}, nbetween::Int; augment::Bool=true, iterator::Bo
 Traverse a sequence of points (coordinates in 2,3,..n dims),
 obtaining interpolatory centripetal Catmull-Rom polynomials.
 """
-function catmullrom_polys(points)
+function catmullrom_polys(points::V) where {V<:POINTS}
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
 
