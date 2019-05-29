@@ -6,7 +6,7 @@ isclosed(firstpoint::NTuple{N,T}, lastpoint::NTuple{N,T}) where {N,T} =
     
 isclosed(points) = isclosed(points[1], points[end])
 
-augment(points) =
+augment_points(points) =
     isclosed(points[1], points[end]) ? augment_closed(points) : augment_open(points)
 
 augment_closed(points) = [points[end-1], points..., points[2]]
