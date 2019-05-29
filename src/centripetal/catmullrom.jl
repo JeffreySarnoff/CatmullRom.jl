@@ -19,7 +19,7 @@ instructs the return of explict coordinate values.
 When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
-function catmullrom(points, nbetween::Int; iterator:Bool=false)
+function catmullrom(points, nbetween::Int; iterator::Bool=false)
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
     # include the given points (knots) for poly generation
