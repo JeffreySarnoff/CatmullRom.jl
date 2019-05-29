@@ -19,8 +19,8 @@ instructs the return of explict coordinate values.
 When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
-function catmullrom(points, nbetween::Int; 
-                    augment::Bool=true, iterator::Bool=false)
+function catmullrom(points::V, nbetween::Int; 
+                    augment::Bool=true, iterator::Bool=false) where {T1,T2,V<:AbstractVector{T2
     npoints = length(points)
     npoints > 3 || throw(ErrorException("four or more points are required"))
     
