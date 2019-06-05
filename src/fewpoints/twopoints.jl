@@ -41,3 +41,15 @@ function linear(pt₁, pt₂, pt₃, x)
     end
     return result
 end
+
+
+
+function linterp(pt₁, pt₂, n::Int)
+    pt₁x, pt₂x = pt₁[1], pt₂[1]
+    pt₁y, pt₂y = pt₁[2:end], pt₂[2:end]
+    dx = pt₂x - pt₁x
+    dy = pt₂y .- pt₁y
+    nxs = range(pt₁x, pt₂x, length = n+2)
+    nys = range.(pt₁y, pt₂y, length = n+2)
+    return collect(zip(nxs, nys...,))
+end
