@@ -41,5 +41,6 @@ include("centripetal/arcbased.jl")
 include("fewpoints/twopoints.jl")
 include("fewpoints/threepoints.jl")
 include("fewpoints/fourpoints.jl")
+include("fewpoints/outside.jl")
 
 end # CatmullRom
