@@ -1,3 +1,8 @@
+function outside(points)
+    initial, final = outside(points[1:4], points[end-3:end])
+    return [initial, points..., final]
+end
+
 #=
    Determine two extremal points (outside of the boundry points)
    for use in anchoring the sequence of centripetal Catmull-Rom
