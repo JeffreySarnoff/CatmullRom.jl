@@ -1,7 +1,10 @@
 function outside(points)
     initial, final = outside(points[1:4], points[end-3:end])
-    return [initial, points..., final]
+    pushfirst!(push!(points, final), initial)
+    return points
 end
+
+outside(points::Tuple) = outside([points...,])
 
 #=
    Determine two extremal points (outside of the boundry points)
