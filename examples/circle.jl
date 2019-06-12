@@ -53,10 +53,10 @@ julia> Plots.plot!(cxs,cys,size=(400,400));
  cx=[sinpi(t) for t=1.5:0.02:2.0];
  cy=[cospi(t) for t=1.5:0.02:2.0];
 
-julia> plt = plot(title="MyPlot")
-julia> Plots.plot!(xs[5:9],ys[5:9],size=(400,400));
-julia> Plots.plot!(cxs,cys,size=(400,400));
-julia> display(plt) #Display newly constructed plot
-julia> Plots.plot!(cx,cy,size=(400,400));
-julia> display(plt) #Display newly constructed plot
+plt = plot(title="MyPlot")
+Plots.plot!(xs[5:9],ys[5:9],size=(400,400));
+Plots.plot!(cxs,cys,size=(400,400));
+display(plt) #Display newly constructed plot
+Plots.plot!(cx,cy,size=(400,400));
+display(plt) #Display newly constructed plot
 =#
