@@ -12,8 +12,8 @@ function outside(initialpoints::T, finalpoints::T) where {T}
     initialpt = reflectback(initialpoints[1:2]...,)
     finalpt   = reflectforward(finalpoints[end-1:end]...,)
     initial = ninitials > 3 ? thiele4(initialpoints[1:4], initialpt[1]) : 
-              (ninitials > 2 ? thiele3(initialpoints[1:3], initialpt[1]) : initialpt)
+              ninitials > 2 ? thiele3(initialpoints[1:3], initialpt[1]) : initialpt
     final   = nfinals > 3 ? thiele4(finalpoints[1:4], finalpt[1]) : 
-              (nfinals > 2 ? thiele3(finalpoints[1:3], finalpt[1]) : finalpt)
+              nfinals > 2 ? thiele3(finalpoints[1:3], finalpt[1]) : finalpt
     return initial, final
 end
