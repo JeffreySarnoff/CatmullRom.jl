@@ -42,8 +42,6 @@ function linear(pt₁, pt₂, pt₃, x)
     return result
 end
 
-
-
 function linterp(pt₁, pt₂, n::Int)
     pt₁x, pt₂x = pt₁[1], pt₂[1]
     pt₁y, pt₂y = pt₁[2:end], pt₂[2:end]
