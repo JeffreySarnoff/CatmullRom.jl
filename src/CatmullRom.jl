@@ -29,10 +29,10 @@ using Polynomials: Poly, polyval, polyder, polyint
 # available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
 # reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
 
-const Type1 = AbstractArray{AbstractArray{T,1},1} where {T}
-const Type2 = AbstractArray{NTuple{N,T},1} where {N,T}
-const Type3 = NTuple{N, NTuple{M,T}} where {N,M,T}
-const POINTS = Union{Type1, Type2, Type3} where {N,M,T}
+const VectorOfVectors = AbstractArray{AbstractArray{T,1},1} where {T}
+const VectorOfTuples  = AbstractArray{NTuple{N,T},1} where {N,T}
+const TupleOfTuples   = NTuple{N, NTuple{M,T}} where {N,M,T}
+const POINTS = Union{VectorOfVectors, VectorOfTuples, TupleOfTuples} where {N,M,T}
 
 include("centripetal/catmullrom.jl")
 include("centripetal/support.jl")
