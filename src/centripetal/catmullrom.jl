@@ -35,7 +35,7 @@ function catmullrom_core(points::Points, nbetween::Int;
     npoints > 3 || throw(ErrorException("four or more points are required"))
     
     if augment
-        points = augment_points(points)
+        points = extendbounds(points)
     end
     
     # include the given points (knots) for poly generation
