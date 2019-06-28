@@ -63,7 +63,7 @@ julia> polys = catmullrom_polys(points2D)
  Poly(0.25881904f0 + 0.25f0*x - 0.00060100853f0*x^2 - 0.008218035f0*x^3)   
  Poly(0.9659258f0 - 0.06698731f0*x - 0.03631732f0*x^2 + 0.0034040362f0*x^3)
 
-julia> catmullrom(points2D, interpolants)
+julia> catmullrom(extendbounds(points2D), interpolants)
 
 ```
 -----
@@ -73,6 +73,8 @@ julia> catmullrom(points2D, interpolants)
 With Centripetal Catmull Rom interpolation, the distances are not uniform.
 Each interval is square root of the Euclidean distance between the points.
 
+----
+
 ### Refs
 
 [Parameterization and Applications of Catmull-Rom Curves](http://www.cemyuksel.com/research/catmullrom_param/catmullrom_cad.pdf)
@@ -80,12 +82,3 @@ Each interval is square root of the Euclidean distance between the points.
 [The Centripetal Catmull-Rom Spline](https://howlingpixel.com/wiki/Centripetal_Catmull%E2%80%93Rom_spline)
 
 [Catmull-Rom spline without cusps or self-intersections](https://stackoverflow.com/questions/9489736/catmull-rom-curve-with-no-cusps-and-no-self-intersections/23980479#23980479)
-
-
-----
-
-[travis-img]: https://travis-ci.org/JeffreySarnoff/CatmullRom.jl.svg?branch=master
-[travis-url]: https://travis-ci.org/JeffreySarnoff/CatmullRom.jl
-
-[pkg-0.7-img]: http://pkg.julialang.org/badges/CatmullRom_0.7.svg
-[pkg-0.7-url]: http://pkg.julialang.org/?pkg=CatmullRom&ver=0.7
