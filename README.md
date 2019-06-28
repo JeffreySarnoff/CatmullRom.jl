@@ -11,7 +11,7 @@
 -----
 
 
-[![][pkg-0.7-img]][pkg-0.7-url]  [![][travis-img]][travis-url]
+[![][pkg-1.0-img]][pkg-1.0-url]  [![][travis-img]][travis-url]
 
 
 -----
@@ -82,3 +82,11 @@ Each interval is square root of the Euclidean distance between the points.
 [The Centripetal Catmull-Rom Spline](https://howlingpixel.com/wiki/Centripetal_Catmull%E2%80%93Rom_spline)
 
 [Catmull-Rom spline without cusps or self-intersections](https://stackoverflow.com/questions/9489736/catmull-rom-curve-with-no-cusps-and-no-self-intersections/23980479#23980479)
+
+-----
+
+[travis-img]: https://travis-ci.org/JeffreySarnoff/CatmullRom.jl.svg?branch=master
+[travis-url]: https://travis-ci.org/JeffreySarnoff/CatmullRom.jl
+
+[pkg-1.0-img]: http://pkg.julialang.org/badges/CatmullRom_1.0.svg
+[pkg-1.0-url]: http://pkg.julialang.org/?pkg=CatmullRom&ver=1.0
