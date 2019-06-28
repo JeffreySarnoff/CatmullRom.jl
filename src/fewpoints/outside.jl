@@ -15,14 +15,14 @@ function outside(points::Points; scale=1/16)
 end
 
 function pointbefore(firstpoints::Points, scale)
-    initialx = firstpoints[1][1] + (firstpoints[1][1] - firstpoints[2][1]) * scale
+    initialx = reflectback(first.(firstpoints[1:2])..., scale=scale)
     initialys = thiele4(firstpoints..., initialx)
     initialpoint = (initialx, initialys...,)
     return convert(eltype(firstpoints), initialpoint)
 end
 
 function pointafter(lastpoints::Points, scale)
-    finalx = lastpoints[end][1] + (lastpoints[end][1] - lastpoints[end-1][1]) * scale
+    finalx = reflectforward(first.(lastpoints[end-1:end])..., scale=scale)
     finalys = thiele4(lastpoints..., finalx)
     finalpoint = (finalx, finalys...,)
     return convert(eltype(lastpoints), finalpoint)
