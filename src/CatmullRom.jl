@@ -18,18 +18,19 @@ using Polynomials: Poly, polyval, polyder, polyint
 include("pointsequences.jl")
 
 
-
+# centripetal Catmull-Rom compution
 include("centripetal/catmullrom.jl")
 include("centripetal/support.jl")
 include("centripetal/arcbased.jl")
 
 
-# available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
-# reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
-
-include("fewpoints/twopoints.jl")
-include("fewpoints/threepoints.jl")
-include("fewpoints/fourpoints.jl")
+# suggest outermost two points for Catmull-Rom spline sequence
 include("fewpoints/outside.jl")
+
+# extrapolation using low-order interpolatory fitting
+include("fewpoints/twopoints.jl")    # linear fit, reflection
+include("fewpoints/threepoints.jl")  # thiele3 rational fit, general quadratic fit
+include("fewpoints/fourpoints.jl")   # thiele4 rational fit (preferred)
+
 
 end # CatmullRom
