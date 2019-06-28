@@ -18,13 +18,14 @@ using Polynomials: Poly, polyval, polyder, polyint
 include("pointsequences.jl")
 
 
-# available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
-# reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
-
 
 include("centripetal/catmullrom.jl")
 include("centripetal/support.jl")
 include("centripetal/arcbased.jl")
+
+
+# available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
+# reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
 
 include("fewpoints/twopoints.jl")
 include("fewpoints/threepoints.jl")
