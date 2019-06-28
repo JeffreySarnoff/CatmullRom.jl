@@ -1,15 +1,26 @@
 """
-    outside(points [; scale=1/16])
+    extendbounds(points [; scale=1/16])
 
-Determine the two extremal points (outside of the boundry points)
-used to anchor the sequence of centripetal Catmull-Rom spline spans.
-Incorporate these boundry points in the point sequence.
+Extend the point sequence by one point before the start and
+by one point after the end. The extended point sequence
+anchors the centripetal Catmull-Rom splines.
 """
-function outside(points::Points; scale=1/16)
+function extendbounds(points::Points; scale=ReflectionScale)
     npoints(points) > 3 || throw(DomainError("4 or more points are required"))
-    firstpoints = points[1:4]
-    lastpoints  = points[end-3:end]
-    initialpoint, finalpoint = pointbefore(firstpoints, scale), pointafter(lastpoints, scale)
+    points = outside(points, scale=scale)
+    return points
+end
+
+"""
+    outside(points [; scale])
+
+Determine the two extremal points (outside of the boundary points)
+used to anchor the sequence of centripetal Catmull-Rom spline spans.
+Incorporate these boundary points in the point sequence.
+"""
+function outside(points::Points, scale=ReflectionScale)
+    initialpoint = pointbefore(points[1:4], scale)
+    finalpoint   = pointafter(points[end-3:end], scale)
     pushfirst!(push!(points, finalpoint), initialpoint)
     return points
 end
