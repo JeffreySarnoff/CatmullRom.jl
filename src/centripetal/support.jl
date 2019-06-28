@@ -1,10 +1,6 @@
-isclosed(firstpoint::V, lastpoint::V) where {T, V<:AbstractVector{T}} = 
-    sum(abs.(lastpoint .- firstpoint)) < eps(T)^(5/8)
+isclosed(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint == lastpoint
+isclosed(points::Points) = isclosed(first(points), last(points))
 
-isclosed(firstpoint::NTuple{N,T}, lastpoint::NTuple{N,T}) where {N,T} = 
-    sum(abs.(lastpoint .- firstpoint)) < eps(T)^(5/8)
-    
-isclosed(points) = isclosed(points[1], points[end])
 
 augment_points(points) =
     isclosed(points[1], points[end]) ? augment_closed(points) : augment_open(points)
