@@ -26,12 +26,14 @@ using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval, polyder, polyint
 
 
-# available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
-# reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
-
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ndims(Points)`
 include("pointsequences.jl")
+
+
+# available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
+# reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
+
 
 include("centripetal/catmullrom.jl")
 include("centripetal/support.jl")
