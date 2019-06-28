@@ -29,10 +29,15 @@ using Polynomials: Poly, polyval, polyder, polyint
 # available as `CatmullRom.extendbounds`, `CatmullRom.thiele3`, etc
 # reflect, linear, quadratic, thiele3, thiele4  # also for interpolation
 
-const VectorOfVectors = AbstractArray{AbstractArray{T,1},1} where {T}
-const VectorOfTuples  = AbstractArray{NTuple{N,T},1} where {N,T}
-const TupleOfTuples   = NTuple{N, NTuple{M,T}} where {N,M,T}
-const POINTS = Union{VectorOfVectors, VectorOfTuples, TupleOfTuples} where {N,M,T}
+# The sorts of sequences understood to hold point coordinates
+const VecNumVec=AbstractArray{Array{T,1},1} where {T<:Number};
+const VecNumTup=AbstractArray{NTuple{N,T},1} where {N,T<:Number};
+const TupNumTup=NTuple{M,NTuple{N,T}} where {M,N,T<:Number};
+const TupNumVec=NTuple{M,Array{T,1}} where {M,N,T<:Number};
+const VecNumNT=AbstractArray{NamedTuple{S,NTuple{N,T}},1} where {S,N,T<:Number};
+const TupNumNT=NTuple{M,NamedTuple{S,NTuple{N,T}}} where {M,S,N,T<:Number};
+
+const Points = Union{VecNumVec, VecNumTup, TupNumTup, TupNumVec, VecNumNT, TupNumNT};
 
 include("centripetal/catmullrom.jl")
 include("centripetal/support.jl")
