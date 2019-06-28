@@ -25,6 +25,10 @@
     - `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
     -  yields interpolating points from points[2] through points[end-1] (inclusive)
 
+### closed curves
+
+To close a curve make sure that the first point and the last point are the same point.
+
 ## interpolation points
 
 - `uniform01(n)`
