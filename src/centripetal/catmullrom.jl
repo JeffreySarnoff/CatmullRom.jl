@@ -120,11 +120,19 @@ function centripetal_tangents(pt₋::T,
     dt₀₁ = speed(pt₀, pt₁)
     dt₁₊ = speed(pt₁, pt₊)
 
-    # correct for repeated coordinates
-    ε = eps(eltype(T))
-    dt₀₁ = @. ifelse(dt₀₁ < ε, one(eltype(T)), dt₀₁)
-    dt₋₀ = @. ifelse(dt₋₀ < ε, dt₀₁, dt₋₀)
-    dt₁₊ = @. ifelse(dt₁₊ < ε, dt₀₁, dt₁₊)
+    # do coordinates coincide
+    coord_type = eltype(T)
+    if coord_type <: AbstractFloat
+        ε = eps(coord_type)
+    elseif coord_type <: Integer
+        ε = zero(coord_type)
+    else
+        ε = eps(float(dt₀₁))
+    end    
+    # correct for repeated coordinates    
+    dt₀₁ = @. ifelse(dt₀₁ <= ε, one(coord_type), dt₀₁)
+    dt₋₀ = @. ifelse(dt₋₀ <= ε, dt₀₁, dt₋₀)
+    dt₁₊ = @. ifelse(dt₁₊ <= ε, dt₀₁, dt₁₊)
 
     # Compute the tangents at the two boundry points
     #   that delimit the interpolatory curve segment.
