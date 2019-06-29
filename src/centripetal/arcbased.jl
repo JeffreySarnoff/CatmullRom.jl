@@ -47,7 +47,7 @@ points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
 ```
 """
 function catmullrom_normalized_arclengths(points::T) where {T<:Points}
-    arclengths = catmulrom_arclengths(points)
+    arclengths = catmullrom_arclengths(points)
     sum_of_arcs = sum(arclengths)
     arclengths[:] = arclengths ./ sum_of_arcs
     return arclengths
