@@ -1,6 +1,6 @@
 """
     catmullrom(  points_along_curve, n_between_points )
-               ; augment = true, iterator = false   )
+               ; iterator = false   )
 
 Given abcissa-sequenced path of points, and
 the number of subdivisions to be fit inbetween
@@ -19,27 +19,26 @@ instructs the return of explict coordinate values.
 When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
-function catmullrom(points::Points, nbetweenpoints::Int; iterator::Bool=true)
-    ncoords  = length(points[1])
-    vals = catmullrom_core(points, nbetweenpoints)
-    crpoints = (Iterators.flatten).(
-                      [vals[:,i] for i=1:ncoords])
+function catmullrom(points::Points, n_between_points::Int; iterator::Bool=true)
+    n_coords  = ncoords(points)
+    vals = catmullrom_core(points, n_between_points)
+    crpoints = (Iterators.flatten).([vals[:,i] for i=1:n_coords])
 
     return iterator ? crpoints : collect.(crpoints)
 end
 
-function catmullrom_core(points::Points, n_betweenpoints::Int)
+function catmullrom_core(points::Points, n_between_points::Int)
     n_points = npoints(points)
     n_points > 3 || throw(ErrorException("four or more points are required"))
     n_coords  = ncoords(points)
     
     # include the given points (knots) for poly generation
-    n_throughpoints = n_betweenpoints + 2  # include both endpoints
+    n_through_points = n_between_points + 2  # include both endpoints
 
     polys = catmullrom_polys(points)
     
     # interpolate using span-relative abcissae [0.0..1.0]
-    abcissae01 = range(0.0, 1.0, length=n_throughpoints)
+    abcissae01 = range(0.0, 1.0, length=n_through_points)
 
     vals = polyval.(polys, Ref(abcissae01[1:end-1]))
     endval = polyval.(polys[end,:], 1.0)
@@ -57,13 +56,12 @@ Traverse a sequence of points (coordinates in 2,3,..n dims),
 obtaining interpolatory centripetal Catmull-Rom polynomials.
 """
 function catmullrom_polys(points::Points)
-    n_points = npoints(points)
-    n_points > 3 || throw(ErrorException("four or more points are required"))
+    npoints(points) > 3 || throw(ErrorException("four or more points are required"))
 
-    T = eltype(eltype(points))
-                                 # omit the extremal points (-2)
-    n_spans  = n_points - 3        # count between fenceposts (-1)
-    n_coords = ncoords(points)       # each point has ncoordinates
+    T = coordtype(points)
+                                    # omit the extremal points (-2)
+    n_spans  = n_points - 3         # count between fenceposts (-1)
+    n_coords = ncoords(points)      # each point has ncoordinates
 
     polys  = Array{Poly{T}, 2}(undef, n_spans, n_coords)
 
@@ -113,15 +111,8 @@ function centripetal_tangents(pt₋::T,
     dt₀₁ = speed(pt₀, pt₁)
     dt₁₊ = speed(pt₁, pt₊)
 
-    # do coordinates coincide
-    coord_type = eltype(T)
-    if coord_type <: AbstractFloat
-        ε = eps(coord_type)
-    elseif coord_type <: Integer
-        ε = zero(coord_type)
-    else
-        ε = eps(float(dt₀₁))
-    end    
+    # check if any coordinates coincide
+    ε = coordeps(T)    
     # correct for repeated coordinates    
     dt₀₁ = @. ifelse(dt₀₁ <= ε, one(coord_type), dt₀₁)
     dt₋₀ = @. ifelse(dt₋₀ <= ε, dt₀₁, dt₋₀)
@@ -186,6 +177,18 @@ magnitude is the centripetal speed.
 function speed(pt₀::T, pt₁::T) where {T<:OnePoint}
     delta = pt₁ .- pt₀
     return sqrt(sqrtdot(delta, delta))
+end
+    
+@inline function coordeps(::Type{T}) where {T<:OnePoint}    
+    coord_type = coordtype(T)
+    if coord_type <: AbstractFloat
+        ε = eps(coord_type)
+    elseif coord_type <: Integer
+        ε = zero(coord_type)
+    else
+        ε = eps(float(dt₀₁))
+    end
+    return ε
 end
 
 sqrtdot(a::T,b::T) where {T} = sqrt(sum(a .* b))
