@@ -14,7 +14,7 @@ using Polynomials: Poly, polyval, polyder, polyint
 
 
 # The sorts of sequences understood to hold point coordinates
-#     defines `Points`m `npoints(Points)`, `ndims(Points)`
+#     defines `Points`m `npoints(Points)`, `ncoords(Points)`
 include("pointsequences.jl")
 
 # suggest outermost two points for Catmull-Rom spline sequence
