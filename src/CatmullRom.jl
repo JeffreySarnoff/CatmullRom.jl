@@ -12,7 +12,6 @@ using LinearAlgebra: dot, norm, normalize
 
 using Polynomials: Poly, polyval, polyder, polyint
 
-
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
 include("presence/pointsequences.jl")
