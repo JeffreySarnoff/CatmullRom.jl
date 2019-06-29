@@ -15,14 +15,13 @@ using Polynomials: Poly, polyval, polyder, polyint
 
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
-include("pointsequences.jl")
+include("presence/pointsequences.jl")
 
 # suggest outermost two points for Catmull-Rom spline sequence
 include("fewpoints/outside.jl")
 
 # centripetal Catmull-Rom compution
 include("centripetal/catmullrom.jl")
-include("centripetal/support.jl")
 include("centripetal/arcbased.jl")
 
 # extrapolation using low-order interpolatory fits
@@ -30,5 +29,7 @@ include("fewpoints/twopoints.jl")    # linear fit, reflection
 include("fewpoints/threepoints.jl")  # thiele3 rational fit, general quadratic fit
 include("fewpoints/fourpoints.jl")   # thiele4 rational fit (preferred)
 
+# myunzip, anglesep
+include("presence/support.jl")
 
 end # CatmullRom
