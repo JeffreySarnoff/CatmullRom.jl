@@ -113,7 +113,8 @@ function centripetal_tangents(pt₋::T,
     dt₁₊ = speed(pt₁, pt₊)
 
     # check if any coordinates coincide
-    ε = coordeps(T)    
+    ε = coordeps(T)
+    coord_type = coordtype(T)
     # correct for repeated coordinates    
     dt₀₁ = @. ifelse(dt₀₁ <= ε, one(coord_type), dt₀₁)
     dt₋₀ = @. ifelse(dt₋₀ <= ε, dt₀₁, dt₋₀)
