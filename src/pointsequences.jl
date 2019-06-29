@@ -14,6 +14,9 @@ const TupNumNT = NTuple{M,NamedTuple{S,NTuple{N,T}}} where {M,S,N,T<:Number};
 
 const Points = Union{VecNumVec, VecNumTup, TupNumTup, TupNumVec, VecNumNT, TupNumNT};
 
+isclosed(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint == lastpoint
+isclosed(points::Points) = isclosed(first(points), last(points))
+
 npoints(pts::Points) = length(pts)
 ncoords(pts::Points) = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : length(pts[1])
 
