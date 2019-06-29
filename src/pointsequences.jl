@@ -20,5 +20,21 @@ ncoords(pts::Points) = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : lengt
 coordtype(pts::Points) = eltype(eltype(pts))
 coordtype(pt::OnePoint) = eltype(pts)
 
+function coordtype(x::T) where {T}
+    result = T
+    !(result<:Number) ? (result = eltype(result)) : (return result)
+    !(result<:Number) ? (result = eltype(result)) : (return result)
+    !(result<:Number) ? (result = eltype(result)) : (return result)
+    !(result<:Number) ? throw(ErrorException("unable to discern the coordinate type for $T")) : (return result)
+end
+
+function coordtype(::Type{T}) where {T}
+    result = T
+    !(result<:Number) ? (result = eltype(result)) : (return result)
+    !(result<:Number) ? (result = eltype(result)) : (return result)
+    !(result<:Number) ? (result = eltype(result)) : (return result)
+    !(result<:Number) ? throw(ErrorException("unable to discern the coordinate type for $T")) : (return result)
+end
+
 Base.convert(::Type{Array{T,1}}, x::NTuple{N,T}) where {N,T} = [x...,]
 Base.convert(::Type{NTuple{N,T}}, x::Array{T,1}) where {N,T} = (x...,)
