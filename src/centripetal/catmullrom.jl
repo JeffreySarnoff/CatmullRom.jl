@@ -19,6 +19,59 @@ instructs the return of explict coordinate values.
 When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
+function catmullrom(points::Points, nbetweenpoints::Int; iterator::Bool=true)
+    ncoords  = length(points[1])
+    vals = catmullrom_core(points, nbetweenpoints)
+    crpoints = (Iterators.flatten).(
+                      [vals[:,i] for i=1:ncoords])
+
+    return iterator ? crpoints : collect.(crpoints)
+end
+
+function catmullrom_core(points::Points, n_betweenpoints::Int)
+    n_points = npoints(points)
+    n_points > 3 || throw(ErrorException("four or more points are required"))
+    n_coords  = ncoords(points)
+    
+    # include the given points (knots) for poly generation
+    n_throughpoints = n_betweenpoints + 2  # include both endpoints
+
+    polys = catmullrom_polys(points)
+    
+    # interpolate using span-relative abcissae [0.0..1.0]
+    abcissae01 = range(0.0, 1.0, length=n_throughpoints)
+
+    vals = polyval.(polys, Ref(abcissae01[1:end-1]))
+    endval = polyval.(polys[end,:], 1.0)
+
+    finalcoords = reshape(map(x->[x], endval), 1, n_coords)
+    vals = vcat(vals, finalcoords)
+
+    return vals
+end
+
+#=
+"""
+    catmullrom(  points_along_curve, n_between_points )
+               ; augment = true, iterator = false   )
+
+Given abcissa-sequenced path of points, and
+the number of subdivisions to be fit inbetween
+each path-adjacent, non-extremal pair of points
+(all neighboring points except the first & last),
+obtain the centripetal Catmull-Rom splines that
+cover each interpoint segment between neighbors.
+
+Use these cubic polynomials to obtain coordinates
+for each bounding point of an interpoint segment,
+and provide them with the given points to obtain
+an augmented abcissa-sequenced path of points.
+
+The keyword `iterator`, when `false` (the default),
+instructs the return of explict coordinate values.
+When `iterator = true` is used, iterators over
+those same coordinate values are returned.
+"""
 function catmullrom(points::Points, nbetween::Int; 
                     augment::Bool=true, iterator::Bool=false)
     ncoords  = length(points[1])
@@ -55,7 +108,7 @@ function catmullrom_core(points::Points, nbetween::Int;
 
     return vals
 end
-
+=#
 
 """
     catmullrom_polys(points)
@@ -69,12 +122,12 @@ function catmullrom_polys(points::Points)
 
     T = eltype(eltype(points))
                                  # omit the extremal points (-2)
-    nspans  = npoints - 3        # count between fenceposts (-1)
-    ncoords = ndim(points)       # each point has ncoordinates
+    n_spans  = n_points - 3        # count between fenceposts (-1)
+    n_coords = ncoords(points)       # each point has ncoordinates
 
-    polys  = Array{Poly{T}, 2}(undef, nspans, ncoords)
+    polys  = Array{Poly{T}, 2}(undef, n_spans, n_coords)
 
-    for idx = 1:nspans
+    for idx = 1:n_spans
         pt₋, pt₀, pt₁, pt₊ = points[idx:idx+3]
         plys = centripetal_catmullrom(pt₋, pt₀, pt₁, pt₊)
         polys[idx,:] = plys
