@@ -56,7 +56,8 @@ Traverse a sequence of points (coordinates in 2,3,..n dims),
 obtaining interpolatory centripetal Catmull-Rom polynomials.
 """
 function catmullrom_polys(points::Points)
-    npoints(points) > 3 || throw(ErrorException("four or more points are required"))
+    n_points = npoints(points)
+    n_points > 3 || throw(ErrorException("four or more points are required"))
 
     T = coordtype(points)
                                     # omit the extremal points (-2)
