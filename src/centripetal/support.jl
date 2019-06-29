@@ -1,9 +1,3 @@
-isclosed(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint == lastpoint
-isclosed(points::Points) = isclosed(first(points), last(points))
-
-isopen(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint != lastpoint
-isopen(points::Points) = isopen(first(points), last(points))
-
 function myunzip(x)
     nd = length(x[1])
     npts = length(x)
