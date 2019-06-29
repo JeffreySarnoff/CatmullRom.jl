@@ -1,9 +1,10 @@
 #=
-    Given 4 ND points, roughly approximate the arclength
-    of the centripetal Catmull-Rom curvilinear segment
-    that would be determined by two bounding points
-    and the tangents they determine.
-    this algorithm was developed by Jens Gravesen
+    Given 4 ND points along a centripetal Catmull-Rom span,
+    roughly approximate the arclength of the curvilinear segment
+    that would be determined by the two bounding points
+    and the tangents they determine [the arc between p1 and p2].
+    
+    This well-behaved approximation was developed by Jens Gravesen
 
     (2*corddist + (n-1)*bezdist)/(n+1), n is degree of the curve
     deg=2 --> (2*corddist + bezdist)/(3)
