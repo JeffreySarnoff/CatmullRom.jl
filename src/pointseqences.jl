@@ -15,7 +15,7 @@ const TupNumNT = NTuple{M,NamedTuple{S,NTuple{N,T}}} where {M,S,N,T<:Number};
 const Points = Union{VecNumVec, VecNumTup, TupNumTup, TupNumVec, VecNumNT, TupNumNT};
 
 npoints(pts::Points) = length(pts)
-ndims(pts::Points) = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : length(pts[1])
+ncoords(pts::Points) = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : length(pts[1])
 
 Base.convert(::Type{Array{T,1}}, x::NTuple{N,T}) where {N,T} = [x...,]
 Base.convert(::Type{NTuple{N,T}}, x::Array{T,1}) where {N,T} = (x...,)
