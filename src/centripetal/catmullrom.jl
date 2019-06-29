@@ -50,66 +50,6 @@ function catmullrom_core(points::Points, n_betweenpoints::Int)
     return vals
 end
 
-#=
-"""
-    catmullrom(  points_along_curve, n_between_points )
-               ; augment = true, iterator = false   )
-
-Given abcissa-sequenced path of points, and
-the number of subdivisions to be fit inbetween
-each path-adjacent, non-extremal pair of points
-(all neighboring points except the first & last),
-obtain the centripetal Catmull-Rom splines that
-cover each interpoint segment between neighbors.
-
-Use these cubic polynomials to obtain coordinates
-for each bounding point of an interpoint segment,
-and provide them with the given points to obtain
-an augmented abcissa-sequenced path of points.
-
-The keyword `iterator`, when `false` (the default),
-instructs the return of explict coordinate values.
-When `iterator = true` is used, iterators over
-those same coordinate values are returned.
-"""
-function catmullrom(points::Points, nbetween::Int; 
-                    augment::Bool=true, iterator::Bool=false)
-    ncoords  = length(points[1])
-    vals = catmullrom_core(points, nbetween, augment=augment)
-    crpoints = (Iterators.flatten).(
-                      [vals[:,i] for i=1:ncoords])
-
-    return iterator ? crpoints : collect.(crpoints)
-end
-
-function catmullrom_core(points::Points, nbetween::Int; 
-                         augment::Bool=true)
-    npoints = length(points)
-    npoints > 3 || throw(ErrorException("four or more points are required"))
-    
-    if augment
-        points = extendbounds(points)
-    end
-    
-    # include the given points (knots) for poly generation
-    nthrough = nbetween + 2  # include both endpoints
-
-    polys = catmullrom_polys(points)
-    # interpolate using span-relative abcissae [0.0..1.0]
-    xin01 = range(0.0, 1.0, length=nthrough)
-
-    ncoords  = length(points[1])
-
-    vals = polyval.(polys, Ref(xin01[1:end-1]))
-    endval = polyval.(polys[end,:], 1.0)
-
-    finalcoords = reshape(map(x->[x], endval), 1, ncoords)
-    vals = vcat(vals, finalcoords)
-
-    return vals
-end
-=#
-
 """
     catmullrom_polys(points)
 
