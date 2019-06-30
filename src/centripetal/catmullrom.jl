@@ -50,10 +50,10 @@ function catmullrom_core(points::Points, n_between_points::Int)
     abcissae01 = range(0.0, 1.0, length=n_through_points)
 
     vals = polyval.(polys, Ref(abcissae01[1:end-1]))
-    endvals = polyval.(polys[end,:], fill(1.0, n_coords-1))
-
-    finalcoords = reshape(map(x->[x], endvals), 1, n_coords)
-    vals = vcat(vals, finalcoords)
+    endvals = polyval.(polys[end,:], fill(1.0, n_coords))
+    vals = push!(vals, endvals)
+    #finalcoords = reshape(map(x->[x], endvals), 1, n_coords)
+    #vals = vcat(vals, finalcoords)
 
     return vals
 end
