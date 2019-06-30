@@ -39,7 +39,8 @@ function catmullrom_core(points::Points, n_between_points::Int)
     #=
         Separate sequences for each coordinate dimension, ordered first to last interpoint span.
         Each poly within a sequence fits an interpoint span for its respective coordinate axis.
-        _polys_ is an `(n_points - 3) x (n_coords) 2D array`
+        _polys_ is an `(n_points - 3) x (n_coords) 2D array` 
+           (n_points - 2 - 1): the two extremal points are dropped, counting fenceposts
            columns are of one coordinate axis 
            each row holds polys that interpolate one interpoint span across all coordinates.
     =#
