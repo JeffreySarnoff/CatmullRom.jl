@@ -28,8 +28,9 @@ function catmullrom(points::Points, n_between_points::Int; iterator::Bool=false)
 end
 
 function catmullrom_core(points::Points, n_between_points::Int)
+    catmullrom_requirement(points)
+    
     n_points = npoints(points)
-    n_points > 3 || throw(ErrorException("four or more points are required"))
     n_coords  = ncoords(points)
     
     # include the given points (knots) for poly generation
@@ -56,9 +57,10 @@ Traverse a sequence of points (coordinates in 2,3,..n dims),
 obtaining interpolatory centripetal Catmull-Rom polynomials.
 """
 function catmullrom_polys(points::Points)
+    catmullrom_requirement(points)
+    
     n_points = npoints(points)
-    n_points > 3 || throw(ErrorException("four or more points are required"))
-
+    
     T = coordtype(points)
                                     # omit the extremal points (-2)
     n_spans  = n_points - 3         # count between fenceposts (-1)
@@ -194,3 +196,8 @@ end
 end
 
 sqrtdot(a::T,b::T) where {T} = sqrt(sum(a .* b))
+
+function catmullrom_requirement(points::Points)
+    n_points = npoints(points)
+    n_points > 3 || throw(ErrorException("four or more points are required"))
+end
