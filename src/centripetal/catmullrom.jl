@@ -36,6 +36,13 @@ function catmullrom_core(points::Points, n_between_points::Int)
     # include the given points (knots) for poly generation
     n_through_points = n_between_points + 2  # include both endpoints
 
+    #=
+        Separate sequences for each coordinate dimension, ordered first to last interpoint span.
+        Each poly within a sequence fits an interpoint span for its respective coordinate axis.
+        _polys_ is an `(n_points - 3) x (n_coords) 2D array`
+           columns are of one coordinate axis 
+           each row holds polys that interpolate one interpoint span across all coordinates.
+    =#
     polys = catmullrom_polys(points)
     
     # interpolate using span-relative abcissae [0.0..1.0]
@@ -55,6 +62,16 @@ end
 
 Traverse a sequence of points (coordinates in 2,3,..n dims),
 obtaining interpolatory centripetal Catmull-Rom polynomials.
+
+Yields separate sequences for each coordinate dimension, 
+    each sequence is ordered from first to last interpoint span.
+
+Each poly within a sequence fits an interpoint span with respect to
+    the sequence's coordinate axis.
+
+_polys_ is an `(n_points - 3) x (n_coords) 2D array`
+   columns are of one coordinate axis 
+   each row holds polys that interpolate one interpoint span across all coordinates.
 """
 function catmullrom_polys(points::Points)
     catmullrom_requirement(points)
