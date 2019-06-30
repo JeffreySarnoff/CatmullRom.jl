@@ -1,25 +1,21 @@
-http://mathworld.wolfram.com/SphericalSpiral.html
+# http://mathworld.wolfram.com/SphericalSpiral.html
 
+```julia
+using CatmullRom, Plots
 
-julia> x(t) = cos(t) / sqrt(1 + t*t)
+x(t) = cos(t) / sqrt(1 + t*t)
+y(t) = sin(t) / sqrt(1 + t*t)
+z(t) = - t/sqrt(1+t*t)
+                        
+ts = collect(range(-4pi,4pi, length=30));
+xs = x.(ts);
+ys = y.(ts);
+zs = z.(ts);
 
-julia> y(t) = sin(t) / sqrt(1 + t*t)
+plot(zs,ys,xs,linecolor=:navy)
 
-julia> z(t) = - t/sqrt(1+t*t)
-            
-            
-julia> ts=collect(range(-4pi,4pi, length=30));
+zyxs = collect(zip(zs,ys,xs));
+zz,yy,xx = catmullrom(zyxs, 32);
 
-julia> xs=x.(ts);
-
-julia> ys=y.(ts);
-
-julia> zs=z.(ts);
-
-julia> plot(zs,ys,xs,linecolor=:navy)
-
-julia> zyxs=collect(zip(zs,ys,xs));
-
-julia> zz,yy,xx=catmullrom(zyxs, 32);
-
-julia> plot(zz,yy,xx)
+plot(zz,yy,xx)
+```
