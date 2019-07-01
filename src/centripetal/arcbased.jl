@@ -7,13 +7,19 @@ to a corresponding sequence of point counts,
 each arc having one or more points (the initial boundary
 arc has two or more points).
 """
-function catmullrom_points_per_arc(points::T, n_points_to_realize::Int) where {T<:Points}
+function catmullrom_points_per_arc(points::T, new_points_on_arc::Int) where {T<:Points}
+    n_points = npoints(point)
+    n_arcs   = n_points - 2 - 1
+    total_points = (new_points_on_arc + 1) * n_arcs + 1    # n_points * (n_points - 2) - 3
+    
     normalized_arclengths = catmullrom_normalized_arclengths(points)
     
     smallest_arc = minimum(normalized_arclengths)
+    largest_arc  = maximum(normalized_arclengths)
+    
     rational_arc = rationalize(Float16(smallest_arc))
-    scalefactor = n_points_to_realize / denominator(rational_arc)
-
+    scalefactor = new_points_on_arc * ceil(Int,inv((largest_arc + smallest_arc)/2))
+    
     # scaled_arclengths_are_point_counts counting points on the arc
     points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
     return points_per_arc
