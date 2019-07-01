@@ -1,18 +1,23 @@
 """
-    arclengths_allocate_points(points, n_points_to_realize)
+    arclengths_allocate_interpolants(given_points, n_interpolants;
+                                     one_arc_interpolants_min = 2,
+                                     one_arc_interpolants_max = n_interpolants)
 
-Convert a sequence of CatmullRom points, those given
-as data and those interpolated through the data,
-to a corresponding sequence of point counts,
-each arc having one or more points (the initial boundary
-arc has two or more points).
+Convert a sequence of points and a count of additional points to interpolate
+througout that point sequence to a sequence of arc-specific point counts.
+Arcs connect adjacent _given points_. Each arc has its initial point
+(which is the final point of the prior arc, if any), its final point
+(which is the initial point of the next arc, if any), and zero or more
+interpolating points.
 """
-function arclengths_allocate_points_on_arcs(points_given::T, points_on_arcs:Int) where {T<:Points}
-    n_points = npoints(points_given)
+function arclengths_allocate_interpolants(given_points::T, n_interpolants::Int;
+                                          one_arc_interpolants_min::Int=2,
+                                          one_arc_interpolants_max::Int=n_interpolants) where {T<:Points}
+    n_points = npoints(given_points)
     n_arcs   = n_points - 2 - 1
-    total_points = n_points + points_on_arcs
+    total_points = n_points + n_interpolants
     
-    normalized_arclengths = normalized_catmullrom_arclengths(points_given)
+    normalized_arclengths = normalized_catmullrom_arclengths(given_points)
     
     smallest_arc = minimum(normalized_arclengths)
     largest_arc  = maximum(normalized_arclengths)
