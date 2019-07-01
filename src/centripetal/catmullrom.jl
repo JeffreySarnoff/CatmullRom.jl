@@ -1,5 +1,5 @@
 """
-    catmullrom(seqof_points, numof_interpolants )
+    catmullrom(points_in_sequence, numof_interpolants )
 
 Given abcissa-sequenced path of points, and
 the number of subdivisions to be fit inbetween
@@ -13,20 +13,20 @@ for each bounding point of an interpoint segment,
 and provide them with the given points to obtain
 an augmented abcissa-sequenced path of points.
 """
-function catmullrom(seqof_points::Points, numof_interpolants::Int)
-    n_coords  = ncoords(seqof_points)
-    vals_along_each_coord = catmullrom_core(seqof_points, numof_interpolants)
+function catmullrom(points::Points, n_interpolants::Int)
+    n_coords  = ncoords(points)
+    vals_along_each_coord = catmullrom_core(points, n_interpolants)
     return vals_along_each_coord
 end
 
-function catmullrom_core(seqof_points::Points, numof_interpolants::Int)
-    catmullrom_requirement(seqof_points)
+function catmullrom_core(points::Points, n_interpolants::Int)
+    catmullrom_requirement(points)
     
-    n_points = npoints(seqof_points)
-    n_coords  = ncoords(seqof_points)
+    n_points = npoints(points)
+    n_coords  = ncoords(points)
     
     # include the given points (knots) for poly generation
-    n_through_points = numof_interpolants + 2  # include both endpoints
+    n_through_points = n_interpolants + 2  # include both endpoints
 
     #=
         Separate sequences for each coordinate dimension, ordered first to last interpoint span.
@@ -36,7 +36,7 @@ function catmullrom_core(seqof_points::Points, numof_interpolants::Int)
            each row holds polys that interpolate one interpoint span across all coordinates.
            (n_points - 2 - 1): drop two extremal points, spans are counted between fenceposts
     =#
-    polys = catmullrom_polys(seqof_points)
+    polys = catmullrom_polys(points)
     
     # interpolate using span-relative abcissae [0.0..1.0]
     abcissae01 = range(0.0, 1.0, length=n_through_points)
