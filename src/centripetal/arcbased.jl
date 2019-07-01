@@ -67,7 +67,7 @@ function catmullrom_arclengths(points::T) where {T<:Points}
     n_arcs = n_points - 2 # first and last points are anchors
     result = Array{L, 1}(undef, n_arcs)
 
-    for idx = 1:n_points-3
+    for idx = 1:n_arcs
         arc = catmullrom_approx_arclength(points[idx:idx+3]...,)
         result[idx] = arc
     end   
