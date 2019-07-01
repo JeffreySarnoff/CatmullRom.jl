@@ -6,7 +6,8 @@ This is the form that does not crimp, provides taughtness, and looks good.
 """
 module CatmullRom
 
-export catmullrom     # populates with points placed between those given
+export catmullrom,     # populates with points placed between those given
+       extendbounds    # extrapolates and affixes new initial and final points
 
 using LinearAlgebra: dot, norm, normalize
 
