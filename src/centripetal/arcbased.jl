@@ -12,7 +12,7 @@ function catmullrom_points_per_arc(points::T, new_points_on_arc::Int) where {T<:
     n_arcs   = n_points - 2 - 1
     total_points = (new_points_on_arc + 1) * n_arcs + 1    # n_points * (n_points - 2) - 3
     
-    normalized_arclengths = catmullrom_normalized_arclengths(points)
+    normalized_arclengths = normalized_catmullrom_arclengths(points)
     
     smallest_arc = minimum(normalized_arclengths)
     largest_arc  = maximum(normalized_arclengths)
@@ -27,7 +27,7 @@ end
    
 
 """
-    catmullrom_normalized_arclengths(points)
+    normalized_catmullrom_arclengths(points)
 
 Convert a sequence of CatmullRom points, those given
 as data and those interpolated through the data,
@@ -52,8 +52,8 @@ scalefactor = points_to_realize / denominator(rational_arc)
 points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
 ```
 """
-function catmullrom_normalized_arclengths(points::T) where {T<:Points}
-    arclengths = catmullrom_arclengths(points)
+function normalized_catmullrom_arclengths(points::T) where {T<:Points}
+    arclengths = approx_catmullrom_arclengths(points)
     sum_of_arcs = sum(arclengths)
     arclengths[:] = arclengths ./ sum_of_arcs
     return arclengths
@@ -61,13 +61,13 @@ end
 
 
 """
-    catmullrom_arclengths(points)
+    approx_catmullrom_arclengths(points)
 
 Convert a sequence of CatmullRom points, those given
 as data and those interpolated through the data,
 to a corresponding sequence of arclength approximations.
 """
-function catmullrom_arclengths(points::T) where {T<:Points}
+function approx_catmullrom_arclengths(points::T) where {T<:Points}
     L = float(coordtype(T))
     n_points = npoints(points)
     # the first two points and the last two points are boundary + anchor
@@ -82,7 +82,7 @@ function catmullrom_arclengths(points::T) where {T<:Points}
 
     # points[1:4], points[2:5], .. points[idx:idx+3] .., points[N-3:N]
     for idx = 1:n_points-3
-        arc = catmullrom_approx_arclength(points[idx:idx+3]...,)
+        arc = approx_catmullrom_arclength(points[idx:idx+3]...,)
         result[idx] = arc
     end   
     return result    
@@ -90,7 +90,7 @@ end
 
 
 """
-    catmullrom_approx_arclength(pt0, pt1, pt2, pt3)
+    approx_catmullrom_arclength(pt0, pt1, pt2, pt3)
 
 Given 4 ND points along a centripetal Catmull-Rom span,
 roughly approximate the arclength of the curvilinear segment
@@ -107,7 +107,7 @@ This well-behaved approximation was developed by Jens Gravesen
     deg=4 --> (2*corddsit + 3*bezdist)/(5)
 ```
 """
-function catmullrom_approx_arclength(p0::T, p1::T, p2::T, p3::T) where {T<:OnePoint}
+function approx_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where {T<:OnePoint}
     b0, b1, b2, b3 = catmullrom_as_bezier(p0, p1, p2, p3)
     cordal_dist = norm(b3 .- b0)
     bezier_dist = norm(b1 .- b0) + norm(b2 .- b1) + norm(b3 .- b2)
