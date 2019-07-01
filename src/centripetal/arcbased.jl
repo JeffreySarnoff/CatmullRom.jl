@@ -1,5 +1,5 @@
 """
-    catmullrom_points_per_arc(points, n_points_to_realize)
+    arclengths_allocate_points(points, n_points_to_realize)
 
 Convert a sequence of CatmullRom points, those given
 as data and those interpolated through the data,
@@ -7,12 +7,12 @@ to a corresponding sequence of point counts,
 each arc having one or more points (the initial boundary
 arc has two or more points).
 """
-function catmullrom_points_per_arc(points::T, new_points_on_arc::Int) where {T<:Points}
-    n_points = npoints(point)
+function arclengths_allocate_points_on_arcs(points_given::T, points_on_arcs:Int) where {T<:Points}
+    n_points = npoints(points_given)
     n_arcs   = n_points - 2 - 1
-    total_points = (new_points_on_arc + 1) * n_arcs + 1    # n_points * (n_points - 2) - 3
+    total_points = n_points + points_on_arcs
     
-    normalized_arclengths = normalized_catmullrom_arclengths(points)
+    normalized_arclengths = normalized_catmullrom_arclengths(points_given)
     
     smallest_arc = minimum(normalized_arclengths)
     largest_arc  = maximum(normalized_arclengths)
