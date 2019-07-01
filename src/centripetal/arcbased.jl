@@ -71,7 +71,7 @@ function catmullrom_arclengths(points::T) where {T<:Points}
     #                                   pt4 .. ptN-3
     #               1 arc               ((N-3)-4 arcs)          1 arc
     #  N-3-4+1+1 = N-1-4 = Npts-5 arcs
-    n_arcs = n_points - 5 
+    n_arcs = n_points - 3 
     result = Array{L, 1}(undef, n_arcs)
 
     # points[1:4], points[2:5], .. points[idx:idx+3] .., points[N-3:N]
