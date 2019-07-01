@@ -1,5 +1,5 @@
 """
-    arclengths_allocate_interpolants(given_points, n_interpolants;
+    arclength_allocated_interpolants(given_points, n_interpolants;
                                      one_arc_interpolants_min = 2,
                                      one_arc_interpolants_max = n_interpolants)
 
@@ -10,7 +10,7 @@ Arcs connect adjacent _given points_. Each arc has its initial point
 (which is the initial point of the next arc, if any), and zero or more
 interpolating points.
 """
-function arclengths_allocate_interpolants(given_points::T, n_interpolants::Int;
+function arclength_allocated_interpolants(given_points::T, n_interpolants::Int;
                                           one_arc_interpolants_min::Int=2,
                                           one_arc_interpolants_max::Int=n_interpolants) where {T<:Points}
     n_points = npoints(given_points)
