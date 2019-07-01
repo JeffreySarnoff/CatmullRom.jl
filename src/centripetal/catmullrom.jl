@@ -19,7 +19,7 @@ instructs the return of explict coordinate values.
 When `iterator = true` is used, iterators over
 those same coordinate values are returned.
 """
-function catmullrom(points::Points, n_between_points::Int; iterator::Bool=false)
+function catmullrom(points::Points, n_between_points::Int)
     n_coords  = ncoords(points)
     vals_along_each_coord = catmullrom_core(points, n_between_points)
     return vals_along_each_coord
