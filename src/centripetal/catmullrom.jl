@@ -1,6 +1,5 @@
 """
     catmullrom(  points_along_curve, n_between_points )
-               ; iterator = false   )
 
 Given abcissa-sequenced path of points, and
 the number of subdivisions to be fit inbetween
