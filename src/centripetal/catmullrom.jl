@@ -21,10 +21,8 @@ those same coordinate values are returned.
 """
 function catmullrom(points::Points, n_between_points::Int; iterator::Bool=false)
     n_coords  = ncoords(points)
-    vals = catmullrom_core(points, n_between_points)
-    crpoints = (Iterators.flatten).([vals[:,i] for i=1:n_coords])
-
-    return iterator ? crpoints : collect.(crpoints)
+    vals_along_each_coord = catmullrom_core(points, n_between_points)
+    return vals_along_each_coord
 end
 
 function catmullrom_core(points::Points, n_between_points::Int)
@@ -49,13 +47,13 @@ function catmullrom_core(points::Points, n_between_points::Int)
     # interpolate using span-relative abcissae [0.0..1.0]
     abcissae01 = range(0.0, 1.0, length=n_through_points)
 
+    # vals is an `(n_points - 3) x (n_dims)` array of groups of successive point_along_coord placements
     vals = polyval.(polys, Ref(abcissae01[1:end-1]))
+    coord_vals = [collect(Iterators.flatten( vals[:,i] )) for i=1:n_coords]
     endvals = polyval.(polys[end,:], fill(1.0, n_coords))
-    vals = push!(vals, endvals)
-    #finalcoords = reshape(map(x->[x], endvals), 1, n_coords)
-    #vals = vcat(vals, finalcoords)
-
-    return vals
+    @. push!(coord_vals, endvals)
+    
+    return coord_vals
 end
 
 """
