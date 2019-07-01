@@ -64,10 +64,18 @@ to a corresponding sequence of arclength approximations.
 function catmullrom_arclengths(points::T) where {T<:Points}
     L = float(coordtype(T))
     n_points = npoints(points)
-    n_arcs = n_points - 2 # first and last points are anchors
+    # the first two points and the last two points are boundary + anchor
+    # boundary anchor first_internal_point ... final_internal_point anchor boundary
+    #       noarc   arc                    arcs                   arc   noarc
+    #    pt1     pt2     pt3                            ptN-2       ptN-1     ptN
+    #                                   pt4 .. ptN-3
+    #               1 arc               ((N-3)-4 arcs)          1 arc
+    #  N-3-4+1+1 = N-1-4 = Npts-5 arcs
+    n_arcs = n_points - 5 
     result = Array{L, 1}(undef, n_arcs)
 
-    for idx = 1:n_arcs
+    # points[1:4], points[2:5], .. points[idx:idx+3] .., points[N-3:N]
+    for idx = 1:n_points-3
         arc = catmullrom_approx_arclength(points[idx:idx+3]...,)
         result[idx] = arc
     end   
