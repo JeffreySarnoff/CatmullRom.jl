@@ -4,49 +4,23 @@ Approaching the Unit Circle
     (x(t), y(t)) circles as t ↦ 0..2
 
 ```julia
+using CatmullRom, Plots
 
-# We need 4 points to determine a Catmull-Rom spline over the _middle_ 2 points. 
-# a circle is a closed curve, so the first and last points must be the same
+fx(t) = cospi(t);
+fy(t) = sinpi(t);
 
-given = [ (x=  1.0, y=  0.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  √3/2), 
-          (x=  0.0, y=  1.0), ( -1/2, √3/2), (-√2/2,  √2/2), (-√3/2,  1/2), 
-          (x= -1.0, y=  0.0), (-√3/2, -1/2), (-√2/2, -√2/2), (-1/2, -√3/2),
-          (x=  0.0, y= -1.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  √3/2),
-          (x=  1.0, y=  0.0)]
+xs = [fx(t) for t=range(0.0, stop=2.0, length=17)];
+ys = [fy(t) for t=range(0.0, stop=2.0, length=17)];
+xys = collect(zip(xs,ys));
 
-xs = first.(given); ys = last.(given)
+if isapprox(xs[1], xs[end])
+   xys = [xys[end-1], xys..., xys[2]]
+   cxs,cys = catmullrom(xys, 16, extend=false);
+else
+   cxs,cys = catmullrom(xys, 16);
+end;
 
-# How many intermediating points should be introduced between adjacent point pairs?
+plot(xs, ys, linecolor=:navy, size=(600,600), legend=nothing)
+plot!(cxs,cys, linecolor=:green, size=(600,600), legend=nothing) 
+```
 
-nbetween = length(given)
-
-plt = plot(title="MyPlot")
-
-cxs,cys = catmullrom(Tuple.(given), nbetween);
-
-plot!(first.(given), last.(given), size=(600,600))
-
-plot!(cxs, cys, size=(600,600));
-
-julia> plot!(cx,cy,size=(400,400));
-
-julia> display(plt) #Display newly constructed plot
-
-julia> cxs,cys = catmullrom(Tuple.(given₁), nbetween1^2);
-
-julia> Plots.plot!(cxs,cys,size=(400,400));
-=#
-
-#=
- xs = first.(given₂); ys = last.(given₂)
- cxs,cys = catmullrom(Tuple.(given₂[4:10]), 17);
- cx=[sinpi(t) for t=1.5:0.02:2.0];
- cy=[cospi(t) for t=1.5:0.02:2.0];
-
-plt = plot(title="MyPlot")
-Plots.plot!(xs[5:9],ys[5:9],size=(400,400));
-Plots.plot!(cxs,cys,size=(400,400));
-display(plt) #Display newly constructed plot
-Plots.plot!(cx,cy,size=(400,400));
-display(plt) #Display newly constructed plot
-=#
