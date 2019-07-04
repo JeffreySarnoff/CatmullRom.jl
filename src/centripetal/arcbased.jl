@@ -6,21 +6,18 @@ to a sequence of arc-length specific point counts.
 """
 function arclength_interpolants(given_points::T, n_interpolants::Int) where {T<:Points}
     n_points = npoints(given_points)
-    n_arcs   = n_points - 2 - 1
+    n_arcs   = n_points - 2
     total_points = n_points + n_interpolants
     
     normalized_arclengths = normalized_catmullrom_arclengths(given_points)
     
-    smallest_arc = minimum(normalized_arclengths)
-    largest_arc  = maximum(normalized_arclengths)
-
-    scalefactor = n_interpolants * ceil(Int,inv((largest_arc + smallest_arc)/2))
+    per_arc = normalized_arclengths .* totalpoints
+    mn = minimum(per_arc)
+    if mn < 1.0
+        per_arc = per_arc .* inv(mn)
+    end
+    points_per_arc = round.(Int, per_arc)
     
-    # scaled_arclengths_are_point_counts counting points on the arc
-    points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
-    points_sum = sum(points_per_arc)
-    scaleby = div(points_sum, total_points)
-    points_per_arc = round.(Int, points_per_arc ./ scaleby)
     return points_per_arc
 end    
    
