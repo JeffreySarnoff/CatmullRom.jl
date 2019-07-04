@@ -18,7 +18,10 @@ isclosed(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint == lastpoint
 isclosed(points::Points) = isclosed(first(points), last(points))
 
 npoints(pts::Points) = length(pts)
+npoints(pts::Base.Iterators.Zip) = length(pts)
+
 ncoords(pts::Points) = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : length(pts[1])
+ncoords(pts::Base.Iterators.Zip) = eltype(pts) <: NamedTuple ? length(Tuple(first(pts))) : length(first(pts))
 
 coordtype(pts::Points) = eltype(eltype(pts))
 coordtype(pt::OnePoint) = eltype(pts)
