@@ -1,5 +1,3 @@
-firstone(xs) = xs[1]; lastone(xs) = xs[end]
-
 """
 Approaching the Unit Circle
 
@@ -34,11 +32,11 @@ julia> plt = plot(title="MyPlot")
 
 julia> cxs,cys = catmullrom(Tuple.(given₁), 3);
 
-julia> Plots.plot!(first.(given₁)[2:end-1],last.(given₁)[2:end-1],size=(400,400))
+julia> plot!(first.(given₁)[2:end-1],last.(given₁)[2:end-1],size=(400,400))
 
-julia> Plots.plot!(cxs,cys,size=(400,400));
+julia> plot!(cxs,cys,size=(400,400));
 
-julia> Plots.plot!(cx,cy,size=(400,400));
+julia> plot!(cx,cy,size=(400,400));
 
 julia> display(plt) #Display newly constructed plot
 
