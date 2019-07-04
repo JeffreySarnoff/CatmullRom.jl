@@ -14,13 +14,13 @@ function Base.pushfirst!(collection::NTuple{N1,NTuple{M,T}}, items::NTuple{N2,NT
     return (items..., collection...)
 end
 
-function myunzip(x)
-    nd = length(x[1])
-    npts = length(x)
+function unzipped(x)
+    n_dims  = length(x[1])
+    n_items = length(x)
     typ = eltype(eltype(x[1]))
-    res = Array{typ, 2}(undef, (npts,nd))
-    for k=1:npts
-       for i=1:nd
+    res = Array{typ, 2}(undef, (n_items, n_dims))
+    for k=1:n_points
+       for i=1:n_dims
           res[k,i] = x[k][i]
        end
     end
