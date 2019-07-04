@@ -11,10 +11,6 @@ function extendbounds(points::Points; scale=ReflectionScale)
     return points
 end
 
-function extendbounds(points::Base.Iterators.Zip; scale=ReflectionScale)
-    return extendbounds(collect(points), scale=scale)
-end
-
 """
     outside(points, scale)
 
