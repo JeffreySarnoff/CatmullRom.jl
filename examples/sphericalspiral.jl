@@ -7,28 +7,12 @@ x(t) = cos(t) / sqrt(1 + t*t)
 y(t) = sin(t) / sqrt(1 + t*t)
 z(t) = - t/sqrt(1+t*t)
                         
-ts = collect(range(-4pi,4pi, length=30));
-xs = x.(ts);
-ys = y.(ts);
-zs = z.(ts);
+ts = collect(range(-4pi,4pi, length=24));
+xs = x.(ts); ys = y.(ts); zs = z.(ts);
 
-plot(zs,ys,xs,linecolor=:navy)
+plot(zs, ys, xs, linecolor=:darkred, linewidth=2, size=(600,600))
 
-#=
-zyxs = collect(zip(zs,ys,xs));
-zs,ys,xs = catmullrom(collect(zip(zs,ys,xs)), 32, iterator=false);
-zz,yy,xx = catmullrom(zyxs, 32, iterator=false);
-
-plot(zz,yy,xx)
-=#
-
-CatmullRom.catmullrom(a::Base.Iterators.Flatten{Array{Array{T,1},1}}, n::Int; iterator=false) where {T} =
-    catmullrom(collect(a), n, iterator=iterator)
-
-CatmullRom.catmullrom(a::Base.Iterators.Zip{Tuple{Array{T,1},Array{T,1},Array{T,1}}}, n::Int; iterator=false) where {T} =
-    catmullrom(collect(a), n, iterator=iterator)
-
-zs,ys,xs = catmullrom(zip(zs,ys,xs), 32, iterator=false);
-plot!(zs,ys,xs,linecolor=:navy)
+czs, cys, cxs = catmullrom(collect(zip(zs,ys,xs)), 36);
+plot!(czs, cys, cxs, linecolor=:navy, linewidth=2, size=(600,600))
 
 ```
