@@ -26,6 +26,7 @@ in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
 and then pass that result to this function with `extend=false`.
 """
 function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
+    coord_type = coordtype(points)
     n_interpolants = n_interpolants + isodd(n_interpolants) # force even number
     
     if points[1] == points[end]
@@ -36,7 +37,12 @@ function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
     end    
 
     vals_along_each_coord = catmullrom_core(points, n_interpolants)
-    return vals_along_each_coord
+    
+    if coord_type === Float64
+        return vals_along_each_coord
+    else
+        return [map(coord_type, vals) for vals in vals_along_each_coord]
+    end
 end
 
 catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true) =
