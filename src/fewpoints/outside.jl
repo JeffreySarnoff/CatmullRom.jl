@@ -7,18 +7,18 @@ anchors the centripetal Catmull-Rom splines.
 """
 function extendbounds(points::Points; scale=ReflectionScale)
     npoints(points) > 3 || throw(DomainError("4 or more points are required"))
-    points = outside(points, scale=scale)
+    points = outside(points, float(scale))
     return points
 end
 
 """
-    outside(points [; scale])
+    outside(points, scale)
 
 Determine the two extremal points (outside of the boundary points)
 used to anchor the sequence of centripetal Catmull-Rom spline spans.
 Incorporate these boundary points in the point sequence.
 """
-function outside(points::Points; scale=ReflectionScale)
+function outside(points::Points, scale::F) where {F<:AbstractFloat}
     initialpoint = pointbefore(points[1:4], scale)
     finalpoint   = pointafter(points[end-3:end], scale)
     pushfirst!(push!(points, finalpoint), initialpoint)
