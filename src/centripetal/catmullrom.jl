@@ -39,9 +39,15 @@ function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
     return vals_along_each_coord
 end
 
-function catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true)
-    return catmullrom(collect(zip(xs,ys)), n_interpolants, extend=extend)
-end
+catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(zip(xs,ys)), n_interpolants, extend=extend)
+
+catmullrom(xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(zip(xs,ys,zs)), n_interpolants, extend=extend)
+
+catmullrom(ws::Vectorm xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(zip(ws,xs,ys,zs)), n_interpolants, extend=extend)
+
 
 function catmullrom_core(points::Points, n_interpolants::Int)
     catmullrom_requirement(points)
