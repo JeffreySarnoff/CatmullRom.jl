@@ -1,18 +1,10 @@
 """
-    arclength_allocated_interpolants(given_points, n_interpolants;
-                                     one_arc_interpolants_min = 2,
-                                     one_arc_interpolants_max = n_interpolants)
+    arclength_interpolants(given_points, n_interpolants)
 
 Convert a sequence of points and a count of additional points to interpolate
-througout that point sequence to a sequence of arc-specific point counts.
-Arcs connect adjacent _given points_. Each arc has its initial point
-(which is the final point of the prior arc, if any), its final point
-(which is the initial point of the next arc, if any), and zero or more
-interpolating points.
+to a sequence of arc-length specific point counts.
 """
-function arclength_allocated_interpolants(given_points::T, n_interpolants::Int;
-                                          one_arc_interpolants_min::Int=2,
-                                          one_arc_interpolants_max::Int=n_interpolants) where {T<:Points}
+function arclength_interpolants(given_points::T, n_interpolants::Int) where {T<:Points}
     n_points = npoints(given_points)
     n_arcs   = n_points - 2 - 1
     total_points = n_points + n_interpolants
@@ -21,9 +13,8 @@ function arclength_allocated_interpolants(given_points::T, n_interpolants::Int;
     
     smallest_arc = minimum(normalized_arclengths)
     largest_arc  = maximum(normalized_arclengths)
-    
-    rational_arc = rationalize(Float16(smallest_arc))
-    scalefactor = new_points_on_arc * ceil(Int,inv((largest_arc + smallest_arc)/2))
+
+    scalefactor = n_interpolants * ceil(Int,inv((largest_arc + smallest_arc)/2))
     
     # scaled_arclengths_are_point_counts counting points on the arc
     points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
