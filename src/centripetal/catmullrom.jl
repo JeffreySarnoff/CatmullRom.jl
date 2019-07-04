@@ -1,7 +1,8 @@
 """
-    catmullrom(points_in_sequence, n_interpolants; extend=true)
+    catmullrom(points, n_interpolants; extend=true)
+    catmullrom(xs, ys, n_interpolants; extend=true)
 
-Given abcissa-sequenced path of points, and
+Given abcissa-sequenced path of points (as points or as xs and ys), and
 the number of subdivisions to be fit inbetween
 each path-adjacent, non-extremal pair of points
 (all neighboring points except the first & last),
@@ -31,6 +32,10 @@ function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
     n_coords  = ncoords(points)
     vals_along_each_coord = catmullrom_core(points, n_interpolants)
     return vals_along_each_coord
+end
+
+function catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true)
+    return catmullrom(collect(zip(xs,ys)), n_interpolants, extend=extend)
 end
 
 function catmullrom_core(points::Points, n_interpolants::Int)
