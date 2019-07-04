@@ -1,5 +1,5 @@
 """
-    catmullrom(points_in_sequence, numof_interpolants )
+    catmullrom(points_in_sequence, n_interpolants; extend=true)
 
 Given abcissa-sequenced path of points, and
 the number of subdivisions to be fit inbetween
@@ -12,8 +12,22 @@ Use these cubic polynomials to obtain coordinates
 for each bounding point of an interpoint segment,
 and provide them with the given points to obtain
 an augmented abcissa-sequenced path of points.
+
+By default, extrapolated first and final points
+are affixed to the input point sequence so that
+all of the input points are present in the resulting sequence
+(CatmullRom fitting does not include the first and final points).
+If you prefer this not occur, call the function with
+`extend=false`.
+
+If you prefer to specify the scale factor used
+in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
+and then pass that result to this function.
 """
-function catmullrom(points::Points, n_interpolants::Int)
+function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
+    if extend
+        points = extendbounds(points)
+    end    
     n_coords  = ncoords(points)
     vals_along_each_coord = catmullrom_core(points, n_interpolants)
     return vals_along_each_coord
