@@ -48,6 +48,9 @@ catmullrom(xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool
 catmullrom(ws::Vectorm xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
     catmullrom(collect(zip(ws,xs,ys,zs)), n_interpolants, extend=extend)
 
+catmullrom(points::Base.Iterators.Zip, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(points), n_interpolants, extend=extend)
+
 
 function catmullrom_core(points::Points, n_interpolants::Int)
     catmullrom_requirement(points)
