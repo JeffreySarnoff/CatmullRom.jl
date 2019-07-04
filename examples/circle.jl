@@ -14,11 +14,11 @@ given = [ (x=  1.0, y=  0.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  √3/
           (x=  0.0, y= -1.0), ( √3/2,  1/2), ( √2/2,  √2/2), ( 1/2,  √3/2),
           (x=  1.0, y=  0.0)]
 
-xs = first.(given₂); ys = last.(given₂)
+xs = first.(given); ys = last.(given)
 
 # How many intermediating points should be introduced between adjacent point pairs?
 
-nbetween = 8
+nbetween = length(given)
 
 plt = plot(title="MyPlot")
 
