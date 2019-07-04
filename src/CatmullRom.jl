@@ -10,7 +10,7 @@ export catmullrom,     # populates with points placed between those given
        extendbounds    # extrapolates and affixes new initial and final points
 
 using LinearAlgebra: dot, norm, normalize
-using Polynomials: Poly, polyval # polyder, polyint
+using Polynomials: Poly, polyval
 
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
