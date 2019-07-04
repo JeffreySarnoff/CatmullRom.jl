@@ -14,7 +14,7 @@ function Base.pushfirst!(collection::NTuple{N1,NTuple{M,T}}, items::NTuple{N2,NT
     return (items..., collection...)
 end
 
-function unzipped(x)
+function points_to_coords(x)
     n_dims  = length(x[1])
     n_items = length(x)
     typ = eltype(eltype(x[1]))
