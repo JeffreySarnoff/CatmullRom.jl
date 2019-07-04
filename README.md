@@ -18,51 +18,35 @@
 
 ## constructor
 
-- catmullrom(points, interpolants)
-    - `points` is a tuple of points-as-tuples
-    - `interpolants` is a tuple of values from 0.0 to 1.0 (inclusive)
+- catmullrom(points, how_many_interpolants)
+    - `points` is a vector or tuple of points-as-tuples or points-as-vectors
+    - `how_many_interpolants` counts the points to be interpolated
     -  yields interpolating points from points[2] through points[end-1] (inclusive)
 
 ### closed curves
 
 To close a curve make sure that the first point and the last point are the same point.
 
-## interpolation points
-
-- `uniform01(n)`
-    - [0.0, b, c.., n-2, n-1, 1.0]
-    - `c - b ~= (n-1) - (n-2)` 
-    - _uniformly separated interpolants_
-
-- `chebyshev01(n)`
-    - [0.0, b .. n-1, 1.0]
-    - Chebyshev polynomial of the second kind, roots
-    - roots of U(n), mapped into 0.0:1.0
-    - these work better than roots T(n) with centripetal Catmull-Rom curves
-
-## utilities
-
-- `into01((xs...,))`, `into01([xs...,])`
-    - maps values into 0.0:1.0, linearly
-    - minimum(xs) --> 0.0, maximum(xs) --> 1.0
-
-- `clamp01((xs...,))`, `clamp01([xs...,])`
-    - forces values into 0.0..1.0
 
 ```julia
-julia> using CatmullRom
 
-julia> interpolants = uniform01(2)
-julia> points2D = ([(sinpi(x),cospi(x)) for x=0.0f0:(0.25f0/3.0f0):0.25f0]...,)
+julia> points = ([(sinpi(x),cospi(x)) for x=0.0f0:(0.25f0/3.0f0):0.25f0]...,)
 ((0.0f0, 1.0f0), (0.25881904f0, 0.9659258f0), (0.5f0, 0.8660254f0), (0.70710677f0, 0.70710677f0))
 
-julia> polys = catmullrom_polys(points2D)
-2-element Array{Poly{Float32},1}:
- Poly(0.25881904f0 + 0.25f0*x - 0.00060100853f0*x^2 - 0.008218035f0*x^3)   
- Poly(0.9659258f0 - 0.06698731f0*x - 0.03631732f0*x^2 + 0.0034040362f0*x^3)
+julia> xs,ys = CatmullRom.unzip(points)
+4×2 Array{Float32,2}:
+ 0.0       1.0
+ 0.258819  0.965926
+ 0.5       0.866025
+ 0.707107  0.707107
 
-julia> catmullrom(extendbounds(points2D), interpolants)
+julia> crpoints = catmullrom(points, 2)
+2-element Array{Array{Float32,1},1}:
+ [0.25881904, 0.34178123, 0.4227836, 0.5]
+ [0.9659258, 0.93968755, 0.9061352, 0.8660252]
 
+
+ 
 ```
 -----
 
