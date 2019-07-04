@@ -18,4 +18,4 @@ plot(xs, ys, linecolor=:black, linewidth=1, size=(200,600), legend=nothing, xaxi
 plot!(cxs,cys, linecolor=:blue, linewidth=1, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing) 
 ```
 
-![CatmullRomCircle](https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CatmullRom_circle_dpi.png)
+
