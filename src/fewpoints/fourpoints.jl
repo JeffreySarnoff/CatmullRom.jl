@@ -2,7 +2,7 @@ function thiele4(pt₁, pt₂, pt₃, pt₄, x)
     result = thiele4(pt₁[1], pt₂[1], pt₃[1], pt₄[1],
                      pt₁[2:end], pt₂[2:end], pt₃[2:end], pt₄[2:end], x)
     # check for degenerate case
-    if !(all(isfinite.(result)))
+    if !all(isfinite.(result))
         if x <= pt₃[1]
             result = thiele3(pt₁, pt₂, pt₃, x)
         else
