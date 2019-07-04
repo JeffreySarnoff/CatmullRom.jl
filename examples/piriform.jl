@@ -10,8 +10,8 @@ ys = [fy(t) for t=range(0.0, stop=1.0, length=26)];
 xys = collect(zip(xs,ys));
 
 if isapprox(xs[1], xs[end])
-   xys = [xys[end-1], xys..., xys[2]];
-end
+   xys = [xys[end-1], xys..., xys[2]]
+end;
 
 cxs,cys = catmullrom(xys, 16);
 
