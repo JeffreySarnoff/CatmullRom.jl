@@ -67,7 +67,7 @@ function thiele3(pt₁x, pt₂x, pt₃x, pt₁y, pt₂y, pt₃y, x)
     t1 = @. inv(t1)
 
     result = @. (-(pt₁x - x) * t1 + pt₁y)
-    if !all(isfinite.(result)))
+    if !all(isfinite.(result))
         result = (pt₁x, pt₂x, pt₃x, pt₁y, pt₂y, pt₃y, x)
     end
 
