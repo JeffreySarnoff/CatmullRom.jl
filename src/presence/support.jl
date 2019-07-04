@@ -1,3 +1,19 @@
+function Base.push!(collection::NTuple{N,NTuple{M,T}}, item::NTuple{M,T}) where {N,M,T}
+    return (collection..., item)
+end
+
+function Base.push!(collection::NTuple{N1,NTuple{M,T}}, items::NTuple{N2,NTuple{M,T}}) where {N1,N2,M,T}
+    return (collection..., items...)
+end
+
+function Base.pushfirst!(collection::NTuple{N,NTuple{M,T}}, item::NTuple{M,T}) where {N,M,T}
+    return (item, collection...)
+end
+
+function Base.pushfirst!(collection::NTuple{N1,NTuple{M,T}}, items::NTuple{N2,NTuple{M,T}}) where {N1,N2,M,T}
+    return (items..., collection...)
+end
+
 function myunzip(x)
     nd = length(x[1])
     npts = length(x)
