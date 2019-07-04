@@ -26,10 +26,15 @@ in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
 and then pass that result to this function with `extend=false`.
 """
 function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
-    if extend
+    n_interpolants = n_interpolants + isodd(n_interpolants) # force even number
+    
+    if points[1] == points[end]
+        pushfirst!(push!(points, points[2]), points[end-1])
+        cxs,cys = catmullrom(points, n_interpolants, extend=false);
+    elseif extend
         points = extendbounds(points)
     end    
-    n_coords  = ncoords(points)
+
     vals_along_each_coord = catmullrom_core(points, n_interpolants)
     return vals_along_each_coord
 end
