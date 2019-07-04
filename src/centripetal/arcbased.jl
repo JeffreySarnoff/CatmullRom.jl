@@ -11,7 +11,7 @@ function arclength_interpolants(given_points::T, n_interpolants::Int) where {T<:
     
     normalized_arclengths = normalized_catmullrom_arclengths(given_points)
     
-    per_arc = normalized_arclengths .* totalpoints
+    per_arc = normalized_arclengths .* total_points
     mn = minimum(per_arc)
     if mn < 1.0
         per_arc = per_arc .* inv(mn)
