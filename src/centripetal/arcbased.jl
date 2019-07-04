@@ -18,6 +18,9 @@ function arclength_interpolants(given_points::T, n_interpolants::Int) where {T<:
     
     # scaled_arclengths_are_point_counts counting points on the arc
     points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
+    points_sum = sum(points_per_arc)
+    scaleby = div(points_sum, total_points)
+    points_per_arc = div(points_per_arc, scaleby)
     return points_per_arc
 end    
    
