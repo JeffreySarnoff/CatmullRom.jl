@@ -6,9 +6,10 @@ makedocs(
     authors = "Jeffrey Sarnoff",
     pages = Any[
         "Overview" => "index.md",
-        "Guide" => "guide.md",
-        "Notes" => "notes.md",
-        "References" => "references.md"
+        "Examples" => "Examples.md",
+        "Circle" => "Circle.md",
+        "Piriform" => "Piriform.md",
+        "Spherical Spiral" => "SphericalSpiral.md"
     ]
 )
 
