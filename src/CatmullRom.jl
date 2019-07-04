@@ -17,7 +17,7 @@ using Polynomials: Poly, polyval # polyder, polyint
 include("presence/pointsequences.jl")
 
 # suggest outermost two points for Catmull-Rom spline sequence
-const ReflectionScale = 1/64
+const ReflectionScale = 1.0
 include("fewpoints/outside.jl")
 
 # centripetal Catmull-Rom compution
