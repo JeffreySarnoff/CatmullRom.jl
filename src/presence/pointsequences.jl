@@ -24,7 +24,7 @@ ncoords(pts::Points) = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : lengt
 ncoords(pts::Base.Iterators.Zip) = eltype(pts) <: NamedTuple ? length(Tuple(first(pts))) : length(first(pts))
 
 coordtype(pts::Points) = eltype(eltype(pts))
-coordtype(pt::OnePoint) = eltype(pts)
+coordtype(pt::OnePoint) = eltype(pt)
 
 function coordtype(x::T) where {T}
     result = T
