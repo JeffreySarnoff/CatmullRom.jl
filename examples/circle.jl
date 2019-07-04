@@ -20,7 +20,7 @@ else
    cxs,cys = catmullrom(xys, 16);
 end;
 
-plot(xs, ys, linecolor=:black, size=(600,600), legend=nothing)
-plot!(cxs,cys, linecolor=:blue, size=(600,600), legend=nothing) 
+plot(xs, ys, linecolor=:black, size=(600,600), legend=nothing, xaxis=nothing)
+plot!(cxs,cys, linecolor=:blue, size=(600,600), legend=nothing, yaxis=nothing) 
 ```
 
