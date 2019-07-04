@@ -1,5 +1,5 @@
 """
-    extendbounds(points [; scale=1/16])
+    extendbounds(points [; scale=1.0])
 
 Extend the point sequence by one point before the start and
 by one point after the end. The extended point sequence
