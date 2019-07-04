@@ -1,5 +1,5 @@
 """
-    catmullrom(points_in_sequence, n_interpolants; extendbounds=true)
+    catmullrom(points_in_sequence, n_interpolants; extend=true)
 
 Given abcissa-sequenced path of points, and
 the number of subdivisions to be fit inbetween
@@ -18,14 +18,14 @@ are affixed to the input point sequence so that
 all of the input points are present in the resulting sequence
 (CatmullRom fitting does not include the first and final points).
 If you prefer this not occur, call the function with
-`extendbounds=false`.
+`extend=false`.
 
 If you prefer to specify the scale factor used
 in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
-and then pass that result to this function.
+and then pass that result to this function with `extend=false`.
 """
-function catmullrom(points::Points, n_interpolants::Int; extendbounds::Bool=true)
-    if extendbounds
+function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
+    if extend
         points = extendbounds(points)
     end    
     n_coords  = ncoords(points)
