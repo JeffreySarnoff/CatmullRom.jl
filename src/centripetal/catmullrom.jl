@@ -69,7 +69,7 @@ function catmullrom_core(points::Points, n_interpolants::Int)
     catmullrom_requirement(points)
     
     n_points = npoints(points)
-    n_coords  = ncoords(points)
+    n_coords = ncoords(points)
     
     # include the given points (knots) for poly generation
     n_through_points = n_interpolants + 2  # include both endpoints
