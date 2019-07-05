@@ -33,7 +33,7 @@ To close a curve make sure that the first point and the last point are the same 
 julia> points = ([(sinpi(x),cospi(x)) for x=0.0f0:(0.25f0/3.0f0):0.25f0]...,)
 ((0.0f0, 1.0f0), (0.25881904f0, 0.9659258f0), (0.5f0, 0.8660254f0), (0.70710677f0, 0.70710677f0))
 
-julia> xs,ys = CatmullRom.points_to_coords(points)
+julia> xys = CatmullRom.points_to_coords(points)
 4×2 Array{Float32,2}:
  0.0       1.0
  0.258819  0.965926
