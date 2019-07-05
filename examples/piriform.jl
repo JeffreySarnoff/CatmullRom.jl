@@ -5,13 +5,19 @@ a = 2*b;
 fx(t) = a * cospi(t)^2;
 fy(t) = (a^2/b) * cospi(t)^3 * sinpi(t);
 
-n_points  =  9;
-n_between = 24; # interpolants between each adjacent pair of points
+n_points  = 12;
+n_between = 42; # interpolants between each adjacent pair of points
 
 xs1 = [fx(t) for t=range( 0.0, stop=1.0, length=n_points)];
 ys1 = [fy(t) for t=range( 0.0, stop=1.0, length=n_points)];
 xs2 = [fx(t) for t=range(-0.5, stop=0.5, length=n_points)];
 ys2 = [fy(t) for t=range(-0.5, stop=0.5, length=n_points)];
+
+cxs1, cys1 = catmullrom(xs1, ys1, 22);
+cxs2, cys2 = catmullrom(xs2, ys2, n_between);
+
+plot(xs2, ys2, linecolor=:lightgreen,  linewidth=3, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
+plot!(cxs2, cys2, linecolor=:black, linewidth=2, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
 
 #=
    The Piriform is a closed curve, so the first and last points are equal.
