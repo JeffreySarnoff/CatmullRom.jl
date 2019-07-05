@@ -43,10 +43,7 @@ julia> xs,ys = CatmullRom.points_to_coords(points)
 julia> crpoints = catmullrom(points, 2)
 2-element Array{Array{Float32,1},1}:
  [0.25881904, 0.34178123, 0.4227836, 0.5]
- [0.9659258, 0.93968755, 0.9061352, 0.8660252]
-
-
- 
+ [0.9659258, 0.93968755, 0.9061352, 0.8660252] 
 ```
 -----
 
