@@ -26,16 +26,30 @@ in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
 and then pass that result to this function with `extend=false`.
 """
 function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
-    coord_type = coordtype(points)
     n_interpolants = n_interpolants + isodd(n_interpolants) # force even number
     
     if points[1] == points[end]
         pushfirst!(push!(points, points[2]), points[end-1])
-        cxs,cys = catmullrom(points, n_interpolants, extend=false);
     elseif extend
         points = extendbounds(points)
     end    
+    
+    return catmullrom_splines(points, n_interpolants)
+end
 
+catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(zip(xs,ys)), n_interpolants, extend=extend)
+catmullrom(xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(zip(xs,ys,zs)), n_interpolants, extend=extend)
+catmullrom(ws::Vector, xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(zip(ws,xs,ys,zs)), n_interpolants, extend=extend)
+catmullrom(points::Base.Iterators.Zip, n_interpolants::Int; extend::Bool=true) =
+    catmullrom(collect(points), n_interpolants, extend=extend)
+
+
+function catmullrom_splines(points::Points, n_interpolants::Int)
+    coord_type = coordtype(points)
+      
     vals_along_each_coord = catmullrom_core(points, n_interpolants)
     
     if coord_type === Float64
@@ -44,18 +58,6 @@ function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
         return [map(coord_type, vals) for vals in vals_along_each_coord]
     end
 end
-
-catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(zip(xs,ys)), n_interpolants, extend=extend)
-
-catmullrom(xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(zip(xs,ys,zs)), n_interpolants, extend=extend)
-
-catmullrom(ws::Vector, xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(zip(ws,xs,ys,zs)), n_interpolants, extend=extend)
-
-catmullrom(points::Base.Iterators.Zip, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(points), n_interpolants, extend=extend)
 
 
 function catmullrom_core(points::Points, n_interpolants::Int)
