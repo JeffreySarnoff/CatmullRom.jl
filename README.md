@@ -14,7 +14,8 @@
 
 -----
 
-### Centripetal Catmull-Rom interpoint arcs
+
+## Centripetal Catmull-Rom Interpolation
 
 
   |                     shape                               |              segments                           |
