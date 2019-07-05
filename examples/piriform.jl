@@ -5,15 +5,15 @@ a = 2*b;
 fx(t) = a * cospi(t)^2;
 fy(t) = (a^2/b) * cospi(t)^3 * sinpi(t);
 
-n_points  = 12;
-n_between = 42; # interpolants between each adjacent pair of points
+n_points  =  7;
+n_between = 17; # interpolants between each adjacent pair of points
 
 xs1 = [fx(t) for t=range( 0.0, stop=1.0, length=n_points)];
 ys1 = [fy(t) for t=range( 0.0, stop=1.0, length=n_points)];
-xs2 = [fx(t) for t=range(-0.5, stop=0.5, length=n_points)];
-ys2 = [fy(t) for t=range(-0.5, stop=0.5, length=n_points)];
+xs2 = reverse(xs1)
+ys2 = reverse(ys1);
 
-cxs1, cys1 = catmullrom(xs1, ys1, 22);
+cxs1, cys1 = catmullrom(xs1, ys1, n_between);
 cxs2, cys2 = catmullrom(xs2, ys2, n_between);
 
 plot(xs2, ys2, linecolor=:lightgreen,  linewidth=3, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
@@ -32,7 +32,7 @@ sort(xs1[2:end]) == sort(xs2[2:end]) && sort(ys1[2:end]) == sort(ys2[2:end]) # t
    it suffices to plot either one. Here we plot both to show
    that one exactly covers the other.
 =#  
-plot(xs1, ys1, linecolor=:green, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
+# plot(xs1, ys1, linecolor=:green, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
 plot(xs2, ys2, linecolor=:blue,  size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
 
 # overlay in orange the curve fitted to the first sequence of xs,ys (xs1, ys1)
@@ -42,6 +42,8 @@ plot!(cxs1, cys1, linecolor=:orange, size=(600,600), legend=nothing, xaxis=nothi
 # overlay in black the curve fitted to the second sequence of xs,ys (xs2, ys2)
 cxs2, cys2 = catmullrom(xs2, ys2, n_between);
 plot!(cxs2, cys2, linecolor=:black, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
+
+
 ```
 
 There are two gaps between the orange and black curves, one at the upper right and the other at the lower left.
