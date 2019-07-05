@@ -44,3 +44,4 @@ end
 
 Base.convert(::Type{Array{T,1}}, x::NTuple{N,T}) where {N,T} = [x...,]
 Base.convert(::Type{NTuple{N,T}}, x::Array{T,1}) where {N,T} = (x...,)
+   
