@@ -28,18 +28,40 @@
   
 
 
-### Exports
+### Use
 
-## constructor
+```
+using CatmullRom
 
-- catmullrom(points, how_many_interpolants)
-    - `points` is a vector or tuple of points-as-tuples or points-as-vectors
-    - `how_many_interpolants` counts the points to be interpolated
-    -  yields interpolating points from points[2] through points[end-1] (inclusive)
+xs = [..]  # these are the abcissae
+ys = [..]  # there is at least one ordinate sequence
+zs = [..}  # and at most, as many as you choose to use
+           # each ordinate dimension is independent of the others
+           # all ordinate sequences match to the abcissa sequence
 
-### closed curves
+# If your n-d curve is intended to be an open curve
+# make sure that the first and last abcissae values are different
+#
+# If your n-d curve is intended to be a closed curve
+# make sure that the first and last abcissae values are identical
+# make sure that the first and last ordinate values for each ordinate dimension are identical
 
-To close a curve make sure that the first point and the last point are the same point.
+# each ordinate sequence must have the same number of values as there are abcissae
+@assert length(xs) == length(ys) [ == length(zs) ]
+
+n_interpoint_arcs = 42   # up to you, try different values to see what is best given the context
+                         # use even numbers (so >= 2) and 12, 16, 24, 50, 64, 120 might work
+                         
+thepoints = zip(xs, ys [, zs ...])  # with (xs, ys) or (xs, ys, zs) you do not need to zip
+
+crpoints = catmullrom(points, n_interpoint_arcs)                         
+crpoints = catmullrom(xs, ys, n_interpoint_arcs)                         
+crpoints = catmullrom(xs, ys, zs, n_interpoint_arcs)                         
+
+# crpoints is a vector of vectors, on for each coordinate dimension
+# crpoints includes the original points and adds all the interpoint placements
+
+```
 
 
 ```julia
