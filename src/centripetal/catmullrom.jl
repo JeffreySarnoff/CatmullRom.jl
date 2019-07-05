@@ -47,12 +47,6 @@ function catmullrom(totalpoints::Int, xs::Vector{T}, ordinates::Vararg{Vector{T}
 end
 
     
-catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(zip(xs,ys)), n_interpolants, extend=extend)
-catmullrom(xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(zip(xs,ys,zs)), n_interpolants, extend=extend)
-catmullrom(ws::Vector, xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(zip(ws,xs,ys,zs)), n_interpolants, extend=extend)
 catmullrom(points::Base.Iterators.Zip, n_interpolants::Int; extend::Bool=true) =
     catmullrom(collect(points), n_interpolants, extend=extend)
 
