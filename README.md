@@ -16,9 +16,8 @@
 
 ### Images
 
-Normal Text
 
-  |                                                          |                                                 |
+  |                     shape                               |              segments                           |
   |:--------------------------------------------------------:|:-----------------------------------------------:|
   |                                                          |                                                 |
   | <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CatmullRom_circle_dpihalf.png" width="300">  |      <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CatmullRom_sectionofcircle.png" width="400">|
