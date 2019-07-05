@@ -26,9 +26,11 @@ in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
 and then pass that result to this function with `extend=false`.
 """
 function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
+    catmullrom_requirement(npoints(points))
+    
     n_interpolants = n_interpolants + isodd(n_interpolants) # force even number
     
-    if points[1] == points[end]
+    if points[1] == points[end]                              # curve is closed
         pushfirst!(push!(points, points[2]), points[end-1])
     elseif extend
         points = extendbounds(points)
@@ -38,8 +40,7 @@ function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
 end
 
 function catmullrom(totalpoints::Int, xs::Vector{T}, ordinates::Vararg{Vector{T}}; extend::Bool=true)
-    n_points = length(xs)
-    n_points >= 4 || throw(DomainError("At least four points are required ($n_points points found)"))
+    catmullrom_requirement(npoints(xs))
     all(n_points .== length.(ordinates)) || throw(DomainError("coordinate sequences must share one length ($n_points, $(length.(ordinates)))"))
     
     n_interpolants = min((n_points-1) * 2, totalpoints - length(xs))
@@ -252,7 +253,6 @@ end
 
 sqrtdot(a::T,b::T) where {T} = sqrt(sum(a .* b))
 
-function catmullrom_requirement(points::Points)
-    n_points = npoints(points)
-    n_points > 3 || throw(ErrorException("four or more points are required"))
+function catmullrom_requirement(n_points::Int)
+    n_points >= 4 || throw(DomainError("At least four points are required ($n_points points found)"))
 end
