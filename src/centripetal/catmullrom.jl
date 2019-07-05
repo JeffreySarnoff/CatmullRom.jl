@@ -37,6 +37,16 @@ function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
     return catmullrom_splines(points, n_interpolants)
 end
 
+function catmullrom(totalpoints::Int, xs::Vector{T}, ordinates::Vararg{Vector{T}}; extend::Bool=true)
+    n_points = length(xs)
+    n_points >= 4 || throw(DomainError("At least four points are required ($n_points points found)"))
+    all(n_points .== length.(ordinates)) || throw(DomainError("coordinate sequences must share one length ($n_points, $(length.(ordinates)))"))
+    
+    n_interpolants = min((n_points-1) * 2, totalpoints - length(xs))
+    return catmullrom(zip(xs, ordinates...), n_interpolants, extend=extend)
+end
+
+    
 catmullrom(xs::Vector, ys::Vector, n_interpolants::Int; extend::Bool=true) =
     catmullrom(collect(zip(xs,ys)), n_interpolants, extend=extend)
 catmullrom(xs::Vector, ys::Vector, zs::Vector, n_interpolants::Int; extend::Bool=true) =
