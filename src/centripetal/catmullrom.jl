@@ -27,23 +27,22 @@ in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
 and then pass that result to this function with `extend=false`.
 """
 function catmullrom(n_more_points::Integer, points::Points; extend::Bool=true)
-    catmullrom_requirement(npoints(points))
-    
-    n_interpolants = n_interpolants + isodd(n_interpolants) # force even number
+    catmullrom_requirement(npoints(points))    
+    n_interpolants = n_interpolants + isodd(n_interpolants)  # force even
     
     if points[1] == points[end]                              # curve is closed
-        pushfirst!(push!(points, points[2]), points[end-1])
-    elseif extend
-        points = extendbounds(points)
+        pushfirst!(push!(points, points[2]), points[end-1])  #   close the spline
+    elseif extend                                            # curve is open 
+        points = extendbounds(points)                        #   cap the spline 
     end    
     
-    return catmullrom_splines(points, n_more_points)
+    return catmullrom_splines(n_more_points, points)
 end
 
-function catmullrom(n_more_points::Int, xs::Vector{T}, ordinates::Vararg{Vector{T}}; extend::Bool=true)
+function catmullrom(n_more_points::Integer, xs::Vector{T}, ordinates::Vararg{Vector{T}}; extend::Bool=true)
     n_points = npoints(xs)
     catmullrom_requirement(n_points)
-    all(n_points .== length.(ordinates)) || throw(DomainError("coordinate sequences must share one length ($n_points, $(length.(ordinates)))"))
+    all(n_points .== length.(ordinates)) || throw(DomainError("lengths must match ($n_points, $(length.(ordinates)))"))
     
     n_more_points = max(n_more_points, 2*(n_points -1))
     return catmullrom(n_more_points, zip(xs, ordinates...), extend=extend)
@@ -54,10 +53,10 @@ catmullrom(n_more_points::Integer, points::Base.Iterators.Zip; extend::Bool=true
     catmullrom(n_more_points, collect(points), extend=extend)
 
 
-function catmullrom_splines(points::Points, n_interpolants::Int)
+function catmullrom_splines(n_more_points::Integer, points::Points)
     coord_type = coordtype(points)
       
-    vals_along_each_coord = catmullrom_core(points, n_interpolants)
+    vals_along_each_coord = catmullrom_core(n_more_points, points) 
     
     if coord_type === Float64
         return vals_along_each_coord
@@ -67,14 +66,14 @@ function catmullrom_splines(points::Points, n_interpolants::Int)
 end
 
 
-function catmullrom_core(points::Points, n_interpolants::Int)
+function catmullrom_core(n_more_points::Integer, points::Points)
     catmullrom_requirement(points)
     
     n_points = npoints(points)
     n_coords = ncoords(points)
     
     # include the given points (knots) for poly generation
-    n_through_points = n_interpolants + 2  # include both endpoints
+    n_through_points = n_more_points + 2  # include both endpoints
 
     #=
         Separate sequences for each coordinate dimension, ordered first to last interpoint span.
