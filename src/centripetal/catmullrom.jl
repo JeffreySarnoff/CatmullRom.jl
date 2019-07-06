@@ -145,7 +145,7 @@ function centripetal_catmullrom(pt₋::T,
                                 pt₁::T,
                                 pt₊::T) where {T<:OnePoint}
 
-    tg₀, tg₁ = centripetal_tangents(pt₋, pt₀, pt₁, pt₊)
+    tg₀,tg₁     = centripetal_tangents(pt₋, pt₀, pt₁, pt₊)
     c₀,c₁,c₂,c₃ = centripetal_hermite(pt₀, pt₁, tg₀, tg₁)
 
     coeffs = [[x...] for x in zip(c₀,c₁,c₂,c₃)]
@@ -170,15 +170,9 @@ function centripetal_tangents(pt₋::T,
     dt₀₁ = speed(pt₀, pt₁)
     dt₁₊ = speed(pt₁, pt₊)
 
-    # check if any coordinates coincide
-    ε = coordeps(T)
-    coord_type = coordtype(T)
-    # correct for repeated coordinates    
-    dt₀₁ = @. ifelse(dt₀₁ <= ε, one(coord_type), dt₀₁)
-    dt₋₀ = @. ifelse(dt₋₀ <= ε, dt₀₁, dt₋₀)
-    dt₁₊ = @. ifelse(dt₁₊ <= ε, dt₀₁, dt₁₊)
-
-    # Compute the tangents at the two boundry points
+    dt₋₀, dt₀₁, dt₁₊ = prevent_overlap(T, dt₋₀, dt₀₁, dt₁₊)
+    
+    # Compute the tangents at the two boundary points
     #   that delimit the interpolatory curve segment.
     #   - tg₀ is the tangent at pt₀
     #   - tg₁ is the tangent at pt₁
@@ -191,32 +185,38 @@ function centripetal_tangents(pt₋::T,
              (pt₊ - pt₀) / (dt₀₁ + dt₁₊) +
              (pt₊ - pt₁) /  dt₁₊
 
-    # The tangent vectors are normalized.
-    # These unit vector tangents provide
-    # centripetal interpolation in [0..1].
-
+    # Normalize the tangent vectors. These unit vector tangents
+    #   provide (guide) centripetal interpolation in [0..1].
     tg₀ = tg₀ .* dt₀₁
     tg₁ = tg₁ .* dt₀₁
 
     return (tg₀, tg₁)
 end
 
+@inline function prevent_overlap(::Type{P}, dt₋₀::T, dt₀₁::T, dt₁₊::T) where {T, P<:OnePoint}
+    # check if any coordinates coincidee
+    ε = coordeps(P)
+    # correct for repeated coordinates    
+    dt₀₁ = @. ifelse(dt₀₁ <= ε, one(coordtype(P)), dt₀₁)
+    dt₋₀ = @. ifelse(dt₋₀ <= ε, dt₀₁, dt₋₀)
+    dt₁₊ = @. ifelse(dt₁₊ <= ε, dt₀₁, dt₁₊)
+    return dt₋₀, dt₀₁, dt₁₊
+ end
+
+
 """
     centripetal_hermite(pt₀, pt₁, tg₀, tg₁)
+    
+- ply(t)  = c0 + c1*t   +   c2*t^2 + c3*t^3    
+- dply(t) = c1 + 2*c2*t + 3*c3*t^2    
 
-Given the bounding points (pt₀, pt₁)
-for an interpolatory curve segment
-and the tangent unit vectors (tg₀, tg₁)
-at those points:
+Given the bounding points `(pt₀, pt₁)` of a  curve segment
+and the unit tangent vectors `(tg₀, tg₁)` at those points,
+determine the coeffs `(c0, c1, c2, c3)` of cubic `ply(t)`
+and of associated quadratic `dply(t)` such that
 
-Determine the coeffs (c0, c1, c2, c3)
-of the cubic polynomial
-   ply(t) = c0 + c1*t + c2*t^2 + c3*t^3
-with associated quadratic polynomial
-   dply(t) = c1 + 2*c2*t + 3*c3*t^2
-such that
-   ply(0) == pt₀,  dply(0) == tg₀
-   ply(1) == pt₁,  dply(1) == tg₁
+- ply(0) == pt₀,  dply(0) == tg₀
+- ply(1) == pt₁,  dply(1) == tg₁
 """
 function centripetal_hermite(pt₀::T, pt₁::T, tg₀::G, tg₁::G) where {T<:OnePoint, G}
     c0 = pt₀
