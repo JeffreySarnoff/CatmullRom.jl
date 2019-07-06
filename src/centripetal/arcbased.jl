@@ -1,24 +1,27 @@
 """
-    arclength_interpolants(given_points, n_interpolants)
+    arclength_interpolants(n_more_points, points; min_arcpoints=2)
 
 Convert a sequence of points and a count of additional points to interpolate
-to a sequence of arc-length specific point counts.
+to a sequence of arc-length specific point counts where each arc has at least
+`min_arcpoints` points.
 """
-function arclength_interpolants(given_points::T, n_interpolants::Int) where {T<:Points}
-    n_points = npoints(given_points)
+function arclength_interpolants(n_more_points::Integer, points::T; arcs_have_points::Int=2) where {T<:Points}
+    n_points = npoints(points)
     n_arcs   = n_points - 2
-    total_points = n_points + n_interpolants
+    points_on_curve = n_points + n_more_points
+    points_per_arc  = cld(points_on_curve, n_arcs)
     
-    normalized_arclengths = normalized_catmullrom_arclengths(given_points)
+    normalized_arclengths = normalized_catmullrom_arclengths(points)
     
-    per_arc = normalized_arclengths .* total_points
-    mn = minimum(per_arc)
-    if mn < 1.0
-        per_arc = per_arc .* inv(mn)
-    end
-    points_per_arc = round.(Int, per_arc)
+    least_arclength = minimum(normalized_arclengths)
+    least_arcpoints = least_arclength * points_per_arc
+    multiplier = round(least_arcpoints) < min_arcpoints ?
+                   inv(least_arcpoints) * min_arcpoints : 1.0
     
-    return points_per_arc
+    normalized_arclengths = normalized_arclengths .* multiplier
+    arcpoints = round.(Int, normalized_arclengths)
+    
+    return arcpoints
 end    
    
 
