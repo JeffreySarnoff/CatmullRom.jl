@@ -1,6 +1,7 @@
 """
-    catmullrom(points, n_interpolants; extend=true)
-    catmullrom(xs, ys, n_interpolants; extend=true)
+    catmullrom(n_more_points, points_given; extend=true)
+    catmullrom(n_more_points, xs, ys; extend=true)
+    catmullrom(n_more_points, xs, ys, zs; extend=true)
 
 Given abcissa-sequenced path of points (as points or as xs and ys), and
 the number of subdivisions to be fit inbetween
@@ -25,7 +26,7 @@ If you prefer to specify the scale factor used
 in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
 and then pass that result to this function with `extend=false`.
 """
-function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
+function catmullrom(n_more_points::Integer, points::Points; extend::Bool=true)
     catmullrom_requirement(npoints(points))
     
     n_interpolants = n_interpolants + isodd(n_interpolants) # force even number
@@ -36,20 +37,21 @@ function catmullrom(points::Points, n_interpolants::Int; extend::Bool=true)
         points = extendbounds(points)
     end    
     
-    return catmullrom_splines(points, n_interpolants)
+    return catmullrom_splines(points, n_more_points)
 end
 
-function catmullrom(totalpoints::Int, xs::Vector{T}, ordinates::Vararg{Vector{T}}; extend::Bool=true)
-    catmullrom_requirement(npoints(xs))
+function catmullrom(n_more_points::Int, xs::Vector{T}, ordinates::Vararg{Vector{T}}; extend::Bool=true)
+    n_points = npoints(xs)
+    catmullrom_requirement(n_points)
     all(n_points .== length.(ordinates)) || throw(DomainError("coordinate sequences must share one length ($n_points, $(length.(ordinates)))"))
     
-    n_interpolants = min((n_points-1) * 2, totalpoints - length(xs))
-    return catmullrom(zip(xs, ordinates...), n_interpolants, extend=extend)
+    n_more_points = max(n_more_points, 2*(n_points -1))
+    return catmullrom(n_more_points, zip(xs, ordinates...), extend=extend)
 end
 
     
-catmullrom(points::Base.Iterators.Zip, n_interpolants::Int; extend::Bool=true) =
-    catmullrom(collect(points), n_interpolants, extend=extend)
+catmullrom(n_more_points::Integer, points::Base.Iterators.Zip; extend::Bool=true) =
+    catmullrom(n_more_points, collect(points), extend=extend)
 
 
 function catmullrom_splines(points::Points, n_interpolants::Int)
