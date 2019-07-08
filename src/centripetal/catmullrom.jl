@@ -40,7 +40,7 @@ function catmullrom(points::Points, perarc::Integer; extend::Bool=true)
     return catmullrom_splines(points, perarc)
 end
 
-function catmullrom(xs::Vector{T}, ordinates::Vararg{Vector{T}}, perarc::Integer; extend::Bool=true) where {T<:Points}
+function catmullrom(xs::Vector{T}, ordinates::Vector{Vector{T}}, perarc::Integer; extend::Bool=true) where {T<:Points}
     n_points = npoints(xs)
     catmullrom_requirement(n_points)
     all(n_points .== length.(ordinates)) || throw(DomainError("lengths must match ($n_points, $(length.(ordinates)))"))
