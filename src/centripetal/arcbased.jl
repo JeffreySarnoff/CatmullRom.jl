@@ -19,7 +19,7 @@ function arclength_interpolants(points::T; arcpoints_min::Int=2, arcpoints_max::
     most_arcpoints = maximum(arcpoints)
     if most_arcpoints > arcpoints_max
         multiplier = prevfloat(arcpoints_max / most_arcpoints)
-        arcpoints  = round.(Int, (arcpoints .- arcpoints_min) .* multiplier)) .+ arcpoints_min
+        arcpoints  = round.(Int, (arcpoints .- arcpoints_min) .* multiplier) .+ arcpoints_min
     end
         
     return arcpoints
