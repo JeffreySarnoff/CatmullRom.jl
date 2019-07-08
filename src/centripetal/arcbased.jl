@@ -15,7 +15,7 @@ function arclength_interpolants(points::T; arcpoints_min::Int=2, arcpoints_max::
 
     most_arcpoints = maximum(arcpoints)
     if most_arcpoints > arcpoints_max
-        multiplier = prevfloat(arcpoints_max / (most_arcpoints - arcpoints_min))
+        multiplier = prevfloat(arcpoints_max / (most_arcpoints + arcpoints_min))
         arcpoints  = floor.(Int, muladd.(arcpoints .- arcpoints_min, multiplier, arcpoints_min))
         arcpoints = arcpoints .+ isodd.(arcpoints)
     end
