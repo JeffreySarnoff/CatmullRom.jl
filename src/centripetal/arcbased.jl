@@ -14,12 +14,10 @@ function arclength_interpolants(n_more_points::Integer, points::T; min_arcpoints
     normalized_arclengths = normalized_catmullrom_arclengths(points)
     
     least_arclength = minimum(normalized_arclengths)
-    least_arcpoints = least_arclength * points_per_arc
-    multiplier = round(least_arcpoints) < min_arcpoints ?
-                   inv(least_arcpoints) * min_arcpoints : 1.0
-    
+    multiplier = nextfloat(min_arcpoints / least_arclength)
     normalized_arclengths = normalized_arclengths .* multiplier
-    arcpoints = round.(Int, normalized_arclengths)
+    arcpoints = floor.(Int, normalized_arclengths)
+    arcpoints = arcpoints .+ isodd.(arcpoints)
     
     return arcpoints
 end    
