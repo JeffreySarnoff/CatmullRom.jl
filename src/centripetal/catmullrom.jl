@@ -1,7 +1,7 @@
 """
-    catmullrom(n_more_points, points_given; extend=true)
-    catmullrom(n_more_points, xs, ys; extend=true)
-    catmullrom(n_more_points, xs, ys, zs; extend=true)
+    catmullrom(points, perarc; extend=true)
+    catmullrom(xs, ys, perarc; extend=true)
+    catmullrom(xs, ys, zs, perarc; extend=true)
 
 Given abcissa-sequenced path of points (as points or as xs and ys), and
 the number of subdivisions to be fit inbetween
@@ -26,9 +26,10 @@ If you prefer to specify the scale factor used
 in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
 and then pass that result to this function with `extend=false`.
 """
-function catmullrom(n_more_points::Integer, points::Points; extend::Bool=true)
+function catmullrom(points::Points, perarc::Integer; extend::Bool=true)
     catmullrom_requirement(npoints(points))    
-    n_more_points = n_more_points + isodd(n_more_points)     # force even
+    perarc = perarc + isodd(perarc)     # force even
+    points = copy(points)                                
     
     if points[1] == points[end]                              # curve is closed
         pushfirst!(push!(points, points[2]), points[end-1])  #   close the spline
@@ -36,27 +37,27 @@ function catmullrom(n_more_points::Integer, points::Points; extend::Bool=true)
         points = extendbounds(points)                        #   cap the spline 
     end    
     
-    return catmullrom_splines(n_more_points, points)
+    return catmullrom_splines(points, perarc)
 end
 
-function catmullrom(n_more_points::Integer, xs::Vector{T}, ordinates::Vararg{Vector{T}}; extend::Bool=true) where {T<:Points}
+function catmullrom(xs::Vector{T}, ordinates::Vararg{Vector{T}}, perarc::Integer; extend::Bool=true) where {T<:Points}
     n_points = npoints(xs)
     catmullrom_requirement(n_points)
     all(n_points .== length.(ordinates)) || throw(DomainError("lengths must match ($n_points, $(length.(ordinates)))"))
     
-    n_more_points = max(n_more_points, 2*(n_points -1))
-    return catmullrom(n_more_points, zip(xs, ordinates...), extend=extend)
+    perarc = max(perarc, 2*(n_points -1))
+    return catmullrom(zip(xs, ordinates...), perarc, extend=extend)
 end
 
     
-catmullrom(n_more_points::Integer, points::Base.Iterators.Zip; extend::Bool=true) =
-    catmullrom(n_more_points, collect(points), extend=extend)
+catmullrom(points::Base.Iterators.Zip, perarc::Integer; extend::Bool=true) =
+    catmullrom(collect(points), perarc, extend=extend)
 
 
-function catmullrom_splines(n_more_points::Integer, points::Points)
+function catmullrom_splines(points::Points, perarc::Integer)
     coord_type = coordtype(points)
       
-    vals_along_each_coord = catmullrom_core(n_more_points, points) 
+    vals_along_each_coord = catmullrom_core(points, perarc) 
     
     if coord_type === Float64
         return vals_along_each_coord
@@ -66,14 +67,14 @@ function catmullrom_splines(n_more_points::Integer, points::Points)
 end
 
 
-function catmullrom_core(n_more_points::Integer, points::Points)
+function catmullrom_core(points::Points, perarc::Integer)
     catmullrom_requirement(points)
     
     n_points = npoints(points)
     n_coords = ncoords(points)
     
     # include the given points (knots) for poly generation
-    n_through_points = n_more_points + 2  # include both endpoints
+    n_through_points = perarc + 2  # include both endpoints
 
     #=
         Separate sequences for each coordinate dimension, ordered first to last interpoint span.
