@@ -1,8 +1,8 @@
-function reflectback(pt₁::T, pt₂::T; scale=1/16) where {T}
+function reflectback(pt₁::T, pt₂::T; scale=ReflectionScale) where {T}
    return @. pt₁ - ((pt₂ - pt₁) * scale)
 end
 
-function reflectforward(pt₁::T, pt₂::T; scale=1/16) where {T}
+function reflectforward(pt₁::T, pt₂::T; scale=ReflectionScale) where {T}
     return @. pt₂ + ((pt₂ - pt₁) * scale)
 end
 
