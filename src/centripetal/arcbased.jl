@@ -5,7 +5,7 @@ Convert a sequence of points and a count of additional points to interpolate
 to a sequence of arc-length specific point counts where each arc has at least
 `min_arcpoints` points.
 """
-function arclength_interpolants(n_more_points::Integer, points::T; arcs_have_points::Int=2) where {T<:Points}
+function arclength_interpolants(n_more_points::Integer, points::T; min_arcpoints::Int=2) where {T<:Points}
     n_points = npoints(points)
     n_arcs   = n_points - 2
     points_on_curve = n_points + n_more_points
