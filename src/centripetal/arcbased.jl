@@ -6,13 +6,10 @@ to a sequence of arc-length specific point counts where each arc has at least
 `min_arcpoints` points.
 """
 function arclength_interpolants(points::T; arcpoints_min::Int=2, arcpoints_max::Int=64) where {T<:Points}
-    n_points = npoints(points)
-    n_arcs   = n_points - 2
-    
     normalized_arclengths = normalized_catmullrom_arclengths(points)
     
-    least_arclength = minimum(normalized_arclengths)
-    multiplier = nextfloat(arcpoints_min / least_arclength)
+    arclength_min = minimum(normalized_arclengths)
+    multiplier = nextfloat(arcpoints_min / arclength_min)
     arcpoints = floor.(Int, normalized_arclengths .* multiplier)
     arcpoints = arcpoints .+ isodd.(arcpoints)
 
