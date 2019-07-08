@@ -28,7 +28,7 @@ and then pass that result to this function with `extend=false`.
 """
 function catmullrom(n_more_points::Integer, points::Points; extend::Bool=true)
     catmullrom_requirement(npoints(points))    
-    n_interpolants = n_interpolants + isodd(n_interpolants)  # force even
+    n_more_points = n_more_points + isodd(n_more_points)     # force even
     
     if points[1] == points[end]                              # curve is closed
         pushfirst!(push!(points, points[2]), points[end-1])  #   close the spline
