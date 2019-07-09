@@ -31,13 +31,13 @@ function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
     return catmullrom_splines(points, pointsperarc)
 end
 
-catmullrom(xs::Vector{T}, ys::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Points} =
+catmullrom(xs::Vector{T}, ys::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Real} =
     catmullrom(collect(zip(xs,ys)), pointsperarc, extend=extend)
 
-catmullrom(xs::Vector{T}, ys::Vector{T}, zs::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Points} =
+catmullrom(xs::Vector{T}, ys::Vector{T}, zs::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Real} =
     catmullrom(collect(zip(xs,ys,zs)), pointsperarc, extend=extend)
 
-catmullrom(ws::Vector{T}, xs::Vector{T}, ys::Vector{T}, zs::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Points} =
+catmullrom(ws::Vector{T}, xs::Vector{T}, ys::Vector{T}, zs::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Real} =
     catmullrom(collect(zip(ws, xs,ys,zs)), pointsperarc, extend=extend)
 
 function catmullrom(xs::Vector{T}, ordinates::Vector{Vector{T}}, pointsperarc::Integer; extend::Bool=true) where {T<:Points}
