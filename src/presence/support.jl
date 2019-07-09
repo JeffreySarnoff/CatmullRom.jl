@@ -14,18 +14,6 @@ function Base.pushfirst!(collection::NTuple{N1,NTuple{M,T}}, items::NTuple{N2,NT
     return (items..., collection...)
 end
 
-function points_to_coords(x)
-    n_dims  = length(x[1])
-    n_items = length(x)
-    typ = eltype(eltype(x[1]))
-    res = Array{typ, 2}(undef, (n_items, n_dims))
-    for k=1:n_points
-       for i=1:n_dims
-          res[k,i] = x[k][i]
-       end
-    end
-    return res
-end
 
 #=
   relatively fast determination of angular separation
