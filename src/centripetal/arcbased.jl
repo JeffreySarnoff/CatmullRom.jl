@@ -5,9 +5,40 @@ Calculates a Catmull-Rom fit through given `points`, where the number of interpo
 varys inversely with the approximate arclength of that arc.
 
 `arcpoints_min` and `arcpoints_max` refer any one arc between two points.
-"""
-function catmullrombyarc(points::Points; arcpoints_min=2, arcpoints_max=64)
-    xpoints = extendbounds(points);
+""" catmullrombyarc
+
+#=
+function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
+    catmullrom_requirement(npoints(points))    
+    
+    if points[1] == points[end]                              # curve is closed
+        pushfirst!(push!(points, points[2]), points[end-1])  #   close the spline
+    elseif extend                                            # curve is open 
+        points = extendbounds(points)                        #   cap the spline 
+    end    
+    
+    return catmullrom_byarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+end
+=#
+
+catmullrombyarc(xs::Vector{T}, ys::Vector{T}; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax) where {T<:Real} =
+    catmullrombyarc(collect(zip(xs,ys)), arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+
+catmullrombyarc(xs::Vector{T}, ys::Vector{T}, zs::Vector{T}; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax) where {T<:Real} =
+    catmullrombyarc(collect(zip(xs,ys,zs)), arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+
+catmullrombyarc(ws::Vector{T}, xs::Vector{T}, ys::Vector{T}, zs::Vector{T}; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax) where {T<:Real} =
+    catmullrombyarc(collect(zip(ws, xs,ys,zs)), arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+
+function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
+    if points[1] == points[end]                               # curve is closed
+        xpoints = similar(points)
+        xpoints[:] = points[:]
+        pushfirst!(push!(xpoints, points[2]), points[end-1])  #   close the spline
+    elseif extend                                             # curve is open 
+        xpoints = extendbounds(xpoints)                       #   cap the spline 
+    end    
+
     n_xpoints = npoints(xpoints)
     pointsperarc = arclength_interpolants(xpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
     n_points = sum(pointsperarc) + npoints(points)
