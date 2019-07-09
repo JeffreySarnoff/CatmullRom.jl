@@ -5,16 +5,18 @@ function catmullrombyarc(points::Points; arcpoints_min=2, arcpoints_max=64)
     n_points = sum(pointsperarc) + npoints(points)
     n_coords = ncoords(points)
     T = coordtype(points)
-    result = Array{T,2}(undef, (n_points, n_coords))
-    ptidx = 1
+    result = fill(T[], n_coords)
+    xpoint_seqs = [xpoints[i:i+3] for i=1:(length(xpoints)-3)]
     for idx=1:(n_xpoints-3)
-        fourpoints = xpoints[idx:idx+3]
+        fourpoints = xpoint_seqs[idx]
         n_between  = pointsperarc[idx]
         fitted = catmullrom_splines(fourpoints, n_between)
         for j=1:n_coords
-            result[ptidx:ptidx+n_between,j] = fitted[j][1:end-1][:]
+            append!(result[j], fitted[j][1:end-1])
         end    
-        ptidx += n_between
     end
+    for j=1:n_coords
+        push!(result[j], points[end][j])
+    end        
     return result
 end
