@@ -12,12 +12,11 @@ By default, extrapolated first and final points
 are affixed to the input point sequence so that
 all of the input points are present in the resulting sequence
 (CatmullRom fitting does not include the first and final points).
-If you prefer this not occur, call the function with
-`extend=false`.
+If you prefer this not occur, call the function with `extend=false`.
 
-If you prefer to specify the scale factor used
-in that extrapolation, use `extendbounds(points, scale=scalefactor)`,
-and then pass that result to this function with `extend=false`.
+If you prefer to specify the scale factor used in that extrapolation,
+use `extendbounds(points, scale=scalefactor)`, and then pass the result
+to this function with `extend=false`.
 """
 function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
     catmullrom_requirement(npoints(points))    
