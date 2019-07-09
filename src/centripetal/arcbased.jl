@@ -35,7 +35,7 @@ function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_m
         xpoints = similar(points)
         xpoints[:] = points[:]
         pushfirst!(push!(xpoints, points[2]), points[end-1])  #   close the spline
-    elseif extend                                             # curve is open 
+        else                                                  # curve is open 
         xpoints = extendbounds(xpoints)                       #   cap the spline 
     end    
 
