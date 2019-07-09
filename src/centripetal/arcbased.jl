@@ -3,7 +3,7 @@
 
 Convert a sequence of points and a count of additional points to interpolate
 to a sequence of arc-length specific point counts where each arc has at least
-`min_arcpoints` points.
+`arcpoints_min` and at most `arcpoints_max` points.
 """
 function arclength_interpolants(points::T; arcpoints_min::Int=2, arcpoints_max::Int=64) where {T<:Points}
     normalized_arclengths = normalized_catmullrom_arclengths(points)
