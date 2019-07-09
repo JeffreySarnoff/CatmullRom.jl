@@ -24,11 +24,11 @@ function catmullrombyarc(points::Points; arcpoints_min=2, arcpoints_max=64)
         fitted = catmullrom_splines(fourpoints, n_between)
         for j=1:n_coords
             append!(result[j], fitted[j][1:end-1])
-        end    
+        end
     end
     for j=1:n_coords
         push!(result[j], points[end][j])
-    end        
+    end
     return result
 end
 
