@@ -45,7 +45,7 @@ catmullrom(points::Base.Iterators.Zip, pointsperarc::Integer; extend::Bool=true)
     catmullrom(collect(points), pointsperarc, extend=extend)
 
 
-function catmullrom_splines(points::Points, pointsperarc::Integer)
+function catmullrom_splines(points::P, pointsperarc::Integer) where {P<:Points}
     coord_type = coordtype(points)
       
     vals_along_each_coord = catmullrom_core(points, pointsperarc) 
@@ -57,8 +57,29 @@ function catmullrom_splines(points::Points, pointsperarc::Integer)
     end
 end
 
+function catmullrom_splines(points::P, pointsperarc::Vector{I}) where {P<:Points, I<:Integer}
+    n_points = npoints(points)
+    n_ppa    = length(pointsperarc)
+    n_points-3 == n_ppa || throw(ErrorException("length(points)-3 != length(pointsperarc) ($n_points != $n_ppa)"))
+    
+    vals_along_each_coord = []
+    for idx = 1:n_ppa
+        pts = points[idx:idx+3]
+        ppa = pointsperarc[idx]
+        vals_each_coord = catmullrom_core(points, pointsperarc) 
+        push!(vals_along_each_coord, vals_each_coord)
+    end
+    return vals_along_each_coord
+    
+    coord_type = coordtype(points)
+    if coord_type === Float64
+        return vals_along_each_coord
+    else
+        return [map(coord_type, vals) for vals in vals_along_each_coord]
+    end
+end
 
-function catmullrom_core(points::Points, pointsperarc::Integer)
+function catmullrom_core(points::P, pointsperarc::Integer) where {P<:Points}
     catmullrom_requirement(npoints(points))
     n_coords = ncoords(points)
     
@@ -103,7 +124,7 @@ _polys_ is an `(n_points - 3) x (n_coords) 2D array`
    columns are of one coordinate axis 
    each row holds polys that interpolate one interpoint span across all coordinates.
 """
-function catmullrom_polys(points::Points)    
+function catmullrom_polys(points::P) where {P<:Points}    
     n_points = npoints(points)
     catmullrom_requirement(n_points)
 
