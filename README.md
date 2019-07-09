@@ -25,6 +25,10 @@
    |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral_locus.png" width="130">    |  
   
   
+## General Perspective
+
+Catmull-Rom splines are a workhorse of computer graphics and a very handy general purpose tool for fast, attractive blending.  Using the centripetal parameterization gives a more naturalistic feel to the interpoint "motion".
+
 
 
 ### Use
