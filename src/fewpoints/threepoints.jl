@@ -11,7 +11,7 @@ function quadratic(pt₁, pt₂, pt₃, x)
     result = quadratic(pt₁[1], pt₂[1], pt₃[1],
                        pt₁[2:end], pt₂[2:end], pt₃[2:end], x)
     # check for degenerate case
-    if !all(isa.(result, Real)) || !all(isfinite.(result))
+    if !all(isfinite.(result))
 	result = linear(pt₁, pt₂, pt₃, x)
     end
 	return result
