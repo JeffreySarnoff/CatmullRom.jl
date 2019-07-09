@@ -19,7 +19,7 @@ used to anchor the sequence of centripetal Catmull-Rom spline spans.
 Incorporate these boundary points in the point sequence.
 """
 function outside(points::Points, scale::F) where {F<:AbstractFloat}
-    extendedpoints = copy(points)
+    extendedpoints = deepcopy(points)
     initialpoint = pointbefore(points[1:4], scale)
     finalpoint   = pointafter(points[end-3:end], scale)
     pushfirst!(push!(extendedpoints, finalpoint), initialpoint)
