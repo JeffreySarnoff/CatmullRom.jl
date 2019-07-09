@@ -19,6 +19,7 @@ use `extendbounds(points, scale=scalefactor)`, and then pass the result
 to this function with `extend=false`.
 """
 function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
+    println(npoints(points));println("");
     catmullrom_requirement(npoints(points))    
     pointsperarc += isodd(pointsperarc)     # force even                                
     
