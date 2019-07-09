@@ -4,16 +4,9 @@
     catmullrom(xs, ys, zs, pointsperarc; extend=true)
 
 Given abcissa-sequenced path of points (as points or as xs and ys), and
-the number of subdivisions to be fit inbetween
-each path-adjacent, non-extremal pair of points
+the number of subdivisions to be fit inbetween pair of points
 (all neighboring points except the first & last),
-obtain the centripetal Catmull-Rom splines that
-cover each interpoint segment between neighbors.    
-
-Use these cubic polynomials to obtain coordinates
-for each bounding point of an interpoint segment,
-and provide them with the given points to obtain
-an augmented abcissa-sequenced path of points.
+obtain the centripetal Catmull-Rom splines that cover each segment.    
 
 By default, extrapolated first and final points
 are affixed to the input point sequence so that
