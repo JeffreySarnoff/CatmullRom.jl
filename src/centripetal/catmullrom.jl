@@ -60,7 +60,7 @@ end
 function catmullrom_splines(points::P, pointsperarc::Vector{I}) where {P<:Points, I<:Integer}
     n_points = npoints(points)
     n_ppa    = length(pointsperarc)
-    n_points-3 != n_ppa && throw(ErrorException("length(points)-3 != length(pointsperarc) ($n_points != $n_ppa)"))
+    n_points != n_ppa+1 && throw(ErrorException("length(points) != length(pointsperarc)+1 ($(n_points) != $(n_ppa+1))"))
     
     vals_along_each_coord = []
     for idx = 1:n_ppa
