@@ -26,13 +26,7 @@ ncoords(pts::Base.Iterators.Zip) = eltype(pts) <: NamedTuple ? length(Tuple(firs
 coordtype(pts::Points) = eltype(eltype(pts))
 coordtype(pt::OnePoint) = eltype(pt)
 
-function coordtype(x::T) where {T}
-    result = T
-    !(result<:Number) ? (result = eltype(result)) : (return result)
-    !(result<:Number) ? (result = eltype(result)) : (return result)
-    !(result<:Number) ? (result = eltype(result)) : (return result)
-    !(result<:Number) ? throw(ErrorException("unable to discern the coordinate type for $T")) : (return result)
-end
+coordtype(x::T) where {T} = coordtype(T)
 
 function coordtype(::Type{T}) where {T}
     result = T
