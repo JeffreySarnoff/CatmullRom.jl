@@ -46,3 +46,21 @@ function coords_to_cols(coords...)
 end
 
 cols_to_coords(cols::Array{T,2}) where T = [cols[:,i] for i=1:(size(cols)[2])]
+
+coords_to_points(coords...) = collect(zip(coords...,))
+
+function points_to_coords(x)
+    n_dims  = length(x[1])
+    n_items = length(x)
+    typ = eltype(eltype(x[1]))
+    res = Array{typ, 2}(undef, (n_items, n_dims))
+    for k=1:n_points
+       for i=1:n_dims
+          res[k,i] = x[k][i]
+       end
+    end
+    return res
+end
+
+cols_to_points(x) = coords_to_points(cols_to_coords(x))
+points_to_cols(x) = coords_to_cols(points_to_coords(x))
