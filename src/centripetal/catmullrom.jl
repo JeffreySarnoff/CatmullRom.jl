@@ -102,11 +102,10 @@ _polys_ is an `(n_points - 3) x (n_coords) 2D array`
    columns are of one coordinate axis 
    each row holds polys that interpolate one interpoint span across all coordinates.
 """
-function catmullrom_polys(points::Points)
-    catmullrom_requirement(points)
-    
+function catmullrom_polys(points::Points)    
     n_points = npoints(points)
-    
+    catmullrom_requirement(n_points)
+
     T = coordtype(points)
                                     # omit the extremal points (-2)
     n_spans  = n_points - 3         # count between fenceposts (-1)
