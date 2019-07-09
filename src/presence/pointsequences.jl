@@ -45,6 +45,4 @@ function coords_to_cols(coords...)
     return reshape(vcat(coords...,), n_rows, n_cols)
 end
 
-function cols_to_coords(cols::Array{T,2}) where T
-    [cols[:,i] for i=1:(size(cols)[2])]
-end
+cols_to_coords(cols::Array{T,2}) where T = [cols[:,i] for i=1:(size(cols)[2])]
