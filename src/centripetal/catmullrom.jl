@@ -20,12 +20,13 @@ to this function with `extend=false`.
 """
 function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
     catmullrom_requirement(npoints(points))    
-    pointsperarc += isodd(pointsperarc)     # force even
-    points = copy(points)                                
+    pointsperarc += isodd(pointsperarc)     # force even                                
     
     if points[1] == points[end]                              # curve is closed
+        points = deepcopy(points)
         pushfirst!(push!(points, points[2]), points[end-1])  #   close the spline
     elseif extend                                            # curve is open 
+        points = deepcopy(points)
         points = extendbounds(points)                        #   cap the spline 
     end    
     
