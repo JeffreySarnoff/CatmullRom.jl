@@ -13,7 +13,10 @@ function catmullrombyarc(points::Points; arcpoints_min=2, arcpoints_max=64)
     n_points = sum(pointsperarc) + npoints(points)
     n_coords = ncoords(points)
     T = coordtype(points)
-    result = fill(T[], n_coords)
+    result = []
+    for i=1:n_coords
+        push!(result, T[])
+    end
     xpoint_seqs = [xpoints[i:i+3] for i=1:(length(xpoints)-3)]
     for idx=1:(n_xpoints-3)
         fourpoints = xpoint_seqs[idx]
