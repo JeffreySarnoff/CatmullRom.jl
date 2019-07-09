@@ -38,4 +38,13 @@ end
 
 Base.convert(::Type{Array{T,1}}, x::NTuple{N,T}) where {N,T} = [x...,]
 Base.convert(::Type{NTuple{N,T}}, x::Array{T,1}) where {N,T} = (x...,)
-   
+
+function coords_to_cols(coords...)
+    n_cols = length(coords)
+    n_rows = length(coords[1])
+    return reshape(vcat(coords...,), n_rows, n_cols)
+end
+
+function cols_to_coords(cols::Array{T,2}) where T
+    [cols[:,i] for i=1:(size(cols)[2])]
+end
