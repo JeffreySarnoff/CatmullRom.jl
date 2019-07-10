@@ -5,7 +5,7 @@ function pointbefore(firstpoints::Points, scale=ReflectionScale)
     return convert(eltype(firstpoints), initialpoint)
 end
 
-function pointafter(lastpoints::Points, scaleReflectionScale)
+function pointafter(lastpoints::Points, scale=ReflectionScale)
     finalx = reflectforward(first.(lastpoints[end-1:end])..., scale=scale)
     finalys = thiele4(lastpoints..., finalx)
     finalpoint = (finalx, finalys...,)
