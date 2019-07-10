@@ -28,7 +28,7 @@ Catmull-Rom splines are a workhorse of computer graphics and a very handy genera
 
 
 
-## Centripetal Catmull-Rom Interpolation
+## Centripetal Catmull-Rom Examples
 
 
   |                     shape                               |              detail                           |
