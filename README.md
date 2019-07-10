@@ -31,7 +31,7 @@ A sequence of 2D, 3D .. nD points is required.  There is no limit on the number 
 
 |    |   |
 |:---------------------------------------------------------------------------------------------------------------------------:|:--|
-| <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  |  Catmull-Rom splines over two points are constructed with their neighbors. A new point preceeds your first and another follows your last. |
+| <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  |  Catmull-Rom splines over two points are made with their neighbors. A new point preceeds your first and another follows your last. |
 
 |   |This is necessary because each Catmull-Rom spline uses four points to characterize the arc connecting the center two of those points.<&br\> By appending a new first and new last point, the initial and final points of your sequence become the initial and final points in the result. |
 
