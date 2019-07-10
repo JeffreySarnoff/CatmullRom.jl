@@ -1,3 +1,11 @@
+function extend_seq(points::Points; scale=ReflectionScale)
+    return if isclosed(points)
+               extend_closed_seq(points)
+           else
+               extend_open_seq(points, scale)
+           end
+end
+
 function extend_closed_seq(points::Points)
     !isclosed(points) && throw(ErrorException("sequence is not closed"))
     npoints(points) < 3 && throw(ErrorException("cannot extend a sequence with fewer than 3 points"))
@@ -15,7 +23,7 @@ function extend_open_seq(points::Points; scale=ReflectionScale)
     pushfirst!(push!(points, finalpoint), initialpoint)
     return points
 end
-
+    
 function close_seq(points::Points)
     isempty(points) && throw(ErrorException("cannot close an empty sequence"))
     if !isclosed(points)
