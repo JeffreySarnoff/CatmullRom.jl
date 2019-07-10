@@ -26,7 +26,7 @@ end
   @test CatmullRom.quadratic(points[3:5]..., 1.5)[1] == 8.0
 end
 
-@testset "approximate arclengths"
+@testset "approximate arclengths" begin
   xs=[0.0, 1.0, 2.0,  3.0,  4.0, 5.0]
   ys=[0.0, 1.0, 4.0, -1.0, -2.0, 2.0]
   points = collect(zip(xs,ys))
