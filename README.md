@@ -16,9 +16,9 @@
   
 ## General Perspective
 
-Catmull-Rom splines are a workhorse of computer graphics and a very handy general purpose tool for fast, attractive blending.  Using the centripetal parameterization gives a more naturalistic feel to the interpoint "motion".
+Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal parameterization, they become a very handy general purpose tool for fast, attractive curvilinear blending. Often, they give interpoint "motion" a naturalistic feel.
 
-|  The Centripetal Catmull-Rom curve is Blue |
+|  The Centripetal Catmull-Rom Curve is Blue |
 |:-----------------------------------------------------------------------------------------------------------------------:|
 |  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="300"> |
 |                                                                                                                         |
@@ -26,6 +26,37 @@ Catmull-Rom splines are a workhorse of computer graphics and a very handy genera
 
 ## Use
 
+A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions. The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors of coordinate values or tuples of coordinate values.
+
+The point sequence that is used will be modified in place (a point will be prepended and a point will be postpended).  This is necessary because each Catmull-Rom spline uses four points when developing the curve that passes from the second to the third.  By appending a new first and new last point, the initial and final points of your sequence become the initial and final points in the result.
+
+```
+using CatmullRom, Plots
+
+result = catmullrom(points, n_inbetween_points)  # your points, how many new points to place between adjacent point pairs
+                                                 # result is a vector of coordinates, e.g. [xs, ys, zs]
+plot(result...,)
+```
+
+When your points have nonuniform separation, or separation extents vary with coordinate dimension,
+it is of benefit to allocate more of the new inbetween points where there are relatively greater
+distances between your adjacent points.  The most appropriate measure for comparison and weighting
+is interpoint arclength.  This package implements a well-behaved approximation to Catmull-Rom
+arclengths appropriate to the centripetal parameterization.  You can use this directly.
+
+```
+using CatmullRom, Plots
+
+result = catmullrombyarc(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
+ 
+result = catmullrombyarc(points, arcpoints_min=at_least, arcpoints_max=at_most)
+                                 # specify the range of inbetween points used
+xs, ys = result
+plot(xs, ys)                     # plot(result...,)
+```
+
+If your points exist as separate coordinate vectors, aggregate them this way
+`points = collect(zip(xs, ys, zs))`
 
 
 ## Centripetal Catmull-Rom Examples
