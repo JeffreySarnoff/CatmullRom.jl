@@ -82,7 +82,7 @@ function catmullrom_core(points::P, pointsperarc::Integer) where {P<:Points}
     polys = catmullrom_polys(points)
     
     # interpolate using span-relative abcissae [0.0..1.0]
-    abcissae01 = range(0.0, 1.0, length=n_through_points)
+    abcissae01 = range(0.0, stop=1.0, length=n_through_points)
 
     # vals is an `(n_points - 3) x (n_dims)` array of groups of successive point_along_coord placements
     vals = polyval.(polys, Ref(abcissae01[1:end-1]))
