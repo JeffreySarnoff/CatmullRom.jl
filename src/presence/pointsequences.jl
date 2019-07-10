@@ -1,18 +1,29 @@
-# The sorts of structures understood to hold the coordinates of a point
-const NumVec = Array{T,1} where {T<:Number};
-const NumTup = NTuple{N,T} where {N,T<:Number};
-const NumNT = NamedTuple{S,NTuple{N,T}} where {S,N,T<:Number};
-const OnePoint = Union{NumVec, NumTup, NumNT}
+function extend_closed_seq(points::Points)
+    !isclosed(points) && throw(ErrorException("sequence is not closed"))
+    npoints(points) < 3 && throw(ErrorException("cannot extend a sequence with fewer than 3 points"))
 
-# The sorts of sequences understood to hold point coordinates
-const VecNumVec = AbstractArray{Array{T,1},1} where {T<:Number};
-const VecNumTup = AbstractArray{NTuple{N,T},1} where {N,T<:Number};
-const TupNumTup = NTuple{M,NTuple{N,T}} where {M,N,T<:Number};
-const TupNumVec = NTuple{M,Array{T,1}} where {M,N,T<:Number};
-const VecNumNT = AbstractArray{NamedTuple{S,NTuple{N,T}},1} where {S,N,T<:Number};
-const TupNumNT = NTuple{M,NamedTuple{S,NTuple{N,T}}} where {M,S,N,T<:Number};
+    pushfirst!(push!(points, points[2]), points[end-1]) 
+    return points
+end    
 
-const Points = Union{VecNumVec, VecNumTup, TupNumTup, TupNumVec, VecNumNT, TupNumNT};
+function extend_open_seq(points::Points; scale=ReflectionScale)
+    isclosed(points) && throw(ErrorException("sequence is not open"))
+    npoints(points) < 3 && throw(ErrorException("cannot extend a sequence with fewer than 3 points"))
+    
+    initialpoint = pointbefore(points[1:4], scale)
+    finalpoint   = pointafter(points[end-3:end], scale)
+    pushfirst!(push!(points, finalpoint), initialpoint)
+    return points
+end
+
+function close_seq(points::Points)
+    isempty(points) && throw(ErrorException("cannot close an empty sequence"))
+    if !isclosed(points)
+        push!(points, points[1])
+    end
+    return points
+end
+
 
 isclosed(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint == lastpoint
 isclosed(points::Points) = isclosed(first(points), last(points))
