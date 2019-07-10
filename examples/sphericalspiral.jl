@@ -10,7 +10,7 @@ z(t) = - t/sqrt(1+t*t)
 ts = collect(range(-4pi,4pi, length=24));
 xs = x.(ts); ys = y.(ts); zs = z.(ts);
 
-czs, cys, cxs = catmullrom(zip(zs,ys,xs), 36);
+czs, cys, cxs = catmullrom(collect(zip(zs,ys,xs)), 36);
 
 plot(zs, ys, xs, linecolor=:darkred, linewidth=2, legend=nothing, size=(600,600))
 plot!(czs, cys, cxs, linecolor=:navy, linewidth=2, legend=nothing, size=(600,600))
