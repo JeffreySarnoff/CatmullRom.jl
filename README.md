@@ -13,6 +13,21 @@
 -----
 
 
+  
+## General Perspective
+
+Catmull-Rom splines are a workhorse of computer graphics and a very handy general purpose tool for fast, attractive blending.  Using the centripetal parameterization gives a more naturalistic feel to the interpoint "motion".
+
+|  The Centripetal Catmull-Rom curve is Blue |
+|:-----------------------------------------------------------------------------------------------------------------------:|
+|  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="300"> |
+|                                                                                                                         |
+| from "Parameterization and Applications of Catmull-Rom Curves" Cem Yuksel, Scott Schaefer, John Keyser  | 
+
+## Use
+
+
+
 ## Centripetal Catmull-Rom Interpolation
 
 
@@ -25,69 +40,6 @@
    |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral_locus.png" width="130">    |  
   
   
-## General Perspective
-
-Catmull-Rom splines are a workhorse of computer graphics and a very handy general purpose tool for fast, attractive blending.  Using the centripetal parameterization gives a more naturalistic feel to the interpoint "motion".
-
-|  The Centripetal Catmull-Rom curve is Blue |
-|:-----------------------------------------------------------------------------------------------------------------------:|
-|  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="300"> |
-|                                                                                                                         |
-| from "Parameterization and Applications of Catmull-Rom Curves" Cem Yuksel, Scott Schaefer, John Keyser  | 
-
-### Use
-
-```
-using CatmullRom
-
-xs = [..]  # these are the abcissae
-ys = [..]  # there is at least one ordinate sequence
-zs = [..}  # and at most, as many as you choose to use
-           # each ordinate dimension is independent of the others
-           # all ordinate sequences match to the abcissa sequence
-
-# If your n-d curve is intended to be an open curve
-# make sure that the first and last abcissae values are different
-#
-# If your n-d curve is intended to be a closed curve
-# make sure that the first and last abcissae values are identical
-# make sure that the first and last ordinate values for each ordinate dimension are identical
-
-# each ordinate sequence must have the same number of values as there are abcissae
-@assert length(xs) == length(ys) [ == length(zs) ]
-
-n_interpoint_arcs = 42   # up to you, try different values to see what is best given the context
-                         # use even numbers (so >= 2) and 12, 16, 24, 50, 64, 120 might work
-                         
-thepoints = zip(xs, ys [, zs ...])  # with (xs, ys) or (xs, ys, zs) you do not need to zip
-
-crpoints = catmullrom(points, n_interpoint_arcs)                         
-crpoints = catmullrom(xs, ys, n_interpoint_arcs)                         
-crpoints = catmullrom(xs, ys, zs, n_interpoint_arcs)                         
-
-# crpoints is a vector of vectors, on for each coordinate dimension
-# crpoints includes the original points and adds all the interpoint placements
-
-```
-
-
-```julia
-
-julia> points = ([(sinpi(x),cospi(x)) for x=0.0f0:(0.25f0/3.0f0):0.25f0]...,)
-((0.0f0, 1.0f0), (0.25881904f0, 0.9659258f0), (0.5f0, 0.8660254f0), (0.70710677f0, 0.70710677f0))
-
-julia> xys = CatmullRom.points_to_coords(points)
-4×2 Array{Float32,2}:
- 0.0       1.0
- 0.258819  0.965926
- 0.5       0.866025
- 0.707107  0.707107
-
-julia> crpoints = catmullrom(points, 2)
-2-element Array{Array{Float32,1},1}:
- [0.25881904, 0.34178123, 0.4227836, 0.5]
- [0.9659258, 0.93968755, 0.9061352, 0.8660252] 
-```
 -----
 
 ### Notes
