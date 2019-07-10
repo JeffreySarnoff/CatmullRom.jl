@@ -5,19 +5,19 @@ Calculates a Catmull-Rom fit through given `points`, where the number of interpo
 varys inversely with the approximate arclength of that arc.
 
 `arcpoints_min` and `arcpoints_max` refer any one arc between two points.
-""" catmullrombyarc
+""" catmullrom_byarc
 
-function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax, extend::Bool=true)
+function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax, extend::Bool=true)
     catmullrom_requirement(npoints(points))    
     
     if extend
         extend_seq(points)
     end
     
-    return catmullrom_byarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    return catmullrombyarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
 end
 
-function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
+function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
     n_points = npoints(points)
     pointsperarc = arclength_interpolants(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
     total_points = sum(pointsperarc) + n_points
