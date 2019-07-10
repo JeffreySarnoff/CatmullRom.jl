@@ -40,12 +40,6 @@ Catmull-Rom splines are a workhorse of computer graphics and a very handy genera
    |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral_locus.png" width="130">    |  
   
   
------
-
-### Notes
-
-- With Centripetal Catmull Rom interpolation, the distances are not uniform.
-    - Each interval is square root of the Euclidean distance between the points.
 
 ----
 
