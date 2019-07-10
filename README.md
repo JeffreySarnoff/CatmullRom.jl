@@ -44,8 +44,8 @@ Catmull-Rom splines are a workhorse of computer graphics and a very handy genera
 
 ### Notes
 
-With Centripetal Catmull Rom interpolation, the distances are not uniform.
-Each interval is square root of the Euclidean distance between the points.
+- With Centripetal Catmull Rom interpolation, the distances are not uniform.
+    - Each interval is square root of the Euclidean distance between the points.
 
 ----
 
