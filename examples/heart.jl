@@ -4,7 +4,7 @@ using CatmullRom, Plots
 xt(t) = 16 * sin(t)^3
 yt(t) = 13 * cos(t) - 5 * cos(2*t) - 2 * cos(3*t) - cos(4*t)
 
-ts = collect(range(0.0, stop=2.0*pi, length=15));
+ts = collect(range(0.0, length=15, stop=2.0*pi));
 n_between = 28;
 
 xs=xt.(ts); ys=yt.(ts);
