@@ -33,7 +33,7 @@ The point sequence that is used will be modified in place (a point will be prepe
 ```
 using CatmullRom, Plots
 
-result = catmullrom(points, n_inbetween_points)  # your points, how many new points to place between adjacent point pairs
+result = catmullrom(points, n_inbetween_points)  # your points, how many new points to place between adjacents
                                                  # result is a vector of coordinates, e.g. [xs, ys, zs]
 plot(result...,)
 ```
