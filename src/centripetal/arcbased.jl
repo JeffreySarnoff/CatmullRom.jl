@@ -35,41 +35,6 @@ function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_
         n_between  = pointsperarc[idx]
         fitted = catmullrom_splines(fourpoints, n_between)
         for j=1:n_coords
-            append!(result[j], fitted[j][1:end-1])
-        end
-    end
-    
-    idx = n_points - 3
-    fourpoints = point_seqs[idx]
-    n_between  = pointsperarc[idx]
-    fitted = catmullrom_splines(fourpoints, n_between)
-    for j=1:n_coords
-        append!(result[j], fitted[j]) # include the end point
-    end
-    
-    return result
-end
-
-
-
-function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
-    n_points = npoints(points)
-    pointsperarc = arclength_interpolants(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
-    total_points = sum(pointsperarc) + n_points
-    n_coords = ncoords(points)
-    T = coordtype(points)
-    result = []
-    for i=1:n_coords
-        push!(result, T[])
-    end
-    point_seqs = [points[i:i+3] for i=1:(length(points)-3)]
-
-    n_points_3 = n_points - 3
-    for idx=1:(n_points-4)
-        fourpoints = point_seqs[idx]
-        n_between  = pointsperarc[idx]
-        fitted = catmullrom_splines(fourpoints, n_between)
-        for j=1:n_coords
             append!(result[j], fitted[j][1:(end-1+(idx==n_points_3))])
         end
     end
