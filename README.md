@@ -47,12 +47,12 @@ arclengths appropriate to the centripetal parameterization.  You can use this di
 ```
 using CatmullRom, Plots
 
-result = catmullrombyarc(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
+result = catmullrom_byarc(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
  
-result = catmullrombyarc(points, arcpoints_min=at_least, arcpoints_max=at_most)
-                                 # specify the range of inbetween points used
+result = catmullrom_byarc(points, arcpoints_min=at_least, arcpoints_max=at_most)
+                                  # specify the range of inbetween points used
 xs, ys = result
-plot(xs, ys)                     # plot(result...,)
+plot(xs, ys)                      # plot(result...,)
 ```
 
 If your points exist as separate coordinate vectors, aggregate them this way
