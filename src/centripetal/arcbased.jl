@@ -17,15 +17,6 @@ function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_m
     return catmullrom_byarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
 end
 
-catmullrombyarc(xs::Vector{T}, ys::Vector{T}; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax) where {T<:Real} =
-    catmullrombyarc(collect(zip(xs,ys)), arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
-
-catmullrombyarc(xs::Vector{T}, ys::Vector{T}, zs::Vector{T}; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax) where {T<:Real} =
-    catmullrombyarc(collect(zip(xs,ys,zs)), arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
-
-catmullrombyarc(ws::Vector{T}, xs::Vector{T}, ys::Vector{T}, zs::Vector{T}; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax) where {T<:Real} =
-    catmullrombyarc(collect(zip(ws, xs,ys,zs)), arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
-
 function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
     n_xpoints = npoints(xpoints)
     pointsperarc = arclength_interpolants(xpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
