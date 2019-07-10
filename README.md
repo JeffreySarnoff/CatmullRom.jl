@@ -22,7 +22,7 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 |:-----------------------------------------------------------------------------------------------------------------------:|
 |  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="300"> |
 |                                                                                                                         |
-| from "Parameterization and Applications of Catmull-Rom Curves" Cem Yuksel, Scott Schaefer, John Keyser  | 
+| "Parameterization and Applications of Catmull-Rom Curves" Cem Yuksel, Scott Schaefer, John Keyser  | 
 
 ## Use
 
