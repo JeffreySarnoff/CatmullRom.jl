@@ -29,9 +29,9 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions. The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors of coordinate values or tuples of coordinate values.
 
 
-| [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  |   |
+|    |   |
 |:---------------------------------------------------------------------------------------------------------------------------:|:--|
-| <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  from wikipedia | The point sequence will be modified in place. Catmull-Rom splines use four points to generate an arc connecting the middle two. For your extremal points to appear, two new points must be affixed.  |
+| <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  | The point sequence will be modified in place. Catmull-Rom splines use four points to generate an arc connecting the middle two. For your extremal points to appear, two new points must be affixed.  |
 
 |   |This is necessary because each Catmull-Rom spline uses four points to characterize the arc connecting the center two of those points.<&br\> By appending a new first and new last point, the initial and final points of your sequence become the initial and final points in the result. |
 
