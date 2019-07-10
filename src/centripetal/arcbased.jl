@@ -18,8 +18,8 @@ function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_m
 end
 
 function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
-    n_xpoints = npoints(xpoints)
-    pointsperarc = arclength_interpolants(xpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    n_points = npoints(points)
+    pointsperarc = arclength_interpolants(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
     n_points = sum(pointsperarc) + npoints(points)
     n_coords = ncoords(points)
     T = coordtype(points)
@@ -27,9 +27,9 @@ function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_
     for i=1:n_coords
         push!(result, T[])
     end
-    xpoint_seqs = [xpoints[i:i+3] for i=1:(length(xpoints)-3)]
-    for idx=1:(n_xpoints-3)
-        fourpoints = xpoint_seqs[idx]
+    point_seqs = [points[i:i+3] for i=1:(length(points)-3)]
+    for idx=1:(n_points-3)
+        fourpoints = point_seqs[idx]
         n_between  = pointsperarc[idx]
         fitted = catmullrom_splines(fourpoints, n_between)
         for j=1:n_coords
