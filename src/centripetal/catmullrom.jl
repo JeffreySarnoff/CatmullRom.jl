@@ -29,28 +29,6 @@ function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
     return catmullrom_splines(points, pointsperarc)
 end
 
-catmullrom(xs::Vector{T}, ys::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Real} =
-    catmullrom(collect(zip(xs,ys)), pointsperarc, extend=extend)
-
-catmullrom(xs::Vector{T}, ys::Vector{T}, zs::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Real} =
-    catmullrom(collect(zip(xs,ys,zs)), pointsperarc, extend=extend)
-
-catmullrom(ws::Vector{T}, xs::Vector{T}, ys::Vector{T}, zs::Vector{T}, pointsperarc::Integer; extend::Bool=true) where {T<:Real} =
-    catmullrom(collect(zip(ws, xs,ys,zs)), pointsperarc, extend=extend)
-
-function catmullrom(xs::Vector{T}, ordinates::Vector{Vector{T}}, pointsperarc::Integer; extend::Bool=true) where {T<:Points}
-    n_points = npoints(xs)
-    catmullrom_requirement(n_points)
-    all(n_points .== length.(ordinates)) || throw(DomainError("lengths must match ($n_points, $(length.(ordinates)))"))
-    
-    pointsperarc = max(pointsperarc, 2*(n_points -1))
-    return catmullrom(zip(xs, ordinates...), pointsperarc, extend=extend)
-end
-
-    
-catmullrom(points::Base.Iterators.Zip, pointsperarc::Integer; extend::Bool=true) =
-    catmullrom(collect(points), pointsperarc, extend=extend)
-
 
 function catmullrom_splines(points::P, pointsperarc::Integer) where {P<:Points}
     coord_type = coordtype(points)
