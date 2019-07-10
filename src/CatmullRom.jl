@@ -7,8 +7,7 @@ This is the form that does not crimp, provides taughtness, and looks good.
 module CatmullRom
 
 export catmullrom,        # populates with points placed between those given
-       catmullrom_byarc,  # populates with points placed between those given relative to arclength
-       extendbounds       # extrapolates and affixes new initial and final points
+       catmullrom_byarc   # populates with points placed between those given relative to arclength
 
 using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval
