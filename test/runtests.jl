@@ -2,7 +2,7 @@ using CatmullRom
 using Test
 
 @testset "closed curve interpositions" begin
-  xs = [sinpi(t) for t=range(0.0, length=5, stop=2.0 )];
+  xs = [sinpi(t) for t=range(0.0, length=5, stop=2.0)];
   ys = [cospi(t) for t=range(0.0, length=5, stop=2.0)];
   points = collect(zip(xs,ys));
   cr_xys = catmullrom(points, 2)
