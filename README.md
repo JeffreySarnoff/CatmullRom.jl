@@ -31,7 +31,7 @@ A sequence of 2D, 3D .. nD points is required.  There is no limit on the number 
 
 | [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  |   |
 |:---------------------------------------------------------------------------------------------------------------------------:|:--|
-| <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  | The point sequence will be modified in place. A point will be prepended and a point will be postpended. This is necessary because each Catmull-Rom spline uses four points to characterize the arc connecting the center two of those points. By appending a new first and new last point, the initial and final points of your sequence become the initial and final points in the result. |
+| <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  | The point sequence will be modified in place. A point will be prepended and a point will be postpended. This is necessary because each Catmull-Rom spline uses four points to characterize each interpoint arc. For your initial and final points to appear, they must be encompassed.  |
 
 |   |This is necessary because each Catmull-Rom spline uses four points to characterize the arc connecting the center two of those points.<&br\> By appending a new first and new last point, the initial and final points of your sequence become the initial and final points in the result. |
 
