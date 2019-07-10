@@ -14,8 +14,6 @@ ys = [fy(t) for t=range(0.0, stop=2.0, length=17)];
 
 cxs,cys = catmullrom(xs, ys, 16);
 
-plot(xs, ys, linecolor=:black, linewidth=1, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
-plot!(cxs,cys, linecolor=:blue, linewidth=1, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing) 
+plot(cxs,cys, linecolor=:grey, linewidth=4, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
+plot!(xs, ys, linecolor=:blue, linewidth=2, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
 ```
-
-
