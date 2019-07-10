@@ -2,7 +2,7 @@ function extend_seq(points::Points; scale=ReflectionScale)
     return if isclosed(points)
                extend_closed_seq(points)
            else
-               extend_open_seq(points, scale)
+               extend_open_seq(points, scale=scale)
            end
 end
 
