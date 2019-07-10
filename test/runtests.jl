@@ -21,9 +21,10 @@ end
   xs=[0.0, 1.0, 2.0,  3.0,  4.0, 5.0]
   ys=[0.0, 1.0, 4.0, -1.0, -2.0, 2.0]
   points = collect(zip(xs,ys))
-  @test CatmullRom.thiele4(points[1:4]..., 6.0)[1] ≈ 2.6666666666666665
-  @test CatmullRom.thiele4(points[2:5]..., 1.0)[1] ≈ 1.0
-  @test CatmullRom.quadratic(points[3:5]..., 1.5)[1] ≈ 8.0
+  p1,p2,p3,p4,p5,p6 = points
+  @test CatmullRom.thiele4(p1,p2,p3,p4, 6.0)[1] ≈ 2.6666666666666665
+  @test CatmullRom.thiele4(p2,p3,p4,p5, 1.0)[1] ≈ 1.0
+  @test CatmullRom.quadratic(p3,p4,p5, 1.5)[1] ≈ 8.0
 end
 
 @testset "approximate arclengths" begin
