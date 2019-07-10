@@ -22,11 +22,9 @@ function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
     catmullrom_requirement(npoints(points))    
     pointsperarc += isodd(pointsperarc)     # force even                                
     
-    if points[1] == points[end]                              # curve is closed
-        pushfirst!(push!(points, points[2]), points[end-1])  #   close the spline
-    elseif extend                                            # curve is open 
-        points = extendbounds(points)                        #   cap the spline 
-    end    
+    if extend
+        extend_seq(points)
+    end
     
     return catmullrom_splines(points, pointsperarc)
 end
