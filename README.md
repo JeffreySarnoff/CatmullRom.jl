@@ -29,7 +29,11 @@
 
 Catmull-Rom splines are a workhorse of computer graphics and a very handy general purpose tool for fast, attractive blending.  Using the centripetal parameterization gives a more naturalistic feel to the interpoint "motion".
 
-
+|  The Centripetal Catmull-Rom curve is Blue |
+|:-----------------------------------------------------------------------------------------------------------------------:|
+|  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="300"> |
+|                                                                                                                         |
+| from "Parameterization and Applications of Catmull-Rom Curves" Cem Yuksel, Scott Schaefer, John Keyser  | 
 
 ### Use
 
