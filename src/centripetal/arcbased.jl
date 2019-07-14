@@ -10,11 +10,11 @@ varys inversely with the approximate arclength of that arc.
 function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax, extend::Bool=true)
     catmullrom_requirement(npoints(points))    
     
-    crpoints = deepcopy(points)
     if extend
-        crpoints = extend_seq(crpoints)
+        extend_seq(points)
     end
-    return catmullrombyarc(crpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    
+    return catmullrombyarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
 end
 
 function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
@@ -44,7 +44,6 @@ end
 
 """
     arclength_interpolants(points; arcpoints_min=2, arcpoints_max=64)
-
 Convert a sequence of points and a count of additional points to interpolate
 to a sequence of arc-length specific point counts where each arc has at least
 `arcpoints_min` and at most `arcpoints_max` points.
@@ -70,26 +69,21 @@ end
 
 """
     normalized_catmullrom_arclengths(points)
-
 Convert a sequence of CatmullRom points, those given
 as data and those interpolated through the data,
 to a corresponding sequence of normalized arclengths.
-
 The sum of the normalized arclengths is 1.0.  Each
 arc's approximated length is a portion of unity.
 The most probable arclength, and the mean of these
 normalized arclengths are roughly equal; given by:
 `1//number_of_arcs`.
-
 The way to use normalized arclengths is to multiply
 the fractional lengths by the number of "plottable"
 points (the given data + the interpoint interpolants).
-
 ```
 smallest_arc = minimum(normalized_arclengths)
 rational_arc = rationalize(Float16(smallest_arc))
 scalefactor = points_to_realize / denominator(rational_arc)
-
 # scaled_arclengths_are_point_counts counting points on the arc
 points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
 ```
@@ -104,7 +98,6 @@ end
 
 """
     approx_catmullrom_arclengths(points)
-
 Convert a sequence of CatmullRom points, those given
 as data and those interpolated through the data,
 to a corresponding sequence of arclength approximations.
@@ -133,17 +126,13 @@ end
 
 """
     approx_catmullrom_arclength(pt0, pt1, pt2, pt3)
-
 Given 4 ND points along a centripetal Catmull-Rom span,
 roughly approximate the arclength of the curvilinear segment
 that would be determined by the two bounding points
 and the tangents they determine [the arc between p1 and p2].
-
 This well-behaved approximation was developed by Jens Gravesen
-
 ```
     (2*corddist + (n-1)*bezdist)/(n+1), n is degree of the curve
-
     deg=2 --> (2*corddist + bezdist)/(3)
     deg=3 --> (2*corddist + 2*bezdist)/(4) --> (corddist + bezdist)/2
     deg=4 --> (2*corddsit + 3*bezdist)/(5)
