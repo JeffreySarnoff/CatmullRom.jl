@@ -11,8 +11,9 @@ fy(t) = sinpi(t);
 
 xs = [fx(t) for t=range(0.0, stop=2.0, length=17)];
 ys = [fy(t) for t=range(0.0, stop=2.0, length=17)];
+points = collect(zip(xs, ys));
 
-cxs,cys = catmullrom(xs, ys, 16);
+cxs,cys = catmullrom(points, 16);
 
 plot(cxs,cys, linecolor=:grey, linewidth=4, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
 plot!(xs, ys, linecolor=:blue, linewidth=2, size=(600,600), legend=nothing, xaxis=nothing, yaxis=nothing)
