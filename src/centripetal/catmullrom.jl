@@ -26,7 +26,7 @@ function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
     if extend
         crpoints = extend_seq(crpoints)
     end
-    return catmullrom(crpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)    extend && extend_seq(points)
+    return catmullrom(crpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
 end
 
 
