@@ -7,7 +7,8 @@ function extend_seq(points::Points; scale=ReflectionScale)
 end
 
 function unextend_seq(points::Points)
-    popfirst!(pop!(points))
+    pop!(points)
+    popfirst!(points)
     return points
 end
 
