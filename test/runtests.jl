@@ -7,7 +7,7 @@ using Test
   points = collect(zip(xs,ys));
   cr_xys = catmullrom(points, 2)
   @test length(cr_xys[1]) == length(xs) + 2*(length(xs)-1)
-  @test length(points) == length(xs) + 2
+  @test length(points) == length(xs)
 end
 
 #=
