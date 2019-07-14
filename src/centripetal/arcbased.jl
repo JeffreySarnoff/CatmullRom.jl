@@ -31,7 +31,7 @@ function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_m
     point_seqs = [points[i:i+3] for i=1:(length(points)-3)]
 
     n_points_3 = n_points - 3
-    for idx=1:(n_points-4)
+    for idx=1:(n_points-3)
         fourpoints = point_seqs[idx]
         n_between  = pointsperarc[idx]
         fitted = catmullrom_splines(fourpoints, n_between)
