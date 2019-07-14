@@ -20,11 +20,12 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 <p align="center">
 
-|  The Centripetal Catmull-Rom Curve is Blue |
+  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/hair.PNG" width="600"> 
+
+|  [Cem Yuksel's research on Catmull-Rom parameterizations](http://www.cemyuksel.com/research/catmullrom_param/)   |
 |:-----------------------------------------------------------------------------------------------------------------------:|
 |  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/hair.PNG" width="600"> |
 |                                                                                                                         |
-| [Cem Yuksel's research on Catmull-Rom parameterizations](http://www.cemyuksel.com/research/catmullrom_param/)  | 
 
 |  The Centripetal Catmull-Rom Curve is Blue |
 |:-----------------------------------------------------------------------------------------------------------------------:|
