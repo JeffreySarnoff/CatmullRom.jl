@@ -6,6 +6,11 @@ function extend_seq(points::Points; scale=ReflectionScale)
            end
 end
 
+function unextend_seq(points::Points)
+    popfirst!(pop!(points))
+    return points
+end
+
 function extend_closed_seq(points::Points)
     !isclosed(points) && throw(ErrorException("sequence is not closed"))
     npoints(points) < 3 && throw(ErrorException("cannot extend a sequence with fewer than 3 points"))
