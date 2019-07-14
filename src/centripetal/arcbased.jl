@@ -1,5 +1,5 @@
 """
-    catmullrombyarc(points; arcpoints_min=2, arcpoints_max=64)
+    catmullrom_byarc(points; arcpoints_min=2, arcpoints_max=64)
 
 Calculates a Catmull-Rom fit through given `points`, where the number of interpoint knots
 varys inversely with the approximate arclength of that arc.
@@ -10,11 +10,11 @@ varys inversely with the approximate arclength of that arc.
 function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax, extend::Bool=true)
     catmullrom_requirement(npoints(points))    
     
-    if extend
-        extend_seq(points)
-    end
+    extend && extend_seq(points)
+    splines = catmullrombyarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    extend && unextend_seq(points)
     
-    return catmullrombyarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    return splines
 end
 
 function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
