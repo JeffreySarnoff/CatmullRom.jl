@@ -22,11 +22,11 @@ function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
     catmullrom_requirement(npoints(points))    
     pointsperarc += isodd(pointsperarc)     # force even                                
     
-    extend && extend_seq(points)
-    splines = catmullrom_splines(points, pointsperarc)
-    extend && unextend_seq(points)
-    
-    return splines
+    crpoints = deepcopy(points)
+    if extend
+        crpoints = extend_seq(crpoints)
+    end
+    return catmullrom(crpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)    extend && extend_seq(points)
 end
 
 
