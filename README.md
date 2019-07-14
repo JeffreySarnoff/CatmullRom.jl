@@ -78,6 +78,7 @@ If your points exist as separate coordinate vectors, aggregate them this way
 
 ## Centripetal Catmull-Rom Examples
 
+  <p align="center"><a href="https://github.com/JeffreySarnoff/CatmullRom.jl/tree/master/examples">using this package to generate the examples</a></p>
 
   |                     shape                               |              detail                           |
   |:--------------------------------------------------------:|:-----------------------------------------------:|
