@@ -79,7 +79,7 @@ If your points exist as separate coordinate vectors, aggregate them this way
 
 ----
 
-### Refs
+### references
 
 [Parameterization and Applications of Catmull-Rom Curves](http://www.cemyuksel.com/research/catmullrom_param/catmullrom_cad.pdf)
 
