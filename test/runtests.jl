@@ -24,8 +24,8 @@ end
   ys=[0.0, 1.0, 4.0, -1.0, -2.0, 2.0]
   points = collect(zip(xs,ys))
   p1,p2,p3,p4,p5,p6 = points
-  @test iszero((CatmullRom.thiele4(p1,p2,p3,p4, 6.0) .- (2.6666666666666665,))[1])
-  @test iszero((CatmullRom.thiele4(p2,p3,p4,p5, 1.0) .- (1.0,))[1])
+  #@test CatmullRom.thiele4(p1,p2,p3,p4, 6.0) == 2.6666666666666665 # v1.2+
+  #@test CatmullRom.thiele4(p2,p3,p4,p5, 1.0) == 1.0                # v1.2+
   @test iszero((CatmullRom.quadratic(p3,p4,p5, 1.5) .- (8.0,))[1])
 end
 
