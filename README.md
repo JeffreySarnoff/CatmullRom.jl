@@ -75,6 +75,7 @@ plot(xs, ys)                      # plot(result...,)
 If your points exist as separate coordinate vectors, aggregate them this way
 `points = collect(zip(xs, ys, zs))`
 
+====
 
 ## Centripetal Catmull-Rom Examples
 
