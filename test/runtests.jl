@@ -8,6 +8,8 @@ using Test
   cr_xys = catmullrom(points, 2)
   @test length(cr_xys[1]) == length(xs) + 2*(length(xs)-1)
   @test length(points) == length(xs)
+  points = close_seq(points)
+  @test points[1] == points[end]
 end
 
 #=
