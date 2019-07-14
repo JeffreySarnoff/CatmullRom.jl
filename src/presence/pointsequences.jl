@@ -34,6 +34,9 @@ end
     
 function close_seq(points::Points)
     isempty(points) && throw(ErrorException("cannot close an empty sequence"))
+    if isapproxclosed(points)
+        points[end] = points[1]
+    end
     if !isclosed(points)
         push!(points, points[1])
     end
@@ -43,6 +46,14 @@ end
 
 isclosed(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint == lastpoint
 isclosed(points::Points) = isclosed(first(points), last(points))
+
+isapproxclosed(points::Points) = isapproxclosed(first(points), last(points))
+
+function isapproxclosed(firstpoint::OnePoint, lastpoint::OnePoint)
+    nrm1 = norm(sqrt(eps(norm(firstpoint))), sqrt(eps(norm(lastpoint))))
+    nrm2 = norm(firstpoint .- lastpoint)
+    return nrm1 >= nrm2
+end
 
 npoints(pts::Points) = length(pts)
 npoints(pts::Base.Iterators.Zip) = length(pts)
