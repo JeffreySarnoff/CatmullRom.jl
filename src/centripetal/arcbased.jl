@@ -10,11 +10,12 @@ varys inversely with the approximate arclength of that arc.
 function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax, extend::Bool=true)
     catmullrom_requirement(npoints(points))    
     
+    crpoints = deepcopy(points)
     if extend
-        extend_seq(points)
+        extend_seq(crpoints)
     end
     
-    return catmullrombyarc(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    return catmullrombyarc(crpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
 end
 
 function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
