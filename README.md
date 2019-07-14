@@ -78,7 +78,7 @@ If your points exist as separate coordinate vectors, aggregate them this way
 
 ## Centripetal Catmull-Rom Examples
 
-  <p align="center"><a href="https://github.com/JeffreySarnoff/CatmullRom.jl/tree/master/examples">using this package to generate the examples</a></p>
+
 
   |                     shape                               |              detail                           |
   |:--------------------------------------------------------:|:-----------------------------------------------:|
@@ -88,7 +88,7 @@ If your points exist as separate coordinate vectors, aggregate them this way
    |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/teardrop_byarc.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/teardrop_section.PNG" width="250">         |
    |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral_locus.png" width="130">    |  
   
-  
+  <p align="center"><a href="https://github.com/JeffreySarnoff/CatmullRom.jl/tree/master/examples">using this package to generate the examples</a></p>  
 
 ----
 
