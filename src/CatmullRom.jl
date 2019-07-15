@@ -6,9 +6,9 @@ This is the form that does not crimp, provides taughtness, and looks good.
 """
 module CatmullRom
 
-export catmullrom,        # populates with points placed between those given
-       catmullrom_byarc,  # populates with points placed between those given relative to arclength
-       close_seq          # ensures a point sequence is closed, precisely
+export catmullrom,               # populates with points placed between those given
+       catmullrom_by_arclength,  # populates with points placed between those given relative to arclength
+       close_seq                 # ensures a point sequence is closed, precisely
 
 using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval
