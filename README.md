@@ -29,10 +29,12 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 ----
 
 <p align="center">
-  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="200"> 
+  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="400"> 
 </p>
 
   <p align="center"><a href="http://www.cemyuksel.com/research/catmullrom_param/catmullrom_cad.pdf">Parameterization and Applications of Catmull-Rom Curves</a></p>
+
+----
 
 
 ## What you provide: Points in a sequence
