@@ -144,7 +144,7 @@ If your points exist as separate coordinate vectors, aggregate them this way
 
 
 ----
-
+### the first and last points are special
 
 |    |   |
 |:---------------------------------------------------------------------------------------------------------------------------|:--|
