@@ -8,7 +8,7 @@ makedocs(
     pages = Any[
         "Overview" => "index.md",
         "Seeing The Contiguity" => "perspective.md",
-        "Examples" => "Examples.md",
+        "Three Functions" => "threefunctions.md",
         "Circle" => "Circle.md",
         "Piriform" => "Piriform.md",
         "Spherical Spiral" => "SphericalSpiral.md"
