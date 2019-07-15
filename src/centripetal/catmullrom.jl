@@ -189,7 +189,7 @@ function centripetal_tangents(pt₋::T,
     return (tg₀, tg₁)
 end
 
-@inline function prevent_overlap(::Type{P}, dt₋₀::T, dt₀₁::T, dt₁₊::T) where T
+@inline function prevent_overlap(::Type{P}, dt₋₀::T, dt₀₁::T, dt₁₊::T) where {P,T}
     # check if any coordinates coincidee
     ε = coordeps(P)
     # correct for repeated coordinates    
