@@ -78,6 +78,7 @@ If your points exist as separate coordinate vectors, aggregate them this way
 ----
 
 ## Centripetal Catmull-Rom Examples <sup>[𝓪](#source)</sup>
+<sup><a href="https://github.com/JeffreySarnoff/CatmullRom.jl/tree/master/examples">[𝓪](#attribution)</a></sup> Julia source code that generates some of the examples
 
 
 
