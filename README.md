@@ -55,6 +55,9 @@ of coordinate values or tuples of coordinate values.  While the points and their
 that occurs without altering any values or sequences you use. We presuppose that you will have some carrier for each
 `Point`, and a container for the points holding them as they are sequenced along whatever you deem their natural path.
 
+Often the point's `xs` will be such that `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]` with the possible exception
+of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.
+
 <p align="center">
 
 |  Type used for a Point | example             |  coordinates are retrievable |  you support   | 
@@ -87,8 +90,6 @@ end
 </p>
 
 
-Often the point's `xs` will be such that `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]` with the possible exception
-of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.
 
 
 |    |   |
