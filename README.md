@@ -38,7 +38,19 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 ## Use
 
-A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions. The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors of coordinate values or tuples of coordinate values.
+A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  The sequence of values
+given as the first coordinate of each point becomes the abcissae (the `x` coordinate values).  The second values become the
+ordinates.  When there are more than two coordinates comprising each point, the second coordinate is as the `y` coordinate value
+(or whatever name attaches to the axis that follows the abcissa's coordinated axis _e.g. by the right-hand rule_).
+
+Each succesive coordinate of a point provides an additional ordinate sequence, with its corresponding coordinate axis.
+The coordinate axes are treated as orthonormal and relatively independent of one another.  All ordinate sequences are
+taken with respect to the same abcissae.  So, the arcs that connect successive `y`s are arcs hewn from a succession
+of `(x_i, y_i)` ordered pairs and the arcs that connect successive `z`s are arcs hewn from a succession of `(x_i, z_i)`
+ordered pairs.  It is easy to obtain arcs determined from _e.g._ the sequence of `(y_i, z_i)` pairs.  Just call the
+`catmullrom` function with points that are generated with `collect(zip(ys, zs))`.
+
+The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors of coordinate values or tuples of coordinate values.  While the point sequences are manipulated internally, there is no alteration of the points that you supply.
 
 
 |    |   |
