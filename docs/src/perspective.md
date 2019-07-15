@@ -13,7 +13,7 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 ----
 
-<p align="right" style="textsize=small">The blue curve shows the Centripetal Parameterization of a Catmull-Rom Splined Curve</p>
+<p align="center">Catmull-Rom spline using the centripetal parameterization (the blue curve)</p>
 
 <p align="center">
   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CR_Centripetal.png" width="400"> 
