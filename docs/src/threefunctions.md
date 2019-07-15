@@ -1,7 +1,11 @@
 
-## Three functions are exported
+# Three functions are exported
 
-### Uniform Intermediation
+- `catmullrom( points )`
+- `catmullrom_by_arclength( points )`
+- `close_seq( points )`
+
+## Uniform Intermediation
 
 - catmullrom( points_along_a_path )
 - catmullrom( points_along_a_path, n_arcs_between_neighbors )
@@ -19,7 +23,7 @@ crpoints = catmullrom( points, n_arcs_between_neighbors )
 ```
 ----
 
-### Arclength Relative Allocation
+## Arclength Relative Allocation
 
 When the points' coordinates are spread differently along distinct axes, the interpoint
 distances along one coordinate have a very different nature from the intercoordinate
@@ -64,7 +68,7 @@ plot(xs, ys)                      # or plot(result...)
 
 ----
 
-### Open and Closed Curves
+## Open and Closed Curves
 
 CatmullRom processes the extremal points of closed curves differently from open curves.
 A curve in which the first and last points are identical is recognized as closed.
