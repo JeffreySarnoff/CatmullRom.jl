@@ -36,7 +36,7 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 ----
 
-## Use
+## What you provide: Points in a sequence
 
 A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  The sequence of values
 given as the first coordinate of each point becomes the abcissae (the `x` coordinate values).  The second values become the
@@ -99,6 +99,8 @@ end
 | <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  |  Catmull-Rom splines over two points are made with their neighbors. A new point preceeds your first and another follows your last. |
 | By appending a new first and a new last point, the resulting sequence starts and ends with your boundary points. | This just happens with the internal flow, unless you prefer another route. |
 
+
+## Three functions are exported
 
 ```
 using CatmullRom, Plots
