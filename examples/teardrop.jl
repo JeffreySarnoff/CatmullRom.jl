@@ -19,7 +19,7 @@ plot(xs, ys, linecolor=:lightgreen, linewidth=9, size=(500,500), xaxis=nothing, 
 plot!(cxs, cys, linecolor=:black, linewidth=2, size=(500,500), xaxis=nothing, yaxis=nothing, legend=nothing)
 
 
-crpoints = catmullrom_byarc(collect(zip(xs,ys)), arcpoints_min=6, arcpoints_max=16);
+crpoints = catmullrom_by_arclength(collect(zip(xs,ys)), arcpoints_min=6, arcpoints_max=16);
 cxs, cys = crpoints;
 
 plot(xs, ys, linecolor=:lightgreen, linewidth=10, size=(500,500), xaxis=nothing, yaxis=nothing, legend=nothing)
