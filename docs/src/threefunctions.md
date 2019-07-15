@@ -1,5 +1,4 @@
-
-
+>  
 |  Centripetal Catmull-Rom Pathmaking   |
 |:--------------------------------------|
 |                                       |
@@ -7,6 +6,9 @@
 |                                       |
 |  `catmullrom_by_arclength( points )`  |
 |                                       |
+
+
+----
 
 ## Uniform Intermediation
 
