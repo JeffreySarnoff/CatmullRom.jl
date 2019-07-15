@@ -3,5 +3,5 @@ Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 CatmullRom = "5b5b35a2-003c-5b99-bc04-a964994dd816"
 
 [compat]
-Documenter = "0"
-CatmullRom = "0"
+Documenter = "0.2"
+CatmullRom = "0.1"
