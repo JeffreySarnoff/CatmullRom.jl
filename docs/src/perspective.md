@@ -15,10 +15,6 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 ![CR_Centripetal](assets/CR_Centripetal.png)   ![OneCurve123](assets/OneCurve123.png)
 
 
-> The blue path shows a Catmull-Rom spline using the centripetal parameterization (α=0.5)
-
-
-
 <p align="center">The blue path shows a Catmull-Rom spline using the centripetal parameterization (α=0.5)</p>
 
   <p align="center"><a href="http://www.cemyuksel.com/research/catmullrom_param/catmullrom_cad.pdf">Parameterization and Applications of Catmull-Rom Curves</a></p>
