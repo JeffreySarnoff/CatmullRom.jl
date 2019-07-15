@@ -1,9 +1,9 @@
 
-# Three functions are exported
+# two functions suffice
 
 - `catmullrom( points )`
+-
 - `catmullrom_by_arclength( points )`
-- `close_seq( points )`
 
 ## Uniform Intermediation
 
