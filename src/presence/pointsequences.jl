@@ -47,7 +47,7 @@ end
 isclosed(firstpoint::P, lastpoint::P) where P = firstpoint == lastpoint
 isclosed(points::P) where P = isclosed(first(points), last(points))
 
-isapproxclosed(points::Points) = isapproxclosed(first(points), last(points))
+isapproxclosed(points::P) where P = isapproxclosed(first(points), last(points))
 
 function isapproxclosed(firstpoint::P, lastpoint::P) where P
     nrm1 = norm(sqrt(eps(norm(firstpoint))), sqrt(eps(norm(lastpoint))))
