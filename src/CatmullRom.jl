@@ -13,8 +13,6 @@ export catmullrom,        # populates with points placed between those given
 using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval
 
-include("presence/pointtypes.jl")
-
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
 include("presence/pointsequences.jl")
