@@ -1,4 +1,4 @@
-function extend_seq(points::Points; scale=ReflectionScale)
+function extend_seq(points::P; scale=ReflectionScale) where P
     return if isclosed(points)
                extend_closed_seq(points)
            else
@@ -6,13 +6,13 @@ function extend_seq(points::Points; scale=ReflectionScale)
            end
 end
 
-function unextend_seq(points::Points)
+function unextend_seq(points::P) where P
     pop!(points)
     popfirst!(points)
     return points
 end
 
-function extend_closed_seq(points::Points)
+function extend_closed_seq(points::P) where P
     !isclosed(points) && throw(ErrorException("sequence is not closed"))
     npoints(points) < 3 && throw(ErrorException("cannot extend a sequence with fewer than 3 points"))
 
@@ -21,7 +21,7 @@ function extend_closed_seq(points::Points)
     return points
 end    
 
-function extend_open_seq(points::Points; scale=ReflectionScale)
+function extend_open_seq(points::P; scale=ReflectionScale) where P
     isclosed(points) && throw(ErrorException("sequence is not open"))
     npoints(points) < 3 && throw(ErrorException("cannot extend a sequence with fewer than 3 points"))
     
@@ -32,7 +32,7 @@ function extend_open_seq(points::Points; scale=ReflectionScale)
     return points
 end
     
-function close_seq(points::Points)
+function close_seq(points::P) where P
     isempty(points) && throw(ErrorException("cannot close an empty sequence"))
     if isapproxclosed(points)
         points[end] = points[1]
@@ -44,25 +44,25 @@ function close_seq(points::Points)
 end
 
 
-isclosed(firstpoint::OnePoint, lastpoint::OnePoint) = firstpoint == lastpoint
-isclosed(points::Points) = isclosed(first(points), last(points))
+isclosed(firstpoint::P, lastpoint::P) where P = firstpoint == lastpoint
+isclosed(points::P) where P = isclosed(first(points), last(points))
 
 isapproxclosed(points::Points) = isapproxclosed(first(points), last(points))
 
-function isapproxclosed(firstpoint::OnePoint, lastpoint::OnePoint)
+function isapproxclosed(firstpoint::P, lastpoint::P) where P
     nrm1 = norm(sqrt(eps(norm(firstpoint))), sqrt(eps(norm(lastpoint))))
     nrm2 = norm(firstpoint .- lastpoint)
     return nrm1 >= nrm2
 end
 
-npoints(pts::Points) = length(pts)
+npoints(pts::P) where P = length(pts)
 npoints(pts::Base.Iterators.Zip) = length(pts)
 
-ncoords(pts::Points) = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : length(pts[1])
+ncoords(pts::P) where P = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : length(pts[1])
 ncoords(pts::Base.Iterators.Zip) = eltype(pts) <: NamedTuple ? length(Tuple(first(pts))) : length(first(pts))
 
-coordtype(pts::Points) = eltype(eltype(pts))
-coordtype(pt::OnePoint) = eltype(pt)
+coordtype(pts::P) where P = eltype(eltype(pts))
+coordtype(pt::P) where P = eltype(pt)
 
 coordtype(x::T) where {T} = coordtype(T)
 
