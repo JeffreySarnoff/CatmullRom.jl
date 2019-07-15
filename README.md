@@ -149,12 +149,13 @@ If your points exist as separate coordinate vectors, aggregate them this way
 
 ## hints
 
-<p align="center">Often the point's `xs` will be such that     
-`x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]`     
-with the possible exception of one triplet     
-when the path is a closed curve     
-`x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.</p>
-
+```
+   Often the point's `xs` will be such that     
+   `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]`     
+   with the possible exception of one triplet     
+   when the path is a closed curve     
+   `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.
+```
 
 ----
 
