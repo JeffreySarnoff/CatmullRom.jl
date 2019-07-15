@@ -14,7 +14,7 @@
 
 
   
-## Visual Contiguity That Acts Naturally
+## Act, Naturally
 
 Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal parameterization, they become a very handy general purpose tool for fast, attractive curvilinear blending. Often, they give interpoint "motion" a naturalistic feel.
 
