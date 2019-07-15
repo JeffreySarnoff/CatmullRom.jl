@@ -60,13 +60,13 @@ of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-
 
 <p align="center">
 
-|  Type used for a Point | example             |  coordinates are retrievable |  you support   | 
+<p align="center">|  Type used for a Point | example             |  coordinates are retrievable |  you support   | 
 |:-----------------------|:--------------------|------------------------------|----------------|
 |  small vector          | \[1.0, 3.5 \]       |   coord(point, i) = point[i] |   _builtin_    |
 |  small tuple           | (1.0, 3.5)          |   coord(point, i) = point[i] |   _builtin_    |
 |  StaticVector          | SVector( 1.0, 3.5 ) |   coord(point, i) = point[i] |   _builtin_    |
 |  NamedTuple            | (x = 1.0, y = 3.5 ) |   coord(point, i) = point[i] |   _builtin_    |
-|  struct                | Point(1.0, 3.5)     |   coord(point, i) = point[i] |   getindex     |
+|  struct                | Point(1.0, 3.5)     |   coord(point, i) = point[i] |   getindex     |</p>
 
 ```
 struct Point{T}
