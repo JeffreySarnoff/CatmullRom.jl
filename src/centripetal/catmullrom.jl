@@ -18,7 +18,7 @@ If you prefer to specify the scale factor used in that extrapolation,
 use `extendbounds(points, scale=scalefactor)`, and then pass the result
 to this function with `extend=false`.
 """
-function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
+function catmullrom(points::P, pointsperarc::Integer; extend::Bool=true) where P
     catmullrom_requirement(npoints(points))    
     pointsperarc += isodd(pointsperarc)     # force even                                
     
@@ -30,7 +30,7 @@ function catmullrom(points::Points, pointsperarc::Integer; extend::Bool=true)
 end
 
 
-function catmullrom_splines(points::P, pointsperarc::Integer) where {P<:Points}
+function catmullrom_splines(points::P, pointsperarc::Integer) where P
     coord_type = coordtype(points)
       
     vals_along_each_coord = catmullrom_core(points, pointsperarc) 
@@ -42,7 +42,7 @@ function catmullrom_splines(points::P, pointsperarc::Integer) where {P<:Points}
     end
 end
 
-function catmullrom_splines(points::P, pointsperarc::Vector{I}) where {P<:Points, I<:Integer}
+function catmullrom_splines(points::P, pointsperarc::Vector{Integer}) where P
     n_points = npoints(points)
     n_ppa    = length(pointsperarc)
     n_points != n_ppa+1 && throw(ErrorException("length(points) != length(pointsperarc)+1 ($(n_points) != $(n_ppa+1))"))
@@ -64,7 +64,7 @@ function catmullrom_splines(points::P, pointsperarc::Vector{I}) where {P<:Points
     end
 end
 
-function catmullrom_core(points::P, pointsperarc::Integer) where {P<:Points}
+function catmullrom_core(points::P, pointsperarc::Integer) where P
     catmullrom_requirement(npoints(points))
     n_coords = ncoords(points)
     
@@ -109,7 +109,7 @@ _polys_ is an `(n_points - 3) x (n_coords) 2D array`
    columns are of one coordinate axis 
    each row holds polys that interpolate one interpoint span across all coordinates.
 """
-function catmullrom_polys(points::P) where {P<:Points}    
+function catmullrom_polys(points::P) where P   
     n_points = npoints(points)
     catmullrom_requirement(n_points)
 
