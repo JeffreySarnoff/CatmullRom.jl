@@ -6,11 +6,8 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 ![hair](assets/hair.PNG)
 
-<-- p align="center">
-  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/hair.PNG" width="750"> 
-</p>
 
-  <p align="center"><a href="http://www.cemyuksel.com/research/catmullrom_param">Cem Yuksel's Research</a></p -->
+  <p align="center"><a href="http://www.cemyuksel.com/research/catmullrom_param">Cem Yuksel's Research</a></p>
 
 
 ----
