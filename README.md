@@ -55,7 +55,6 @@ of coordinate values or tuples of coordinate values.  While the points and their
 that occurs without altering any values or sequences you use. We presuppose that you will have some carrier for each
 `Point`, and a container for the points holding them as they are sequenced along whatever you deem their natural path.
 
-<p align="center">Often the point's `xs` will be such that `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]` with the possible exception of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.</p>
 
 ----
 
@@ -147,6 +146,18 @@ If your points exist as separate coordinate vectors, aggregate them this way
   <p align="center"><sup><a name="source">𝓪</sup> <a href="https://github.com/JeffreySarnoff/CatmullRom.jl/tree/master/examples">using this package to generate some of these examples</a></p>  
 
 ----
+
+## hints
+
+<p align="center">Often the point's `xs` will be such that     
+`x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]`     
+with the possible exception of one triplet     
+when the path is a closed curve     
+`x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.</p>
+
+
+----
+
 
 ### references
 
