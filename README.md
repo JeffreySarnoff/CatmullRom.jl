@@ -142,7 +142,7 @@ crpoints = catmullrom( points )
 crpoints = catmullrom( points, n_between_points )
 ```
 
-### Arclength Relative Intermediation
+### Arclength Relative Allocation
 
 When the points' coordinates are spread differently along distinct axes, the interpoint
 distances along one coordinate have a very different nature from the intercoordinate
