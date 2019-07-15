@@ -127,11 +127,36 @@ close_seq( points )            # this is the only function that may change some 
 points = close_seq( points )   # (the same thing)
 ```
 
+There are two ways to connect path-adjacent points using Centripetal Catmull-Rom machinery.
+The most often used iterplaces a given number of curvilinear waypoints between each adjacent
+pair of original points.  All neighbors become connected by that given number of intermediating
+places. Though the places differ, the proportional advancing between abcissae is consistent.
+There is a default for this intermediation count, nonetheless trying a few different values
+may help you visualize the significance that is of import.
+```
+crpoints = catmullrom( points )
+
+crpoints = catmullrom( points, n_between_points )
+```
+
+When the points' coordinates are spread differently along distinct axes, the interpoint
+distances along one coordinate have a very different nature from the intercoordinate
+spreads along another coordinate axis.  The distances separating adjacent point pairs
+may vary substantively.  This is particularly true when working in higher dimensional
+regions of an orthonormal coordinate space.  One may use more intermediating placements
+between adjacent points that are relatively far apart, and fewer between adjacent points
+that are in close relative proximity.
+
+```
+crpoints = catmullrom_byarc( points )
+
+crpoints = catmullrom_byarc( points, (min_between_points, max_between_points) )
+```
 
 
-lyprocessed the last point may be handled as if it did match the first point exactly.
+----
+----
 
-overwritten determined to be a closed curve  if differently `first(point) == last(point)`
 ```
 using CatmullRom, Plots
 
