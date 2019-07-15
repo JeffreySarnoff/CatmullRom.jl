@@ -128,7 +128,7 @@ close_seq( points )            # this is the only function that may change some 
 points = close_seq( points )   # (the same thing)
 ```
 
-#### Consistent Intermediation
+### Uniform Intermediation
 
 There are two ways to connect path-adjacent points using Centripetal Catmull-Rom machinery.
 The most often used iterplaces a given number of curvilinear waypoints between each adjacent
@@ -142,7 +142,7 @@ crpoints = catmullrom( points )
 crpoints = catmullrom( points, n_between_points )
 ```
 
-#### Arclength Relative Intermediation
+### Arclength Relative Intermediation
 
 When the points' coordinates are spread differently along distinct axes, the interpoint
 distances along one coordinate have a very different nature from the intercoordinate
