@@ -115,12 +115,13 @@ end
 
 ## Three functions are exported
 
-#### Open and Closed Curves
+### Open and Closed Curves
 
 CatmullRom processes the extremal points of closed curves differently from open curves.
-A curve in which `first(point) == last(point)` is recognized as closed.  A function, `close_seq`,
-is available to ensure curves intended to be closed are made closed in an exact and proper way.
-It is _good practice_  to assure closed curves are crisp in their extremal points.
+A curve in which the first and last points are identical is recognized as closed.
+A function, `close_seq`, is available to ensure curves intended to be closed are made closed
+in an exact and proper way. It is _good practice_ to use this function with closed curves,
+and so assure they are crisp where the escribed path rejoins itself.
 ```
 close_seq( points )            # this is the only function that may change some part of your data
                                # any change is limited to copying the first point into the last 
