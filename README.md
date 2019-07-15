@@ -36,6 +36,12 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 ----
 
+<p align="center">
+  <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/parameterize_in_color.png" width="400"> 
+</p>
+
+----
+
 ## What you provide: Points in a sequence
 
 A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  The sequence of values
