@@ -63,12 +63,12 @@ arclengths appropriate to the centripetal parameterization.  You can use this di
 ```
 using CatmullRom, Plots
 
-result = catmullrom_byarc(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
+result = catmullrom_by_arclength(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
  
-result = catmullrom_byarc(points, (atleast_min_arcs_total, atmost_max_arcs_total))
-                                  # min, max pertain to the whole path of the curve
+result = catmullrom_by_arclength(points, (atleast_min_arcs_total, atmost_max_arcs_total))
+                                          # min, max pertain to the whole path of the curve
 xs, ys = result
-plot(xs, ys)                      # or plot(result...)
+plot(xs, ys)
 ```
 
 ----
