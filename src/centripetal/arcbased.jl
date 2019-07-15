@@ -1,5 +1,6 @@
 """
-    catmullrom_byarc(points; arcpoints_min=2, arcpoints_max=64)
+    catmullrom_byarc( points )    
+    catmullrom_byarc( points, (min_between_points, max_between_points))    
 
 Calculates a Catmull-Rom fit through given `points`, where the number of interpoint knots
 varys inversely with the approximate arclength of that arc.
@@ -7,7 +8,7 @@ varys inversely with the approximate arclength of that arc.
 `arcpoints_min` and `arcpoints_max` refer any one arc between two points.
 """ catmullrom_byarc
 
-function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax, extend::Bool=true)
+function catmullrom_byarc(points::Points, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax), extend::Bool=true) where {I<:Integer}
     catmullrom_requirement(npoints(points))    
     
     crpoints = deepcopy(points)
@@ -15,12 +16,13 @@ function catmullrom_byarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_
         extend_seq(crpoints)
     end
     
-    return catmullrombyarc(crpoints, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    return catmullrombyarc(crpoints, minmax(arcpoints...))
 end
 
-function catmullrombyarc(points::Points; arcpoints_min=ArcpointsMin, arcpoints_max=ArcpointsMax)
+
+function catmullrombyarc(points::Points, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {I<:Integer}
     n_points = npoints(points)
-    pointsperarc = arclength_interpolants(points, arcpoints_min=arcpoints_min, arcpoints_max=arcpoints_max)
+    pointsperarc = arclength_interpolants(points, arcpoints)
     total_points = sum(pointsperarc) + n_points
     n_coords = ncoords(points)
     T = coordtype(points)
@@ -49,7 +51,7 @@ Convert a sequence of points and a count of additional points to interpolate
 to a sequence of arc-length specific point counts where each arc has at least
 `arcpoints_min` and at most `arcpoints_max` points.
 """
-function arclength_interpolants(points::T; arcpoints_min::Int=2, arcpoints_max::Int=64) where {T<:Points}
+function arclength_interpolants(points::T, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {T<:Points, I<:Integer}
     normalized_arclengths = normalized_catmullrom_arclengths(points)
     
     arclength_min = minimum(normalized_arclengths)
