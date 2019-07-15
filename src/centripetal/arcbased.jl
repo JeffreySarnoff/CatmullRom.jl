@@ -8,7 +8,7 @@ varys inversely with the approximate arclength of that arc.
 `arcpoints_min` and `arcpoints_max` refer any one arc between two points.
 """ catmullrom_byarc
 
-function catmullrom_byarc(points::Points, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax), extend::Bool=true) where {I<:Integer}
+function catmullrom_byarc(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax), extend::Bool=true) where {P, I<:Integer}
     catmullrom_requirement(npoints(points))    
     
     crpoints = deepcopy(points)
@@ -20,7 +20,7 @@ function catmullrom_byarc(points::Points, arcpoints::Tuple{I,I}=(ArcpointsMin, A
 end
 
 
-function catmullrombyarc(points::Points, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {I<:Integer}
+function catmullrombyarc(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {P, I<:Integer}
     n_points = npoints(points)
     pointsperarc = arclength_interpolants(points, arcpoints)
     total_points = sum(pointsperarc) + n_points
@@ -51,7 +51,7 @@ Convert a sequence of points and a count of additional points to interpolate
 to a sequence of arc-length specific point counts where each arc has at least
 `arcpoints_min` and at most `arcpoints_max` points.
 """
-function arclength_interpolants(points::T, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {T<:Points, I<:Integer}
+function arclength_interpolants(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {P, I<:Integer}
     normalized_arclengths = normalized_catmullrom_arclengths(points)
     
     arclength_min = minimum(normalized_arclengths)
@@ -91,7 +91,7 @@ scalefactor = points_to_realize / denominator(rational_arc)
 points_per_arc = round.(Int, normalized_arclengths .* scalefactor)
 ```
 """
-function normalized_catmullrom_arclengths(points::T) where {T<:Points}
+function normalized_catmullrom_arclengths(points::P) where P
     arclengths = approx_catmullrom_arclengths(points)
     sum_of_arcs = sum(arclengths)
     arclengths[:] = arclengths ./ sum_of_arcs
@@ -105,7 +105,7 @@ Convert a sequence of CatmullRom points, those given
 as data and those interpolated through the data,
 to a corresponding sequence of arclength approximations.
 """
-function approx_catmullrom_arclengths(points::T) where {T<:Points}
+function approx_catmullrom_arclengths(points::P) where P
     L = float(coordtype(T))
     n_points = npoints(points)
     # the first two points and the last two points are boundary + anchor
@@ -141,7 +141,7 @@ This well-behaved approximation was developed by Jens Gravesen
     deg=4 --> (2*corddsit + 3*bezdist)/(5)
 ```
 """
-function approx_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where {T<:OnePoint}
+function approx_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where T
     b0, b1, b2, b3 = catmullrom_as_bezier(p0, p1, p2, p3)
     cordal_dist = norm(b3 .- b0)
     bezier_dist = norm(b1 .- b0) + norm(b2 .- b1) + norm(b3 .- b2)
@@ -149,7 +149,7 @@ function approx_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where {T<:OnePo
     return (cordal_dist + bezier_dist) * 0.5
 end
 
-function catmullrom_as_bezier(p0::T, p1::T, p2::T, p3::T) where {T<:OnePoint}
+function catmullrom_as_bezier(p0::T, p1::T, p2::T, p3::T) where T
     b0 = p1
     b3 = p2
     
