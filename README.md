@@ -77,9 +77,9 @@ between adjacent points that are relatively far apart, and fewer between adjacen
 that are in close relative proximity.
 
 ```
-crpoints = catmullrom_byarc( points )
+crpoints = catmullrom_by_arclength( points )
 
-crpoints = catmullrom_byarc( points, (min_between_points, max_between_points) )
+crpoints = catmullrom_by_arclength( points, (min_between_points, max_between_points) )
 ```
 
 ----
