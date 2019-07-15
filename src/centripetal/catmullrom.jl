@@ -139,7 +139,7 @@ that interpolates the middle two points of the path.
 function centripetal_catmullrom(pt₋::T,
                                 pt₀::T,
                                 pt₁::T,
-                                pt₊::T) where {T<:OnePoint}
+                                pt₊::T) where T
 
     tg₀,tg₁     = centripetal_tangents(pt₋, pt₀, pt₁, pt₊)
     c₀,c₁,c₂,c₃ = centripetal_hermite(pt₀, pt₁, tg₀, tg₁)
@@ -159,7 +159,7 @@ each as a unit vector.
 function centripetal_tangents(pt₋::T,
                               pt₀::T,
                               pt₁::T,
-                              pt₊::T) where {T<:OnePoint}
+                              pt₊::T) where T
 
     # intrasegment centripetal speeds
     dt₋₀ = speed(pt₋, pt₀)
@@ -189,7 +189,7 @@ function centripetal_tangents(pt₋::T,
     return (tg₀, tg₁)
 end
 
-@inline function prevent_overlap(::Type{P}, dt₋₀::T, dt₀₁::T, dt₁₊::T) where {T, P<:OnePoint}
+@inline function prevent_overlap(::Type{P}, dt₋₀::T, dt₀₁::T, dt₁₊::T) where T
     # check if any coordinates coincidee
     ε = coordeps(P)
     # correct for repeated coordinates    
@@ -214,7 +214,7 @@ and of associated quadratic `dply(t)` such that
 - ply(0) == pt₀,  dply(0) == tg₀
 - ply(1) == pt₁,  dply(1) == tg₁
 """
-function centripetal_hermite(pt₀::T, pt₁::T, tg₀::G, tg₁::G) where {T<:OnePoint, G}
+function centripetal_hermite(pt₀::T, pt₁::T, tg₀::G, tg₁::G) where {T, G}
     c0 = pt₀
     c1 = tg₀
     c2 = @. -3*pt₀ + 3*pt₁ - 2*tg₀ - tg₁
@@ -230,12 +230,12 @@ Obtain the tangent vector along the path
 at pt₀ moving to pt₁. The sqrt of that
 magnitude is the centripetal speed.
 """
-function speed(pt₀::T, pt₁::T) where {T<:OnePoint}
+function speed(pt₀::T, pt₁::T) where T
     delta = pt₁ .- pt₀
     return sqrt(sqrtdot(delta, delta))
 end
     
-@inline function coordeps(::Type{T}) where {T<:OnePoint}    
+@inline function coordeps(::Type{T}) where T   
     coord_type = coordtype(T)
     if coord_type <: AbstractFloat
         ε = eps(coord_type)
