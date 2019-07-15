@@ -4,9 +4,10 @@
 
 |                                       |
 |:--------------------------------------|
-| - `catmullrom( points )`              |
 |                                       |
-| - `catmullrom_by_arclength( points )` |
+|  `catmullrom( points )`              |
+|                                       |
+|  `catmullrom_by_arclength( points )` |
 
 ## Uniform Intermediation
 
