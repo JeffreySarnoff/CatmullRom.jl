@@ -105,8 +105,8 @@ Convert a sequence of CatmullRom points, those given
 as data and those interpolated through the data,
 to a corresponding sequence of arclength approximations.
 """
-function approx_catmullrom_arclengths(points::T) where T
-    L = float(coordtype(T))
+function approx_catmullrom_arclengths(points::P) where P
+    L = float(coordtype(P))
     n_points = npoints(points)
     # the first two points and the last two points are boundary + anchor
     # boundary anchor first_internal_point ... final_internal_point anchor boundary
