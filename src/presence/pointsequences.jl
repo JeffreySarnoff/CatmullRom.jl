@@ -61,10 +61,7 @@ npoints(pts::Base.Iterators.Zip) = length(pts)
 ncoords(pts::P) where P = eltype(pts) <: NamedTuple ? length(Tuple(pts[1])) : length(pts[1])
 ncoords(pts::Base.Iterators.Zip) = eltype(pts) <: NamedTuple ? length(Tuple(first(pts))) : length(first(pts))
 
-coordtype(pts::P) where P = eltype(eltype(pts))
-coordtype(pt::P) where P = eltype(pt)
-
-coordtype(x::T) where {T} = coordtype(T)
+coordtype(pts::P) where P = eltype(pts) <: Number ? eltype(pts) : eltype(eltype(pts))
 
 function coordtype(::Type{T}) where {T}
     result = T
