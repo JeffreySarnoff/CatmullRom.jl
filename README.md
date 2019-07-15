@@ -115,7 +115,7 @@ plot(xs, ys)                      # plot(result...,)
 ----
 
 
-## What you provide: Points along a path, so sequenced
+## What you provide: Points along an path as a sequence
 
 A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  The sequence of values
 given as the first coordinate of each point becomes the abcissae (the `x` coordinate values).  The second values become the
