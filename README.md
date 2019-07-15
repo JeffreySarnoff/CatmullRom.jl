@@ -50,7 +50,7 @@ of `(x_i, y_i)` ordered pairs and the arcs that connect successive `z`s are arcs
 ordered pairs.  It is easy to obtain arcs determined from _e.g._ the sequence of `(y_i, z_i)` pairs.  Just call the
 `catmullrom` function with points that are generated with `collect(zip(ys, zs))`.
 
-The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors of coordinate values or tuples of coordinate values.  While the point sequences are manipulated internally, there is no alteration of the points that you supply.
+The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors of coordinate values or tuples of coordinate values.  While the points and their coordinates are manipulated internally, that occurs without altering any values or sequences you use.
 
 
 |    |   |
