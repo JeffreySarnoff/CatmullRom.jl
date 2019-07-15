@@ -55,20 +55,22 @@ of coordinate values or tuples of coordinate values.  While the points and their
 that occurs without altering any values or sequences you use. We presuppose that you will have some carrier for each
 `Point`, and a container for the points holding them as they are sequenced along whatever you deem their natural path.
 
-Often the point's `xs` will be such that `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]` with the possible exception
-of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.
+<p align="center">Often the point's `xs` will be such that `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]` with the possible exception of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.</p>
 
-<p align="center"><p align="center">
-  
+----
+
 |  Type used for a Point | example             |  coordinates are retrievable |  you support   | 
 |:-----------------------|:--------------------|------------------------------|----------------|
+|                        |                     |                                               |
 |  small vector          | \[1.0, 3.5 \]       |   coord(point, i) = point[i] |   _builtin_    |
 |  small tuple           | (1.0, 3.5)          |   coord(point, i) = point[i] |   _builtin_    |
+|                        |                     |                                               |
 |  StaticVector          | SVector( 1.0, 3.5 ) |   coord(point, i) = point[i] |   _builtin_    |
 |  NamedTuple            | (x = 1.0, y = 3.5 ) |   coord(point, i) = point[i] |   _builtin_    |
+|                        |                     |                                               |
 |  struct                | Point(1.0, 3.5)     |   coord(point, i) = point[i] |   getindex     |
+|                        |                     |                                               |
 
-</p></p>
 ```
 struct Point{T}
     x::T
@@ -88,7 +90,7 @@ function Base.getindex(point::Point{T}, i::Integer) where T
     end
 end
 ```
-</p>
+
 
 
 
