@@ -99,6 +99,27 @@ end
 | <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  |  Catmull-Rom splines over two points are made with their neighbors. A new point preceeds your first and another follows your last. |
 | By appending a new first and a new last point, the resulting sequence starts and ends with your boundary points. | This just happens with the internal flow, unless you prefer another route. |
 
+----
+
+----
+
+## Centripetal Catmull-Rom Examples <sup>[𝓪](#source)</sup>
+
+
+
+
+  |                     shape                               |              detail                           |
+  |:--------------------------------------------------------:|:-----------------------------------------------:|
+  |                                                          |                                                 |
+  | <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CatmullRom_circle_dpihalf.png" width="300">  |      <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CatmullRom_sectionofcircle.png" width="300">|
+  |                                                          |                                                 |
+   |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/teardrop_byarc.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/teardrop_section.PNG" width="250">         |
+   |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral_locus.png" width="130">    |  
+  
+  <p align="center"><sup><a name="source">𝓪</sup> <a href="https://github.com/JeffreySarnoff/CatmullRom.jl/tree/master/examples">using this package to generate some of these examples</a></p>  
+
+
+----
 
 ## Three functions are exported
 
@@ -129,23 +150,6 @@ plot(xs, ys)                      # plot(result...,)
 
 If your points exist as separate coordinate vectors, aggregate them this way
 `points = collect(zip(xs, ys, zs))`
-
-----
-
-## Centripetal Catmull-Rom Examples <sup>[𝓪](#source)</sup>
-
-
-
-
-  |                     shape                               |              detail                           |
-  |:--------------------------------------------------------:|:-----------------------------------------------:|
-  |                                                          |                                                 |
-  | <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CatmullRom_circle_dpihalf.png" width="300">  |      <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/CatmullRom_sectionofcircle.png" width="300">|
-  |                                                          |                                                 |
-   |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/teardrop_byarc.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/teardrop_section.PNG" width="250">         |
-   |    <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral.png" width="400">          |   <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/sphericalspiral_locus.png" width="130">    |  
-  
-  <p align="center"><sup><a name="source">𝓪</sup> <a href="https://github.com/JeffreySarnoff/CatmullRom.jl/tree/master/examples">using this package to generate some of these examples</a></p>  
 
 ----
 
