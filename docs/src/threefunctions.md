@@ -1,13 +1,12 @@
 
-# two functions suffice
-
 
 |  Centripetal Catmull-Rom Pathmaking   |
 |:--------------------------------------|
 |                                       |
-|  `catmullrom( points )`              |
+|  `catmullrom( points )`               |
 |                                       |
-|  `catmullrom_by_arclength( points )` |
+|  `catmullrom_by_arclength( points )`  |
+|                                       |
 
 ## Uniform Intermediation
 
