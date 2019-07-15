@@ -41,7 +41,7 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  The sequence of values
 given as the first coordinate of each point becomes the abcissae (the `x` coordinate values).  The second values become the
 ordinates.  When there are more than two coordinates comprising each point, the second coordinate is as the `y` coordinate value
-(or whatever name attaches to the axis that follows the abcissa's coordinated axis _e.g. by the right-hand rule_).
+(or whatever coordinate is identified with the axis that follows e.g. by the right-hand rule).
 
 Each succesive coordinate of a point provides an additional ordinate sequence, with its corresponding coordinate axis.
 The coordinate axes are treated as orthonormal and relatively independent of one another.  All ordinate sequences are
