@@ -115,7 +115,7 @@ plot(xs, ys)                      # plot(result...,)
 ----
 
 
-## you provide a point sequence,
+## you provide points in sequenced by ajacency
 
 ### points along a path
 
