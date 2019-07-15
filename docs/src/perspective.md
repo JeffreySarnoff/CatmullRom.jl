@@ -12,7 +12,10 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 ----
 
+<p align="center">
 ![CR_centripetal](assets/CR_Centripetal.png)
+</p>
+
 
 > The blue path shows a Catmull-Rom spline using the centripetal parameterization (α=0.5)
 
