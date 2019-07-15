@@ -53,7 +53,40 @@ arcs using the sequence of `(y_i, z_i)` pairs: `ys_zs = catmullrom( collect(zip(
 The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors
 of coordinate values or tuples of coordinate values.  While the points and their coordinates are manipulated internally,
 that occurs without altering any values or sequences you use. We presuppose that you will have some carrier for each
-`Point`, maybe a `Tuple` `(1.0, 3.5)` or a small `Vector` `[1.0, 3.5]` or a `StaticVector` `SVector(1.0, 3.5)`
+`Point`, and a container for the points holding them as they are sequenced along whatever you deem their natural path.
+
+<p align="center">
+
+|  Type used for a Point | example             |  coordinates are retrievable |  you support   | 
+|:-----------------------|:--------------------|------------------------------|----------------|
+|  small vector          | \[1.0, 3.5 \]       |   coord(point, i) = point[i] |   _builtin_    |
+|  small tuple           | (1.0, 3.5)          |   coord(point, i) = point[i] |   _builtin_    |
+|  StaticVector          | SVector( 1.0, 3.5 ) |   coord(point, i) = point[i] |   _builtin_    |
+|  NamedTuple            | (x = 1.0, y = 3.5 ) |   coord(point, i) = point[i] |   _builtin_    |
+|  struct                | Point(1.0, 3.5)     |   coord(point, i) = point[i] |   getindex     |
+
+```
+struct Point{T}
+    x::T
+    y::T
+    z::T
+end
+
+function Base.getindex(point::Point{T}, i::Integer) where T
+    if i == 1
+       point.x
+    elseif i == 2
+       point.y
+    elseif i == 3
+       point.z
+    else
+       throw(DomainError("i must be 1, 2, or 3 (not $i)"))
+    end
+end
+```
+</p>
+
+of pointsmaybe a `Tuple` `(1.0, 3.5)` or a small `Vector` `[1.0, 3.5]` or a `StaticVector` `SVector(1.0, 3.5)`
 or a `NamedTuple` `(x = 1.0, y = 3.5)`.  And you will have some sequential containter that holds the points
 just as they happen to be adjacent along their natural path.
 
