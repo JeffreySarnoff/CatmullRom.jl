@@ -17,7 +17,7 @@ plot(xs, ys, linecolor=:lightgreen, linewidth=7, size=(500,500), xaxis=nothing, 
 plot!(cxs, cys, linecolor=:black, linewidth=2, size=(500,500), xaxis=nothing, yaxis=nothing, legend=nothing)
 
 arcpoints = (8, 64)
-crpts = catmullrom_byarc(points, arcpoints);
+crpts = catmullrom_by_arclength(points, arcpoints);
 cxs,cys=crpts;
 
 plot(xs, ys, linecolor=:lightgreen, linewidth=7, size=(500,500), xaxis=nothing, yaxis=nothing, legend=nothing)
