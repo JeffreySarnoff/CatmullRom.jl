@@ -9,7 +9,9 @@ makedocs(
         "Overview" => "index.md",
         "Perspecive" => "perspective.md",
         "Three Functions" => "threefunctions.md",
-        "Examples" => "Examples.md"
+        "Examples" => "Examples.md",
+        "A few hints" => "hints.md",
+        "References" => "references.md"
     ]
 )
 
