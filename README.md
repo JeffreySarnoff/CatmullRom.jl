@@ -185,17 +185,6 @@ xs, ys = result
 plot(xs, ys)                      # plot(result...,)
 ```
 
-If your points exist as separate coordinate vectors, aggregate them this way
-`points = collect(zip(xs, ys, zs))`
-
-```
-using CatmullRom, Plots
-
-closed_path = close_seq( points )
-
-plot( catmullrom( closed_path )..., )
-
-```
 
 ----
 ### the first and last points are special
@@ -213,6 +202,8 @@ plot( catmullrom( closed_path )..., )
     - with the possible exception of one triplet when the path is a closed curve     
     - `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`
     
+- If your points exist as separate coordinate vectors, aggregate them this way
+    - `points = collect(zip(xs, ys, zs))`
 
 ----
 
