@@ -43,14 +43,22 @@ given as the first coordinate of each point becomes the abcissae (the `x` coordi
 ordinates.  When there are more than two coordinates comprising each point, the second coordinate is as the `y` coordinate value
 (or whatever coordinate is identified with the axis that follows e.g. by the right-hand rule).
 
-Each succesive coordinate of a point provides an additional ordinate sequence, with its corresponding coordinate axis.
-The coordinate axes are treated as orthonormal and relatively independent of one another.  All ordinate sequences are
-taken with respect to the same abcissae.  So, the arcs that connect successive `y`s are arcs hewn from a succession
-of `(x_i, y_i)` ordered pairs and the arcs that connect successive `z`s are arcs hewn from a succession of `(x_i, z_i)`
-ordered pairs.  It is easy to obtain arcs determined from _e.g._ the sequence of `(y_i, z_i)` pairs.  Just call the
-`catmullrom` function with points that are generated with `collect(zip(ys, zs))`.
+Every point in a sequence of points has the same number of constiuent coordinates.  The first coordinate from each point,
+in sequence, are the abcissae.  The remaining coordinates (e.g. the `y` or the `y` and `z` coordinates) are considered to be
+values along orthonormal _ordinate_ axes.  All ordinate sequences are fitted with respect to the same abcissae. So, the arcs
+that connect successive `y`s are arcs hewn from a succession of `(x_i, y_i)` ordered pairs and the arcs connecting successive
+`z`s are arcs hewn from a succession of `(x_i, z_i)` ordered pairs.  It is easy to work with other axial pairings. To generate
+arcs using the sequence of `(y_i, z_i)` pairs: `ys_zs = catmullrom( collect(zip(ys, zs)) )`.
 
-The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors of coordinate values or tuples of coordinate values.  While the points and their coordinates are manipulated internally, that occurs without altering any values or sequences you use.
+The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors
+of coordinate values or tuples of coordinate values.  While the points and their coordinates are manipulated internally,
+that occurs without altering any values or sequences you use. We presuppose that you will have some carrier for each
+`Point`, maybe a `Tuple` `(1.0, 3.5)` or a small `Vector` `[1.0, 3.5]` or a `StaticVector` `SVector(1.0, 3.5)`
+or a `NamedTuple` `(x = 1.0, y = 3.5)`.  And you will have some sequential containter that holds the points
+just as they happen to be adjacent along their natural path.
+
+Often the point's `xs` will be such that `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]` with the possible exception
+of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.
 
 
 |    |   |
