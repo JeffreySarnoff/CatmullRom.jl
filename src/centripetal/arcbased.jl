@@ -1,14 +1,14 @@
 """
-    catmullrom_byarc( points )    
-    catmullrom_byarc( points, (min_between_points, max_between_points))    
+    catmullrom_by_arclength( points )    
+    catmullrom_by_arclength( points, (min_between_points, max_between_points))    
 
 Calculates a Catmull-Rom fit through given `points`, where the number of interpoint knots
 varys inversely with the approximate arclength of that arc.
 
 `arcpoints_min` and `arcpoints_max` refer any one arc between two points.
-""" catmullrom_byarc
+""" catmullrom_by_arclength
 
-function catmullrom_byarc(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax), extend::Bool=true) where {P, I<:Integer}
+function catmullrom_by_arclength(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax), extend::Bool=true) where {P, I<:Integer}
     catmullrom_requirement(npoints(points))    
     
     crpoints = deepcopy(points)
@@ -16,11 +16,11 @@ function catmullrom_byarc(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, Arcpoi
         extend_seq(crpoints)
     end
     
-    return catmullrombyarc(crpoints, minmax(arcpoints...))
+    return catmullrombyarclength(crpoints, minmax(arcpoints...))
 end
 
 
-function catmullrombyarc(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {P, I<:Integer}
+function catmullrombyarclength(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {P, I<:Integer}
     n_points = npoints(points)
     pointsperarc = arclength_interpolants(points, arcpoints)
     total_points = sum(pointsperarc) + n_points
