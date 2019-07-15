@@ -2,7 +2,7 @@
 # two functions suffice
 
 
-|                                       |
+|   Catmull-Rom, boyantly      |
 |:--------------------------------------|
 |                                       |
 |  `catmullrom( points )`              |
