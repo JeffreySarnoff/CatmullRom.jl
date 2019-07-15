@@ -86,9 +86,6 @@ end
 ```
 </p>
 
-of pointsmaybe a `Tuple` `(1.0, 3.5)` or a small `Vector` `[1.0, 3.5]` or a `StaticVector` `SVector(1.0, 3.5)`
-or a `NamedTuple` `(x = 1.0, y = 3.5)`.  And you will have some sequential containter that holds the points
-just as they happen to be adjacent along their natural path.
 
 Often the point's `xs` will be such that `x[i-1] < x[i] < x[i+1]` or `x[i-1] > x[i] > x[i+1]` with the possible exception
 of one triplet when the path is a closed curve `x[i-1] < x[i] > x[i+1]` or `x[i-1] > x[i] < x[i+1]`.
