@@ -1,9 +1,8 @@
-using Documenter, CatmullRom
+using Documenter
 
 #    format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true"),
 
 makedocs(
-    modules = [CatmullRom],
     sitename = "CatmullRom.jl",
     authors = "Jeffrey Sarnoff",
     pages = Any[
