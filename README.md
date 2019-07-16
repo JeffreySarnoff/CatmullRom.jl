@@ -195,7 +195,7 @@ end
 |    |   |
 |:---------------------------------------------------------------------------------------------------------------------------|:--|
 | <img src="https://github.com/JeffreySarnoff/CatmullRom.jl/blob/master/examples/assets/Catmull-Rom_Spline.png" width="500">  [from Wikipedia](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline)  |  Catmull-Rom splines over two points are made with their neighbors. A new point preceeds your first and another follows your last. |
-| By appending a point outside the given first and another outside the last, the curve is bounded at your extremal points.
+| By appending points outside those given, the generated curve is bounded at your extremal points. |
  | This just happens with the internal flow, so do not provide endpoint "buffers" unless you use _unexported_ functions. |
 
 ----
