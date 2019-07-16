@@ -114,9 +114,6 @@ plot(xs, ys)                      # plot(result...,)
 
 ----
 
-
-## you provide points in sequenced by ajacency
-
 ### points along a path
 
 A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  The sequence of values
