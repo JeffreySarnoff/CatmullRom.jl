@@ -36,10 +36,22 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 
 ----
+>  
+|  Centripetal Catmull-Rom Pathmaking   |
+|:--------------------------------------|
+|                                       |
+|  `catmullrom( points )`               |
+|                                       |
+|  `catmullrom_by_arclength( points )`  |
+|                                       |
 
-## Three functions are exported
 
-### Uniform Intermediation
+----
+
+## Uniform Intermediation
+
+- catmullrom( points_along_a_path )
+- catmullrom( points_along_a_path, n_arcs_between_neighbors )
 
 There are two ways to connect path-adjacent points using Centripetal Catmull-Rom machinery.
 The most often used iterplaces a given number of curvilinear waypoints between each adjacent
@@ -50,10 +62,11 @@ may help you visualize the significance that is of import.
 ```
 crpoints = catmullrom( points )
 
-crpoints = catmullrom( points, n_between_points )
+crpoints = catmullrom( points, n_arcs_between_neighbors )
 ```
+----
 
-### Arclength Relative Allocation
+## Arclength Relative Allocation
 
 When the points' coordinates are spread differently along distinct axes, the interpoint
 distances along one coordinate have a very different nature from the intercoordinate
@@ -64,9 +77,9 @@ between adjacent points that are relatively far apart, and fewer between adjacen
 that are in close relative proximity.
 
 ```
-crpoints = catmullrom_by_arclength( points )
+crpoints = catmullrom_byarc( points )
 
-crpoints = catmullrom_by_arclength( points, (min_between_points, max_between_points) )
+crpoints = catmullrom_byarc( points, (min_arcs_between_points, max_arcs_between_points) )
 ```
 
 ----
@@ -74,7 +87,7 @@ crpoints = catmullrom_by_arclength( points, (min_between_points, max_between_poi
 ```
 using CatmullRom, Plots
 
-result = catmullrom(points, n_inbetween_points)  # your points, how many new points to place between adjacents
+result = catmullrom(points, n_arcs_per_pair)    # your points, how many new points to place between adjacents
                                                  # result is a vector of coordinates, e.g. [xs, ys, zs]
 plot(result...,)
 ```
@@ -88,16 +101,17 @@ arclengths appropriate to the centripetal parameterization.  You can use this di
 ```
 using CatmullRom, Plots
 
-result = catmullrom_byarc(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
+result = catmullrom_by_arclength(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
  
-result = catmullrom_byarc(points, arcpoints_min=at_least, arcpoints_max=at_most)
-                                  # specify the range of inbetween points used
+result = catmullrom_by_arclength(points, (atleast_min_arcs_total, atmost_max_arcs_total))
+                                          # min, max pertain to the whole path of the curve
 xs, ys = result
-plot(xs, ys)                      # plot(result...,)
+plot(xs, ys)
 ```
 
+----
 
-### Open and Closed Curves
+## Open and Closed Curves
 
 CatmullRom processes the extremal points of closed curves differently from open curves.
 A curve in which the first and last points are identical is recognized as closed.
@@ -110,31 +124,24 @@ close_seq( points )            # this is the only function that may change some 
 points = close_seq( points )   # (the same thing)
 ```
 
-
-
 ----
 
-### points along a path
+## Points along a path
 
-A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  The sequence of values
-given as the first coordinate of each point becomes the abcissae (the `x` coordinate values).  The second values become the
-ordinates.  When there are more than two coordinates comprising each point, the second coordinate is as the `y` coordinate value
-(or whatever coordinate is identified with the axis that follows e.g. by the right-hand rule).
+A sequence of 2D, 3D .. nD points is required.  There is no limit on the number of coordinate dimensions.  
+The first coordinate of each point become the abcissae (e.g. the `x` coordinate values).  The second \[, third etc.\]
+become \[successive\] ordinates (e.g. the `ys`, `zs` ...).
 
-Every point in a sequence of points has the same number of constiuent coordinates.  The first coordinate from each point,
-in sequence, are the abcissae.  The remaining coordinates (e.g. the `y` or the `y` and `z` coordinates) are considered to be
-values along orthonormal _ordinate_ axes.  All ordinate sequences are fitted with respect to the same abcissae. So, the arcs
+Every point in a givne sequence must has the same number of constiuent coordinates.  Coordinates are considered to be values
+along _orthonormal_ axes.  All ordinate axes are fitted with respect to the same abcissae. So, the arcs
 that connect successive `y`s are arcs hewn from a succession of `(x_i, y_i)` ordered pairs and the arcs connecting successive
 `z`s are arcs hewn from a succession of `(x_i, z_i)` ordered pairs.  It is easy to work with other axial pairings. To generate
 arcs using the sequence of `(y_i, z_i)` pairs: `ys_zs = catmullrom( collect(zip(ys, zs)) )`.
 
-The point sequence may be provided as a vector of points or as a tuple of points.  The points themselves may be vectors
-of coordinate values or tuples of coordinate values.  While the points and their coordinates are manipulated internally,
-that occurs without altering any values or sequences you use. We presuppose that you will have some carrier for each
-`Point`, and a container for the points holding them as they are sequenced along whatever you deem their natural path.
-
-
 ----
+
+The point sequence itself may be provided as a vector of points or as a tuple of points. 
+
 
 |  Type used for a Point | example             |  coordinates are retrievable |  you support   | 
 |:-----------------------|:--------------------|------------------------------|----------------|
@@ -167,8 +174,6 @@ function Base.getindex(point::Point{T}, i::Integer) where T
     end
 end
 ```
-
-
 
 ----
 
