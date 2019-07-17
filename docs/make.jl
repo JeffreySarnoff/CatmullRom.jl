@@ -10,6 +10,7 @@ makedocs(
         "Perspecive" => "perspective.md",
         "Three Functions" => "threefunctions.md",
         "Examples" => "Examples.md",
+        "Points along a path" => "pointsalongapath.md",
         "A few hints" => "hints.md",
         "References" => "references.md"
     ]
