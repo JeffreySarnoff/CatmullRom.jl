@@ -37,32 +37,29 @@ Catmull-Rom splines are a workhorse of computer graphics. Using the centripetal 
 
 ----
 >  
-|  Centripetal Catmull-Rom Pathmaking   |
-|:--------------------------------------|
-|                                       |
-|  `catmullrom( points )`               |
-|                                       |
-|  `catmullrom_by_arclength( points )`  |
-|                                       |
+|  Centripetal Catmull-Rom Pathmaking   |         optional arguments                            |
+|:--------------------------------------|:------------------------------------------------------|
+|                                       |                                                       |
+|  `catmullrom( points )`               | `catmullrom( points, n_segments_between_neighbors )`  |  
+|                                       |                                                       |
+|  `catmullrom_by_arclength( points )`  | `catmullrom_by_arclength( points, (min_segments, max_segments) )` |
+|                                       |                                                                   |
 
 
 ----
 
 ## Uniform Intermediation
 
-- catmullrom( points_along_a_path )
-- catmullrom( points_along_a_path, n_arcs_between_neighbors )
-
 There are two ways to connect path-adjacent points using Centripetal Catmull-Rom machinery.
-The most often used iterplaces a given number of curvilinear waypoints between each adjacent
-pair of original points.  All neighbors become connected by that given number of intermediating
+The most often used method places a given number of curvilinear waypoints between each adjacent
+pair from the original points.  All neighbors become connected by that given number of intermediating
 places. Though the places differ, the proportional advancing between abcissae is consistent.
-There is a default for this intermediation count, nonetheless trying a few different values
-may help you visualize the significance that is of import.
+Trying a few different values may help you visualize the significance that is of import.
+
 ```
 crpoints = catmullrom( points )
 
-crpoints = catmullrom( points, n_arcs_between_neighbors )
+crpoints = catmullrom( points, n_segments_between_neighbors )
 ```
 ----
 
@@ -79,7 +76,7 @@ that are in close relative proximity.
 ```
 crpoints = catmullrom_byarc( points )
 
-crpoints = catmullrom_byarc( points, (min_arcs_between_points, max_arcs_between_points) )
+crpoints = catmullrom_byarc( points, (min_segments_between_points, max_segments_between_points) )
 ```
 
 ----
@@ -87,8 +84,8 @@ crpoints = catmullrom_byarc( points, (min_arcs_between_points, max_arcs_between_
 ```
 using CatmullRom, Plots
 
-result = catmullrom(points, n_arcs_per_pair)    # your points, how many new points to place between adjacents
-                                                 # result is a vector of coordinates, e.g. [xs, ys, zs]
+result = catmullrom(points, n_segments_per_pair)    # your points, how many new points to place between adjacents
+                                                    # result is a vector of coordinates, e.g. [xs, ys, zs]
 plot(result...,)
 ```
 
@@ -103,8 +100,8 @@ using CatmullRom, Plots
 
 result = catmullrom_by_arclength(points) # result is a vector of coordinates, e.g. [xs, ys, zs]
  
-result = catmullrom_by_arclength(points, (atleast_min_arcs_total, atmost_max_arcs_total))
-                                          # min, max pertain to the whole path of the curve
+result = catmullrom_by_arclength(points, (atleast_min_segments, atmost_max_segments))
+                                         # min, max pertain to each pair of neighboring points
 xs, ys = result
 plot(xs, ys)
 ```
