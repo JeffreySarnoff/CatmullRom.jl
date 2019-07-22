@@ -19,7 +19,7 @@ include("presence/pointsequences.jl")
 
 # suggest outermost two points for Catmull-Rom spline sequence
 const ReflectionScale = 1.0
-const ArcpointsMin = 4
+const ArcpointsMin = 8
 const ArcpointsMax = 64
 
 include("fewpoints/outside.jl")
