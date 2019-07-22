@@ -76,7 +76,7 @@ that are in close relative proximity.
 ```
 crpoints = catmullrom_byarc( points )
 
-crpoints = catmullrom_byarc( points, (min_segments_between_points, max_segments_between_points) )
+crpoints = catmullrom_byarc( points, (min_segments_between_neighbors, max_segments_between_neighbors) )
 ```
 
 ----
