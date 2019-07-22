@@ -8,7 +8,7 @@ varys inversely with the approximate arclength of that arc.
 `arcpoints_min` and `arcpoints_max` refer any one arc between two points.
 """ catmullrom_by_arclength
 
-function catmullrom_by_arclength(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax), extend::Bool=true) where {P, I<:Integer}
+function catmullrom_by_arclength(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax); extend::Bool=true) where {P, I<:Integer}
     catmullrom_requirement(npoints(points))    
     
     crpoints = deepcopy(points)
@@ -53,6 +53,7 @@ to a sequence of arc-length specific point counts where each arc has at least
 """
 function arclength_interpolants(points::P, arcpoints::Tuple{I,I}=(ArcpointsMin, ArcpointsMax)) where {P, I<:Integer}
     normalized_arclengths = normalized_catmullrom_arclengths(points)
+    
     arcpoints_min, arcpoints_max = arcpoints
     arclength_min = minimum(normalized_arclengths)
     multiplier = nextfloat(arcpoints_min / arclength_min)
