@@ -32,7 +32,7 @@ function extend_open_seq(points::P; scale=ReflectionScale) where P
     return points
 end
     
-function close_seq(points::P) where P
+function close_seq!(points::P) where P
     isempty(points) && throw(ErrorException("cannot close an empty sequence"))
     if isapproxclosed(points)
         points[end] = points[1]
