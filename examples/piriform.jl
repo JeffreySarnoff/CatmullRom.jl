@@ -11,7 +11,7 @@ n_between = 17; # interpolants between each adjacent pair of points
 xs = [fx(t) for t=range( 0.0, stop=1.0, length=n_points)];
 ys = [fy(t) for t=range( 0.0, stop=1.0, length=n_points)];
 points = collect(zip(xs, ys))
-close_seq(points)
+close_seq!(points)
 
 crpoints = catmullrom(points, n_between);
 cxs, cys = crpoints
