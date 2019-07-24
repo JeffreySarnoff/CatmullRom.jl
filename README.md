@@ -197,6 +197,8 @@ end
 
 [Interpolations.jl](https://github.com/JuliaMath/Interpolations.jl)
 
+----
+
 ## references
 
 [Parameterization and Applications of Catmull-Rom Curves](http://www.cemyuksel.com/research/catmullrom_param/catmullrom_cad.pdf)
