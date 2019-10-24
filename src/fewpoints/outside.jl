@@ -11,3 +11,5 @@ function pointafter(lastpoints::P, scale=ReflectionScale) where P
     finalpoint = (finalx, finalys...,)
     return convert(eltype(lastpoints), finalpoint)
 end
+
+allfinite(result) = all(Iterators.flatten(map(x->isfinite.(x),result)))
