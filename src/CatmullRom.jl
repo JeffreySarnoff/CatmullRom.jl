@@ -8,10 +8,13 @@ module CatmullRom
 
 export catmullrom,               # populates with points placed between those given
        catmullrom_by_arclength,  # populates with points placed between those given relative to arclength
-       close_seq!                # ensures a point sequence is closed, precisely
+       close_seq!,               # ensures a point sequence is closed, precisely
+       floatvecs                 # obtain a vector of vectors of floats
 
 using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval
+
+include("utilities.jl")
 
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
