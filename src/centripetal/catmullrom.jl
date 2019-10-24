@@ -21,24 +21,25 @@ use `extendbounds(points, scale=scalefactor)`, and then pass the result
 to this function with `extend=false`.
 """
 function catmullrom(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
+    catmullrom_requirement(npoints(points))        
     pointsperarc += isodd(pointsperarc)     # force even                                
-    crpoints = catmullrom_prep(points, pointsperarc, extend=extend)
     
     # ensure that the 'x' values are not coinciding
-    changes = norm.(diff(cr_points))[1:end]
+    changes = norm.(diff(points))[1:end]
     relchanges = changes ./ sum(changes)
     cumrelchanges = cumsum(relchanges)
     pushfirst!(cumrelchanges, 0.0)
-    m = vcat(cumrelchanges',reduce(hcat,cr_points))
+    m = vcat(cumrelchanges',reduce(hcat,points))
     m = permutedims(m)
-    cr_points = [m[i,:] for i=1:size(m)[1]]
+    crpoints = [m[i,:] for i=1:size(m)[1]]
+
+    crpoints = catmullrom_prep(crpoints, pointsperarc, extend=extend)
 
     # ensure the spline passes through the original values
-    return catmullrom_splines(cr_points, pointsperarc)[2:end]
+    return catmullrom_splines(crpoints, pointsperarc)[2:end]
 end
 
 function catmullrom_prep(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
-    catmullrom_requirement(npoints(points))        
     if isa(points[1], Tuple)
         cr_points = [Float64.([x...,]) for x in points]
     else
