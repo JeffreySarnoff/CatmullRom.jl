@@ -64,9 +64,9 @@ crpoints = catmullrom( points, n_segments_between_neighbors )
 When the points' coordinates are spread differently along distinct axes, the interpoint distances along one coordinate have a very different nature from the intercoordinate spreads along another coordinate axis.  The distances separating adjacent point pairs may vary substantively.  This is particularly true when working in higher dimensional regions of an orthonormal coordinate space.  One may use more intermediating placements between adjacent points that are relatively far apart, and fewer between adjacent points that are in close relative proximity.
 
 ```
-crpoints = catmullrom_byarc( points )
+crpoints = catmullrom_by_arclength( points )
 
-crpoints = catmullrom_byarc( points, (min_segments_between_neighbors, max_segments_between_neighbors) )
+crpoints = catmullrom_by_arclength( points, (min_segments_between_neighbors, max_segments_between_neighbors) )
 ```
 
 ----
