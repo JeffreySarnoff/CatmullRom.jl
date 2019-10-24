@@ -20,19 +20,22 @@ If you prefer to specify the scale factor used in that extrapolation,
 use `extendbounds(points, scale=scalefactor)`, and then pass the result
 to this function with `extend=false`.
 """
-function catmullrom(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
-    catmullrom_requirement(npoints(points))    
-    pointsperarc += isodd(pointsperarc)     # force even                                
-    
+function catmullrom_prep(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
+    catmullrom_requirement(npoints(points))        
     if isa(crpoints[1], Tuple)
         cr_points = [Float64.([x...,]) for x in crpoints]
     else
         cr_points = [Float64.(x) for x in xcrpoints]
     end
-
     if extend
         cr_points = extend_seq(cr_points)
     end
+    return cr_points
+end
+    
+function catmullrom(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
+    pointsperarc += isodd(pointsperarc)     # force even                                
+    crpoints = catmullrom_(points, pointsperarc, extend=extend)
     
     # ensure that the 'x' values are not coinciding
     changes = norm.(diff(cr_points))[1:end]
