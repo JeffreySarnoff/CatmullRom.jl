@@ -40,9 +40,9 @@ end
 function catmullrom_prep(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
     catmullrom_requirement(npoints(points))        
     if isa(points[1], Tuple)
-        cr_points = [Float64.([x...,]) for x in crpoints]
+        cr_points = [Float64.([x...,]) for x in points]
     else
-        cr_points = [Float64.(x) for x in xcrpoints]
+        cr_points = [Float64.(x) for x in points]
     end
     if extend
         cr_points = extend_seq(cr_points)
