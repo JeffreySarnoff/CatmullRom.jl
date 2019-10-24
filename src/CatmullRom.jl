@@ -22,7 +22,6 @@ const ReflectionScale = 1.0
 const ArcpointsMin = 8
 const ArcpointsMax = 64
 
-Base.isfinite(x::NTuple{N,T}) where {N,T<:Number} = all(isfinite.(x))
 
 include("fewpoints/outside.jl")
 
