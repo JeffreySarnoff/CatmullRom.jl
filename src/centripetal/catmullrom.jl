@@ -21,7 +21,11 @@ use `extendbounds(points, scale=scalefactor)`, and then pass the result
 to this function with `extend=false`.
 """
 function catmullrom(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
-    catmullrom_requirement(npoints(points))        
+    catmullrom_requirement(npoints(points))
+    if eltype(points) <: Tuple
+        apoints = map(x->[x...,], points)
+        return catmullrom(apoints, pointsperarc, extend=extend)
+    end
     pointsperarc += isodd(pointsperarc)     # force even                                
     
     # ensure that the 'x' values are not coinciding
