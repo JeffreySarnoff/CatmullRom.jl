@@ -24,22 +24,27 @@ function catmullrom(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend
     catmullrom_requirement(npoints(points))    
     pointsperarc += isodd(pointsperarc)     # force even                                
     
-    crpoints = deepcopy(points)
+    if isa(crpoints[1], Tuple)
+        cr_points = [Float64.([x...,]) for x in crpoints]
+    else
+        cr_points = [Float64.(x) for x in xcrpoints]
+    end
+
     if extend
-        crpoints = extend_seq(crpoints)
+        cr_points = extend_seq(cr_points)
     end
     
     # ensure that the 'x' values are not coinciding
-    changes = norm.(diff(crpoints))[1:end]
+    changes = norm.(diff(cr_points))[1:end]
     relchanges = changes ./ sum(changes)
     cumrelchanges = cumsum(relchanges)
     pushfirst!(cumrelchanges, 0.0)
-    m = vcat(cumrelchanges',reduce(hcat,crpoints))
+    m = vcat(cumrelchanges',reduce(hcat,cr_points))
     m = permutedims(m)
-    crpoints = [m[i,:] for i=1:size(m)[1]]
+    cr_points = [m[i,:] for i=1:size(m)[1]]
 
     # ensure the spline passes through the original values
-    return catmullrom_splines(crpoints, pointsperarc)[2:end]
+    return catmullrom_splines(cr_points, pointsperarc)[2:end]
 end
 
 
