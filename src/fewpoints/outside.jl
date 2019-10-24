@@ -16,3 +16,5 @@ allfinite(result) = all(Iterators.flatten(map(x->isfinite.(x),result)))
 
 Base.convert(::Type{Array{T,1}}, x::Array{NTuple{N,T},1}) where {N,T} = map(a->[a...,], x)
 Base.convert(::Type{Array{NTuple{N,T},1}}, x::Array{T,1}) where {N,T} = map(a->(a...,), x)
+Base.convert(::Type{Array{T1,1}}, x::Array{NTuple{N,T2},1}) where {N,T1,T2} = map(a->[(T1.(a))...,], x)
+Base.convert(::Type{Array{NTuple{N,T1},1}}, x::Array{T2,1}) where {N,T1,T2} = map(a->((T1.(a))...,), x)
