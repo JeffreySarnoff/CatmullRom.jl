@@ -1,3 +1,5 @@
+const DefaultPointsPerArc = 64
+
 """
     catmullrom(points, pointsperarc; extend=true)
     catmullrom(xs, ys, pointsperarc; extend=true)
@@ -18,7 +20,7 @@ If you prefer to specify the scale factor used in that extrapolation,
 use `extendbounds(points, scale=scalefactor)`, and then pass the result
 to this function with `extend=false`.
 """
-function catmullrom(points::P, pointsperarc::Integer; extend::Bool=true) where P
+function catmullrom(points::P, pointsperarc::Integer=DefaultPointsPerArc; extend::Bool=true) where P
     catmullrom_requirement(npoints(points))    
     pointsperarc += isodd(pointsperarc)     # force even                                
     
@@ -26,7 +28,18 @@ function catmullrom(points::P, pointsperarc::Integer; extend::Bool=true) where P
     if extend
         crpoints = extend_seq(crpoints)
     end
-    return catmullrom_splines(crpoints, pointsperarc)
+    
+    # ensure that the 'x' values are not coinciding
+    changes = norm.(diff(crpoints))[1:end]
+    relchanges = changes ./ sum(changes)
+    cumrelchanges = cumsum(relchanges)
+    pushfirst!(cumrelchanges, 0.0)
+    m = vcat(cumrelchanges',reduce(hcat,crpoints))
+    m = permutedims(m)
+    crpoints = [m[i,:] for i=1:size(m)[1]]
+
+    # ensure the spline passes through the original values
+    return catmullrom_splines(crpoints, pointsperarc)[2:end]
 end
 
 
