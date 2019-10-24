@@ -14,10 +14,11 @@ end
 
 allfinite(result) = all(Iterators.flatten(map(x->isfinite.(x),result)))
 
+#=
 Base.convert(::Type{Array{T1,1}}, x::Array{T2,1}) where {N,T1,T2} = T1.(x)
 Base.convert(::Type{NTuple{N,T1}}, x::NTuple{N,T2}) where {N,T1,T2} = T1.(x)
 Base.convert(::Type{Array{NTuple{N,T},1}}, x::Array{T,1}) where {N,T} = map(a->(a...,), x)
 Base.convert(::Type{Array{T,1}}, x::Array{NTuple{N,T},1}) where {N,T} = map(a->[a...,], x)
 Base.convert(::Type{Array{T1,1}}, x::Array{NTuple{N,T2},1}) where {N,T1,T2} = convert(Array{T1,1}, convert(NTuple{N,T1},x))
 Base.convert(::Type{Array{NTuple{N,T1},1}}, x::Array{T2,1}) where {N,T1,T2} = convert(NTuple{N,T1}, convert(Array{T1},x))
-
+=#
