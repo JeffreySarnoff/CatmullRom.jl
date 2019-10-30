@@ -3,13 +3,14 @@
 
 ``` 
 vec_of_coord_tuples = [(1, 2), (2, 4)]
-coordvecs(vec_of_coord_tuples) == [(1.0, 2.0), (2.0, 4.0)]
+coordvecs(vec_of_coord_tuples) == [[1.0, 2.0], [2.0, 4.0]]
 
 vec_of_coord_vectors = [[1, 2], [2, 4]]
 coordvecs(vec_of_coord_vectors) == [[1.0, 2.0], [2.0, 4.0]]
 
 tuple_of_coord_tuples = ((1, 2), (2, 4))
-coordvecs(tuple_of_coord_tuples, Float32) == ((1.0f0, 2.0f0), (2.0f0, 4.0f0))
+coordvecs(tuple_of_coord_tuples) == ([1.0, 2.0], [2.0, 4.0])
+coordvecs(tuple_of_coord_tuples, Float32) == ([1.0f0, 2.0f0], [2.0f0, 4.0f0])
 ```
 """
 coordvecs(coordseq::Vector{Vector{T}}) where {T<:AbstractFloat} = coordvecs(coordseq, T)
