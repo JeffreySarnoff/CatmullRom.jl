@@ -41,3 +41,4 @@ coordvecs(coordseq::NTuple{N1, NTuple{N2,T1}}, ::Type{T2}) where {N1, N2, T1<:Re
 coordvecs(coordseq::NTuple{N, Vector{T1}}, ::Type{T2}) where {N, T1<:Real, T2<:AbstractFloat} = map(x->[T2.(x)...,], coordseq)
 
 vectorofcoordvecs(coordseq) = vector(coordvecs(coordseq))
+matrixfromcoords(coordseq) = permutedims(reduce(hcat, vectorofcoordvecs(coordseq)))
