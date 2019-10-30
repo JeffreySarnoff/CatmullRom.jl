@@ -39,3 +39,5 @@ coordvecs(coordseq::Vector{Vector{T1}}, ::Type{T2}) where {T1<:Real, T2<:Abstrac
 coordvecs(coordseq::Vector{NTuple{N,T1}}, ::Type{T2}) where {N, T1<:Real, T2<:AbstractFloat} = map(x->[T2.(x)...,], coordseq)
 coordvecs(coordseq::NTuple{N1, NTuple{N2,T1}}, ::Type{T2}) where {N1, N2, T1<:Real, T2<:AbstractFloat} = map(x->[T2.(x)...,], coordseq)
 coordvecs(coordseq::NTuple{N, Vector{T1}}, ::Type{T2}) where {N, T1<:Real, T2<:AbstractFloat} = map(x->[T2.(x)...,], coordseq)
+
+vectorofcoordvecs(coordseq) = vector(coordvecs(coordseq))
