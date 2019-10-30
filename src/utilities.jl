@@ -1,12 +1,28 @@
 """
-     floatvecs(seq_of_coords, T) where T is Float64 (default) or Float32
-    
-```    
-vec_of_coords = [(1, 2), (2, 4)]
-floatvecs(vec_of_coords) = [[1.0, 2.0], [2.0, 4.0]]
+     coordvecs(seq_of_coord, ::Type{T}=Float64)
 
-tup_of_coords = ((1, 2), (2, 4))
-floatvecs(tup_of_coords, Float32) = ([1.0f0, 2.0f0], [2.0f0, 4.0f0])
+``` 
+vec_of_coord_tuples = [(1, 2), (2, 4)]
+coordvecs(vec_of_coord_tuples) == [(1.0, 2.0), (2.0, 4.0)]
+
+vec_of_coord_vectors = [[1, 2], [2, 4]]
+coordvecs(vec_of_coord_vectors) == [[1.0, 2.0], [2.0, 4.0]]
+
+tuple_of_coord_tuples = ((1, 2), (2, 4))
+coordvecs(tuple_of_coord_tuples, Float32) == ((1.0f0, 2.0f0), (2.0f0, 4.0f0))
 ```
 """
-floatvecs(seq_of_coords, ::Type{T}=Float64) where {T} = map(x->[T.(x)...,], seq_of_coords)
+coordvecs(coordseq::Vector{Vector{T}}) where {T<:AbstractFloat} = coordseq
+coordvecs(coordseq::Vector{NTuple{N,T}}) where {N, T<:AbstractFloat} = coordseq
+coordvecs(coordseq::NTuple{N1, NTuple{N2,T}}) where {N1, N2, T<:AbstractFloat} = coordseq
+coordvecs(coordseq::NTuple{N, Vector{T}}) where {N, T<:AbstractFloat} = coordseq
+
+coordvecs(coordseq::Vector{Vector{T}}) where {T<:Integer} = coordvecs(coordseq, Float64)
+coordvecs(coordseq::Vector{NTuple{N,T}}) where {N, T<:Integer} = coordvecs(coordseq, Float64)
+coordvecs(coordseq::NTuple{N1, NTuple{N2,T}}) where {N1, N2, T<:Integer} = coordvecs(coordseq, Float64)
+coordvecs(coordseq::NTuple{N, Vector{T}}) where {N, T<:Integer} = coordvecs(coordseq, Float64)
+
+coordvecs(coordseq::Vector{Vector{T1}}, ::Type{T2}) where {T1<:Real, T2<:AbstractFloat} = map(x->T2.(x), coordseq)
+coordvecs(coordseq::Vector{NTuple{N,T1}}, ::Type{T2}) where {N, T1<:Real, T2<:AbstractFloat} = map(x->[T2.(x)...,], coordseq)
+coordvecs(coordseq::NTuple{N1, NTuple{N2,T1}}, ::Type{T2}) where {N1, N2, T1<:Real, T2<:AbstractFloat} = map(x->[T2.(x)...,], coordseq)
+coordvecs(coordseq::NTuple{N, Vector{T1}}, ::Type{T2}) where {N, T1<:Real, T2<:AbstractFloat} = map(x->[T2.(x)...,], coordseq)
