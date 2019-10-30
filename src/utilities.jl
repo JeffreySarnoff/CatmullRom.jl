@@ -12,10 +12,10 @@ tuple_of_coord_tuples = ((1, 2), (2, 4))
 coordvecs(tuple_of_coord_tuples, Float32) == ((1.0f0, 2.0f0), (2.0f0, 4.0f0))
 ```
 """
-coordvecs(coordseq::Vector{Vector{T}}) where {T<:AbstractFloat} = coordseq
-coordvecs(coordseq::Vector{NTuple{N,T}}) where {N, T<:AbstractFloat} = coordseq
-coordvecs(coordseq::NTuple{N1, NTuple{N2,T}}) where {N1, N2, T<:AbstractFloat} = coordseq
-coordvecs(coordseq::NTuple{N, Vector{T}}) where {N, T<:AbstractFloat} = coordseq
+coordvecs(coordseq::Vector{Vector{T}}) where {T<:AbstractFloat} = coordvecs(coordseq, T)
+coordvecs(coordseq::Vector{NTuple{N,T}}) where {N, T<:AbstractFloat} = coordvecs(coordseq, T)
+coordvecs(coordseq::NTuple{N1, NTuple{N2,T}}) where {N1, N2, T<:AbstractFloat} = coordvecs(coordseq, T)
+coordvecs(coordseq::NTuple{N, Vector{T}}) where {N, T<:AbstractFloat} = coordvecs(coordseq, T)
 
 coordvecs(coordseq::Vector{Vector{T}}) where {T<:Integer} = coordvecs(coordseq, Float64)
 coordvecs(coordseq::Vector{NTuple{N,T}}) where {N, T<:Integer} = coordvecs(coordseq, Float64)
