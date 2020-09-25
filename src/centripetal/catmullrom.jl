@@ -63,15 +63,15 @@ end
 =#
     
 function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T) where {T}
-    dt0sq = dt0*dt0
-    dt1sq = dt1*dt1
-    dt2sq = dt2*dt2
+    dt0sq = dt0 * dt0
+    dt1sq = dt1 * dt1
+    dt2sq = dt2 * dt2
     
     x2x1 = x2 - x1
-    t1den = (dt0 + dt1)*dt0
-    t2den = (dt1 + dt2)*dt2
-    t1num = x2x1*dt0sq - dt1sq*(x0 - x1)
-    t2num = x2x1*dt2sq - dt1sq*(x2 - x3)
+    t1den = (dt0 + dt1) * dt0
+    t2den = (dt1 + dt2) * dt2
+    t1num = (x2x1 * dt0sq) - dt1sq * (x0 - x1)
+    t2num = (x2x1 * dt2sq) - dt1sq * (x2 - x3)
     t1 = t1num / t1den
     t2 = t2num / t2den
     
