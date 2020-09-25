@@ -5,6 +5,8 @@ Interpolate using the centripetal parameterization of Catmull-Rom splines.
 This is the form that does not crimp, provides taughtness, and looks good.
 
 See: [`catmullrom`](@ref), [`catmullrom_by_arclength`](@ref)
+
+See also: [`close_seq!`](@ref)
 """ CatmullRom
 
 module CatmullRom
