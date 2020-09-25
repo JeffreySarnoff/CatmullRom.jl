@@ -127,9 +127,9 @@ for i=1:npoints-3
     ybetweens = (evalpoly(yinsides[idx], ypoly.coeffs) for idx=1:length(yinsides))
     yofxbetweens = (evalpoly(xbetweens[idx], ypoly.coeffs) for idx=1:length(xbetweens))
     
-    append(xs, (xbetweens..., x3))
-    append(ys, (ybetweens..., y3))
-    append(yofxs, (yofxbetweens..., y3))
+    append!(xs, (xbetweens..., x3))
+    append!(ys, (ybetweens..., y3))
+    append!(yofxs, (yofxbetweens..., y3))
  end
  
  println(xs)
