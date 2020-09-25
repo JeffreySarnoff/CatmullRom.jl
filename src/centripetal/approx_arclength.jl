@@ -23,6 +23,21 @@ function approx_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where T
     return (cordal_dist + bezier_dist) * 0.5
 end
 
+"""
+    estimate_catmullrom_arclength2d(p0, p1, p2, p3)
+
+Uses 5-point Gauss-Legandre integration.
+"""
+function estimate_catmullrom_arclength2d(p0::T, p1::T, p2::T, p3::T) where T
+    b0, b1, b2, b3 = catmullrom_as_bezier(p0, p1, p2, p3)
+    c0 = complex(b0[1], b0[2])
+    c1 = complex(b1[1], b1[2])
+    c2 = complex(b2[1], b2[2])
+    c3 = complex(b3[1], b3[2])
+    
+    return estimate_bezier_arclength(c0, c1, c2, c3)
+end
+
 function catmullrom_as_bezier(p0::T, p1::T, p2::T, p3::T) where T
     b0 = p1
     b3 = p2
@@ -39,16 +54,6 @@ function catmullrom_as_bezier(p0::T, p1::T, p2::T, p3::T) where T
     b2 = b2n ./ b2d
     
     return b0, b1, b2, b3
-end
-
-function estimate_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where T
-    b0, b1, b2, b3 = catmullrom_as_bezier(p0, p1, p2, p3)
-    c0 = complex(b0...)
-    c1 = complex(b1...)
-    c2 = complex(b2...)
-    c3 = complex(b3...)
-    
-    return estimate_bezier_arclength(c0, c1, c2, c3)
 end
 
 function estimate_bezier_arclength(c0::T, c1::T, c2::T, c3::T) where {T<:Complex}
