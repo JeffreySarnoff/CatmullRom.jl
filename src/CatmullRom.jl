@@ -7,7 +7,7 @@ This is the form that does not crimp, provides taughtness, and looks good.
 module CatmullRom
 
 export catmullrom,               # populates with points placed between those given
-       catmullrom_by_arclength,  # populates with points placed between those given relative to arclength
+       catmullrom_by_arclength,  # like catmullrom with points placed relative to arclength
        close_seq!,               # ensures a point sequence is closed, precisely
        floatvecs                 # obtain a vector of vectors of floats
 
