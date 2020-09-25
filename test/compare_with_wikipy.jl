@@ -1,46 +1,4 @@
 
-# Define a set of points for curve to go through
-xcoords = Float64.([0, 2, 3, 4, 5, 6, 7])
-ycoords = Float64.([1.5, 2, 1, 0.5, 1, 2, 3])
-points = collect(zip(xcoords, ycoords))
-npoints = length(points)
-seqnums = collect(1:npoints)
-
-nbetweenpoints = 4
-nbetweens = collect(1:nbetweenpoints) ./ (nbetweenpoints + 1)
-
-xs = [xcoords[1]]
-ys = [ycoords[1]]
-yofxs = [ycoords[1]]
-
-for i=1:npoints-3
-    seq2 = i+1
-    seq3 = i+2
-    dseq = seq3 - seq2
-    seqbetweens = seq2 .+ nbetweens
-    seqthrough  = (seq2, seqbetweens..., seq3)
-    
-    x2, y2 = points[i+1]
-    x3, y3 = points[i+2]
-    dx = x3 - x2
-    dy = y3 - y2
-    xinsides = x2 .+ (nbetweens .* dx)
-    yinsides = y2 .+ (nbetweens .* dy)
-    
-    xpoly, ypoly = centripetal_catmullrom(points[i],points[i+1],points[i+2],points[i+3])
-    xbetweens = (evalpoly(xinsides[idx], xpoly.coeffs) for idx=1:length(xinsides))
-    ybetweens = (evalpoly(yinsides[idx], ypoly.coeffs) for idx=1:length(yinsides))
-    yofxbetweens = (evalpoly(xbetweens[idx], ypoly.coeffs) for idx=1:length(xbetweens))
-    
-    append(xs, (xbetweens..., x3))
-    append(ys, (ybetweens..., y3))
-    append(yofxs, (yofxbetweens..., y3))
- end
- 
- println(xs)
- println(ys)
- println(yofxs)
- 
 
 
 struct Cubic{T}
@@ -132,3 +90,49 @@ subsq(a::NTuple{N,T}, b::NTuple{N,T}) where {N,T} =
 
 subsq(a::T, b::T) where {S,T<:AbstractVector{S}} =
     (((a[i] - b[i])^2 for i=1:min(length(a),length(b)))...,)
+
+#
+
+
+# Define a set of points for curve to go through
+xcoords = Float64.([0, 2, 3, 4, 5, 6, 7])
+ycoords = Float64.([1.5, 2, 1, 0.5, 1, 2, 3])
+points = collect(zip(xcoords, ycoords))
+npoints = length(points)
+seqnums = collect(1:npoints)
+
+nbetweenpoints = 4
+nbetweens = collect(1:nbetweenpoints) ./ (nbetweenpoints + 1)
+
+xs = [xcoords[1]]
+ys = [ycoords[1]]
+yofxs = [ycoords[1]]
+
+for i=1:npoints-3
+    seq2 = i+1
+    seq3 = i+2
+    dseq = seq3 - seq2
+    seqbetweens = seq2 .+ nbetweens
+    seqthrough  = (seq2, seqbetweens..., seq3)
+    
+    x2, y2 = points[i+1]
+    x3, y3 = points[i+2]
+    dx = x3 - x2
+    dy = y3 - y2
+    xinsides = x2 .+ (nbetweens .* dx)
+    yinsides = y2 .+ (nbetweens .* dy)
+    
+    xpoly, ypoly = centripetal_catmullrom(points[i],points[i+1],points[i+2],points[i+3])
+    xbetweens = (evalpoly(xinsides[idx], xpoly.coeffs) for idx=1:length(xinsides))
+    ybetweens = (evalpoly(yinsides[idx], ypoly.coeffs) for idx=1:length(yinsides))
+    yofxbetweens = (evalpoly(xbetweens[idx], ypoly.coeffs) for idx=1:length(xbetweens))
+    
+    append(xs, (xbetweens..., x3))
+    append(ys, (ybetweens..., y3))
+    append(yofxs, (yofxbetweens..., y3))
+ end
+ 
+ println(xs)
+ println(ys)
+ println(yofxs)
+ 
