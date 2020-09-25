@@ -112,7 +112,7 @@ for i=1:npoints-3
     seq2 = i+1
     seq3 = i+2
     dseq = seq3 - seq2
-    seqbetweens = seq2 .+ nbetweens
+    seqbetweens = seq2 .+ (dseq .* nbetweens)
     seqthrough  = (seq2, seqbetweens..., seq3)
     
     x2, y2 = points[i+1]
@@ -123,9 +123,9 @@ for i=1:npoints-3
     yinsides = y2 .+ (nbetweens .* dy)
     
     xpoly, ypoly = centripetal_catmullrom(points[i],points[i+1],points[i+2],points[i+3])
-    xbetweens = (evalpoly(xinsides[idx], xpoly.coeffs) for idx=1:length(xinsides))
-    ybetweens = (evalpoly(yinsides[idx], ypoly.coeffs) for idx=1:length(yinsides))
-    yofxbetweens = (evalpoly(xbetweens[idx], ypoly.coeffs) for idx=1:length(xbetweens))
+    xbetweens = collect(evalpoly(xinsides[idx], xpoly.coeffs) for idx=1:length(xinsides))
+    ybetweens = collect(evalpoly(yinsides[idx], ypoly.coeffs) for idx=1:length(yinsides))
+    yofxbetweens = collect(evalpoly(xbetweens[idx], ypoly.coeffs) for idx=1:length(xbetweens))
     
     append!(xs, (xbetweens..., x3))
     append!(ys, (ybetweens..., y3))
