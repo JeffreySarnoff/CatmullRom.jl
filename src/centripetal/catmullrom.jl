@@ -20,6 +20,32 @@ function HermiteCubic(x0::T, x1::T, t0::T, t1::T) where {T}
     return Cubic{T}((c0, c1, c2, c3))
 end
 
+function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {T}
+    dt0 = root4(distancesquared(p0, p1))
+    dt1 = root4(distancesquared(p1, p2))
+    dt2 = root4(distancesquared(p2, p3))
+	
+    # safety check for repeated points
+    small = eltype(T)(1.0e-4)
+    if dt1 < small
+        dt1 = one(eltype(T))
+    end
+    if dt0 < small
+        dt0 = dt1
+    end
+    if dt2 < small
+        d2 = dt1
+    end
+	
+    n = length(p0)
+    result = Vector{Cubic}(undef, n)
+    for i = 1:n
+        result[i] = nonuniform_catmullrom(p0[i], p1[i], p2[i], p3[i], dt0, dt1, dt2)
+    end
+	
+    return (result...,)	
+end
+
 #=
     nonuniform_catmullrom
 
@@ -41,6 +67,7 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
     dt0sq = dt0*dt0
     dt1sq = dt1*dt1
     dt2sq = dt2*dt2
+    
     x2x1 = x2 - x1
     t1den = (dt0 + dt1)*dt0
     t2den = (dt1 + dt2)*dt2
@@ -48,33 +75,8 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
     t2num = x2x1*dt2sq - dt1sq*(x2 - x3)
     t1 = t1num / t1den
     t2 = t2num / t2den
-	return HermiteCubic(x1, x2, t1, t2)
-end
-
-function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {T}
-    dt0 = root4(distancesquared(p0, p1))
-	dt1 = root4(distancesquared(p1, p2))
-	dt2 = root4(distancesquared(p2, p3))
-	
-	# safety check for repeated points
-    small = eltype(T)(1.0e-4)
-	if dt1 < small
-	    dt1 = one(eltype(T))
-    end
-	if dt0 < small
-	    dt0 = dt1
-	end
-	if dt2 < small
-	    d2 = dt1
-	end
-	
-    n = length(p0)
-    result = Vector{Cubic}(undef, n)
-	for i = 1:n
-	    result[i] = nonuniform_catmullrom(p0[i], p1[i], p2[i], p3[i], dt0, dt1, dt2)
-	end
-	
-    return (result...,)	
+    
+    return HermiteCubic(x1, x2, t1, t2)
 end
 
 root4(x) = sqrt(sqrt(x))
