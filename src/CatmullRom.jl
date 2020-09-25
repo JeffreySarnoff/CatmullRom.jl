@@ -4,8 +4,9 @@
 Interpolate using the centripetal parameterization of Catmull-Rom splines.
 This is the form that does not crimp, provides taughtness, and looks good.
 
-[catmullrom](@ref), [catmullrom_by_arclength](@ref)
-"""
+See: [`catmullrom`](@ref), [`catmullrom_by_arclength`](@ref)
+""" CatmullRom
+
 module CatmullRom
 
 export catmullrom,               # populates with points placed between those given
