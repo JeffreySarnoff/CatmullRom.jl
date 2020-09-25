@@ -19,6 +19,7 @@ function HermiteCubic(x0::T, x1::T, t0::T, t1::T) where {T}
     return Cubic{T}((c0, c1, c2, c3))
 end
 
+# create alt version passing in Vector for results
 function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T; abserr=1.0e-4) where {T}
     dt0 = root4(distancesquared(p0, p1))
     dt1 = root4(distancesquared(p1, p2))
