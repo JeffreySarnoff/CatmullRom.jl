@@ -14,6 +14,7 @@ export catmullrom,               # populates with points placed between those gi
 using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval
 
+include("init_arcpoints.jl")
 include("utilities.jl")
 
 # The sorts of sequences understood to hold point coordinates
@@ -22,9 +23,6 @@ include("presence/pointsequences.jl")
 
 # suggest outermost two points for Catmull-Rom spline sequence
 const ReflectionScale = 1.0
-const ArcpointsMin = 8
-const ArcpointsMax = 64
-
 
 include("fewpoints/outside.jl")
 
