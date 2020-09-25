@@ -20,6 +20,7 @@ using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval
 
 include("init_arcpoints.jl")
+include("centripetal/approx_arclength.jl")
 include("utilities.jl")
 
 # The sorts of sequences understood to hold point coordinates
