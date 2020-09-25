@@ -2,7 +2,6 @@ struct Cubic{T}
     coeffs::NTuple{4,T}
 end
 Cubic(a::T, b::T, c::T, d::T) where {T} = Cubic{T}((a,b,c,d))
-Cubic{T}(a, b, c, d) where {T} = Cubic{T}((T(a), T(b), T(c), T(d)))
 
 #=
      Compute coefficients for a cubic polynomial
@@ -20,13 +19,13 @@ function HermiteCubic(x0::T, x1::T, t0::T, t1::T) where {T}
     return Cubic{T}((c0, c1, c2, c3))
 end
 
-function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T) where {T}
+function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T; abserr=1.0e-4) where {T}
     dt0 = root4(distancesquared(p0, p1))
     dt1 = root4(distancesquared(p1, p2))
     dt2 = root4(distancesquared(p2, p3))
 	
     # safety check for repeated points
-    small = eltype(T)(1.0e-4)
+    small = eltype(T)(abserr)
     if dt1 < small
         dt1 = one(eltype(T))
     end
