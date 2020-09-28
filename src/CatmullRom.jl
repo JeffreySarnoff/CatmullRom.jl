@@ -33,7 +33,8 @@ const ReflectionScale = 1.0
 include("fewpoints/outside.jl")
 
 # centripetal Catmull-Rom compution
-include("centripetal/catmullrom.jl")
+include("centripetal/catmullrom1.jl")
+include("centripetal/catmullrom2.jl")
 include("centripetal/arcbased.jl")
 
 # extrapolation using low-order interpolatory fits
