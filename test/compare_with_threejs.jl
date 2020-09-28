@@ -27,13 +27,10 @@ end
 
 # evaluate cubicpoly(t)
 function (poly::CubicPoly{T})(t::T) where {T}
-    t2 = t * t
-    t3 = t2 * t
-    evalpoly(t, poly.coef
-    return poly.c0 + poly.c1*t + poly.c2*t2 + poly.c3 * t3
+    return evalpoly(t, (poly.c0, poly.c1, poly.c2, poly.c3))
 end
 
-function catmullrom_cubicpoly(x0::T, x1::T, x2::T, x3::T; tension = T(0.5)) where {T}
+function uniform_catmullrom_cubicpoly(x0::T, x1::T, x2::T, x3::T; tension = T(0.5)) where {T}
       coord0 = x1
       coord1 = x2
       deriv0 = tension * (x2 .- x0)
@@ -41,6 +38,18 @@ function catmullrom_cubicpoly(x0::T, x1::T, x2::T, x3::T; tension = T(0.5)) wher
       return CubicPoly(coord0, coord1, deriv0, deriv1)
 end
 
+function nonuniform_catmullrom_cubicpoly(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::T) where {T}
+    coord0 = x1
+    coord1 = x2	
+    # compute tangents unscaled (parameterized within [t1,t2])
+    t1 = ( x1 - x0 ) / dt0 - ( x2 - x0 ) / ( dt0 + dt1 ) + ( x2 - x1 ) / dt1
+    t2 = ( x2 - x1 ) / dt1 - ( x3 - x1 ) / ( dt1 + dt2 ) + ( x3 - x2 ) / dt2
+    # rescale tangents for parametrization in [0,1]
+    deriv1 = t1 * dt1
+    deriv2 = t2 * dt1
+	
+    return CubicPoly(coord0, coord1, deriv0, deriv1)
+end
 #=
 
 function CubicPoly() {
