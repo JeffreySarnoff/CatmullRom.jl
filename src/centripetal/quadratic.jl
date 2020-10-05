@@ -21,7 +21,7 @@ function quadraticBezierLength2d(p0, p1, p2)
     r3 = log(r3a * r3b)
     r4 = 4 * A32
     result = (r1 + r2 + r3) / r4
-    return result # (A32 * Sabc + A2 * B * (Sabc - C2) + (4 * C * A - B * B) * log((2 * A2 + BA + Sabc) / (BA + C2))) / (4 * A32)
+    return result
 end
 
 function quadraticBezierLength(p0, p1, p2)
@@ -44,5 +44,5 @@ function quadraticBezierLength(p0, p1, p2)
     r3 = log(r3a * r3b)
     r4 = 4 * A32
     result = (r1 + r2 + r3) / r4
-    return result # (A32 * Sabc + A2 * B * (Sabc - C2) + (4 * C * A - B * B) * log((2 * A2 + BA + Sabc) / (BA + C2))) / (4 * A32)
+    return result
 end
