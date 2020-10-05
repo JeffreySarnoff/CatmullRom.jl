@@ -5,6 +5,12 @@ function catmullrom_to_approxarclength(p0, p1, p2, p3)
     return result
 end
 
+#=
+Quadratic Approximation of Cubic Curves
+NGHIA TRUONG, University of Utah
+CEM YUKSEL, University of Utah
+LARRY SEILER, Facebook Reality Lab
+=#
 function catmullrom_to_quadraticbeziers(p0, p1, p2, p3)
     p10 = p1 .- p0
     p21 = p2 .- p1
