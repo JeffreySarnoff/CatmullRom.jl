@@ -22,7 +22,6 @@ function approx_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where T
     
     return (cordal_dist + bezier_dist) * 0.5
 end
-
 """
     estimate_catmullrom_arclength2d(p0, p1, p2, p3)
 
@@ -55,6 +54,8 @@ function catmullrom_as_bezier(p0::T, p1::T, p2::T, p3::T) where T
     
     return b0, b1, b2, b3
 end
+
+# from https://github.com/fonttools/fonttools/blob/master/Lib/fontTools/misc/bezierTools.py
 
 function estimate_bezier_arclength(c0::T, c1::T, c2::T, c3::T) where {T<:Complex}
    v0 = abs(c1-c0) * 0.15
