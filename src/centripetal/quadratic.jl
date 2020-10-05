@@ -1,3 +1,27 @@
+function catmullrom_to_approxarclength(p0, p1, p2, p3)
+    bz0, bz1 = catmullrom_to_quadraticbeziers(p0, p1, p2, p3)
+    result = quadraticBezierLength2d(bz0...)
+    result += quadraticBezierLength2d(bz1...)
+    return result
+end
+
+function catmullrom_to_quadraticbeziers(p0, p1, p2, p3)
+    p10 = p1 .- p0
+    p21 = p2 .- p1
+    p32 = p3 .- p2
+    d1 = norm(p10); d1sqrt = sqrt(d1)
+    d2 = norm(p21); d2sqrt = sqrt(d2)
+    d3 = norm(p32); d3sqrt = sqrt(d3)
+
+    q00 = p1
+    q01 = p1 .+ ((d1 .* p21)+(d2 .* p10)) / (4*d1sqrt*(d1sqrt+d2sqrt))
+    q11 = p2 .+ ((d3 .* (-1 .* p21)+(d2 .* (-1 .* p32))) / (4*d3sqrt*(d3sqrt+d2sqrt))
+    q02 = q10 = (q01 .+ q11) ./ 2
+    q12 = p2
+    
+    return (q00,q01,q02), (q10,q11,q12)
+end
+
 # https://gist.github.com/tunght13488/6744e77c242cc7a94859
 function quadraticBezierLength2d(p0, p1, p2)
     ax = p0[1] - 2 * p1[1] + p2[1]
