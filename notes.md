@@ -87,5 +87,12 @@ denom = a * b * c
 
 (dx/dt)[i] = numer / denom
 ```
+
+#### the tangent vector at t=0 and t=1 (point[1] and point[n])
+
+dt[i] = t[i+1] - t[i]
+
+
+
 - ref: Piecewise Polynomial Curves (Release d70f149)
     - Matthias Geier, 2020-07-01. page 36
