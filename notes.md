@@ -64,7 +64,12 @@ ts = [t₁ t₂ t₃ t₄ t₅ .. tₖ₋₃ tₖ₋₂ tₖ₋₁ tₖ tₖ₊�
 
 #### equation for the tangent vector at point[i]
 ```julia
-(dx/dt)[i] = (x[i+1] - x[i-1]) / 2
+
+r = (x[i] - x[i-1]) / (t[i] - t[i-1]))
+s = (x[i+1] - x[i]) / (t[i+1] - t[i])
+(dx/dt)[i] = (1/2) * (r + s)
+
+# (dx/dt)[i] = (x[i+1] - x[i-1]) / 2
 ```
 
 ## When the abcissae (or timesteps) are not uniformly separated
