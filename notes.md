@@ -18,6 +18,17 @@
      - The remaining coordinate[s] is[are] processed as the ordinate[s].
      
  - Working with domains that span 2 or more axes is not supported by this version.
-  
-  
+ 
+## How are multidimensional ordinates processed?
+
+### Interpolating a 1D sequence
+
+avec = [ a₁ a₂ a₃ a₄ .. aᵢ₋₃ aᵢ₋₂ aᵢ₋₁ aᵢ aᵢ₊₁ aᵢ₊₂ aᵢ₊₃ .. aₙ₋₄ aₙ₋₃ aₙ₋₂ aₙ₋₁ aₙ ]
+
+### Interpolating a 2D sequence
+
+### Interpolating a 3D sequence
+
+### Interpolating a nD sequence
+
  
