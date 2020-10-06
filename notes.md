@@ -23,7 +23,7 @@
 
 ### Interpolating a 1D sequence
 
-avec = [ a₁ a₂ a₃ a₄ .. aᵢ₋₃ aᵢ₋₂ aᵢ₋₁ aᵢ aᵢ₊₁ aᵢ₊₂ aᵢ₊₃ .. aₙ₋₄ aₙ₋₃ aₙ₋₂ aₙ₋₁ aₙ ]
+avec = [a₁ a₂ a₃ a₄ a₅ .. aₖ₋₃ aₖ₋₂ aₖ₋₁ aₖ aₖ₊₁ aₖ₊₂ aₖ₊₃ .. aₙ₋₄ aₙ₋₃ aₙ₋₂ aₙ₋₁ aₙ]
 
 ### Interpolating a 2D sequence
 
