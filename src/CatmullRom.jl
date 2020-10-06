@@ -19,6 +19,8 @@ export catmullrom,               # populates with points placed between those gi
 using LinearAlgebra: dot, norm, normalize
 using Polynomials: Poly, polyval
 
+using LoopVectorization, StructArrays, StaticArrays
+
 include("init_arcpoints.jl")
 include("centripetal/approx_arclength.jl")
 include("utilities.jl")
