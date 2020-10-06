@@ -59,4 +59,21 @@ ts = [t₁ t₂ t₃ t₄ t₅ .. tₖ₋₃ tₖ₋₂ tₖ₋₁ tₖ tₖ₊�
 
 ### Interpolating a nD sequence
 
+
+## When the abcissae (or timesteps) are not uniformly separated
+
+### equation for the tangent vector at point[i]
+```julia
+a = t[i+1] - t[i]
+b = t[i]   - t[i-1]
+c = t[i+1] - t[i-1]
+r = (t[i+1] - t[i])^2 * (x[i] - x[i-1])
+s = (t[i] - t[i-1])^2 * (x[i+1] - x[i])
  
+numer = r + s
+denom = a * b * c
+
+(dx/dt)[i] = numer / denom
+```
+- ref: Piecewise Polynomial Curves (Release d70f149)
+    - Matthias Geier, 2020-07-01. page 36
