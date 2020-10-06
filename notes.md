@@ -21,9 +21,19 @@
  
 ## How are multidimensional ordinates processed?
 
-### Interpolating a 1D sequence
+```julia
+xs = [x₁ x₂ x₃ x₄ x₅ .. xₖ₋₃ xₖ₋₂ xₖ₋₁ xₖ xₖ₊₁ xₖ₊₂ xₖ₊₃ ..  xₙ₋₄ xₙ₋₃ xₙ₋₂ xₙ₋₁ xₙ]
+ys = [y₁ y₂ y₃ y₄ y₅ .. yₖ₋₃ yₖ₋₂ yₖ₋₁ yₖ yₖ₊₁ yₖ₊₂ yₖ₊₃ ..  yₙ₋₄ yₙ₋₃ yₙ₋₂ yₙ₋₁ yₙ]
+zs = [z₁ z₂ z₃ z₄ z₅ .. zₖ₋₃ zₖ₋₂ zₖ₋₁ zₖ zₖ₊₁ zₖ₊₂ zₖ₊₃ ..  zₙ₋₄ zₙ₋₃ zₙ₋₂ zₙ₋₁ zₙ]
+ws = [w₁ w₂ w₃ w₄ w₅ .. wₖ₋₃ wₖ₋₂ wₖ₋₁ wₖ wₖ₊₁ wₖ₊₂ wₖ₊₃ ..  wₙ₋₄ wₙ₋₃ wₙ₋₂ wₙ₋₁ wₙ]
 
-avec = [a₁ a₂ a₃ a₄ a₅ .. aₖ₋₃ aₖ₋₂ aₖ₋₁ aₖ aₖ₊₁ aₖ₊₂ aₖ₊₃ .. aₙ₋₄ aₙ₋₃ aₙ₋₂ aₙ₋₁ aₙ]
+hs = [h₁ h₂ h₃ h₄ h₅ .. hₖ₋₃ hₖ₋₂ hₖ₋₁ hₖ hₖ₊₁ hₖ₊₂ hₖ₊₃ ..  hₙ₋₄ hₙ₋₃ hₙ₋₂ hₙ₋₁ hₙ]
+ms = [m₁ m₂ m₃ m₄ m₅ .. mₖ₋₃ mₖ₋₂ mₖ₋₁ mₖ mₖ₊₁ mₖ₊₂ mₖ₊₃ ..  mₙ₋₄ mₙ₋₃ mₙ₋₂ mₙ₋₁ mₙ]
+rs = [r₁ r₂ r₃ r₄ r₅ .. rₖ₋₃ rₖ₋₂ rₖ₋₁ rₖ rₖ₊₁ rₖ₊₂ rₖ₊₃ ..  rₙ₋₄ rₙ₋₃ rₙ₋₂ rₙ₋₁ rₙ]
+ts = [t₁ t₂ t₃ t₄ t₅ .. tₖ₋₃ tₖ₋₂ tₖ₋₁ tₖ tₖ₊₁ tₖ₊₂ tₖ₊₃ ..  tₙ₋₄ tₙ₋₃ tₙ₋₂ tₙ₋₁ tₙ]
+```
+
+### Interpolating a 1D sequence
 
 ### Interpolating a 2D sequence
 
