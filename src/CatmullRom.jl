@@ -23,11 +23,15 @@ using LoopVectorization, StructArrays, StaticArrays
 
 include("init_arcpoints.jl")
 include("centripetal/approx_arclength.jl")
-include("utilities.jl")
+
+include("support/basemethods.jl")
+include("point/coordinate.jl")
+include("point/sequence.jl")
+
 
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
-include("presence/pointsequences.jl")
+include("point/sequences.jl")
 
 # suggest outermost two points for Catmull-Rom spline sequence
 const ReflectionScale = 1.0
