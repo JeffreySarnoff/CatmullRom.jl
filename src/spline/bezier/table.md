@@ -7,6 +7,9 @@
    __`PD`__   | polynomial degree  |  `Int`      
    __`KS`__   | kind of spline     |  singelton   
 
+
+```
+
 ```
 # these Kinds of Splines are internally supported
 
