@@ -4,9 +4,11 @@ parameter | represents        | value type
 :--------:|-------------------|-------------
    `ND`   | dimensions        |  `Signed`   
    `CT`   | coord type        |  `Number`   
-   `KS`   | kind of spline    |  Singleton below   
    `PD`   | polynomial degree |  `Int`      
-   
+   `KS`   | kind of spline    |  `Symbol`   
+
+(kinds are shown below)
+
 -----
 
 _Related Symbols_   
