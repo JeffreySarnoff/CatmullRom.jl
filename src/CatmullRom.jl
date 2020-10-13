@@ -21,13 +21,13 @@ using Polynomials: Poly, polyval
 
 using LoopVectorization, StructArrays, StaticArrays
 
-include("init_arcpoints.jl")
-include("centripetal/approx_arclength.jl")
-
 include("support/basemethods.jl")
+include("support/init_arcpoints.jl")
+
 include("point/coordinate.jl")
 include("point/sequence.jl")
 
+include("centripetal/approx_arclength.jl")
 
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
