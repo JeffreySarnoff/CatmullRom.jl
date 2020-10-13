@@ -10,12 +10,12 @@
 
 ```
 
-```
-# these Kinds of Splines are internally supported
-
-
 ----
 
+#### these Kinds of Splines are internally supported
+
+
+```
 #=
     All Splines share the AbstractSpline abstraction.
     All Linear Splines share the AkoLinearSpline abstraction
@@ -65,9 +65,11 @@
 ```
 
 ```
+```
 abstract type AbstractSpline{ND,PD} end`
 
 abstract type AkoLinearSpline{ND,PD} <: AbstractSpline{ND,PD} end
+```
 ```
 
 #=
