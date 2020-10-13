@@ -7,7 +7,11 @@ parameter | represents        | value type
    `KS`   | kind of spline    |  Singleton below   
    `PD`   | polynomial degree |  `Int`      
    
+-----
+
 _Related Symbols_   
-- SplineKinds = (:Bezier, :CatmullRom)
-- SplineFits  = (:Linear, :Quadratic, :Cubic, :Quartic)
+```
+const SplineKinds   = (:Bezier, :CatmullRom)
+const SplineDegrees = (:Linear = 1, :Quadratic = 2, :Cubic = 3, :Quartic = 4)
+```
 
