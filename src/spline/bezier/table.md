@@ -59,6 +59,7 @@
       points that are adjacent in their given sequence
     
 =#
+```
 
 ```
 abstract type AbstractSpline{ND,PD} end`
@@ -84,7 +85,7 @@ struct
 -----
 
 _Related Symbols_   
-
+```
 const SplineKinds   = (:Bezier, :CatmullRom)
 const SplineDegrees = (:Linear = 1, :Quadratic = 2, :Cubic = 3, :Quartic = 4)
 ```
