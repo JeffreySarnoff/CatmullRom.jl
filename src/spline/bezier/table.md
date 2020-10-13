@@ -81,15 +81,13 @@ abstract type AkoQuadraticSpline{ND,PD} <: AbstractSpline{ND,PD} end
 abstract type AkoCubicSpline{ND,PD}     <: AbstractSpline{ND,PD} end
 abstract type AkoQuarticSpline{ND,PD}   <: AbstractSpline{ND,PD} end
 abstract type AkoQuinticSpline{ND,PD}   <: AbstractSpline{ND,PD} end
-
-struct 
-(kinds are shown below)
-
+```
 -----
 
 _Related Symbols_   
-```
-const SplineKinds   = (:Bezier, :CatmullRom)
+
+```julia
+const SplineKinds   = (:Bezier, :CatmullRom)0
 const SplineDegrees = (:Linear = 1, :Quadratic = 2, :Cubic = 3, :Quartic = 4)
 ```
 
