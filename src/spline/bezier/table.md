@@ -4,8 +4,7 @@ parameter | represents        | value type
 :--------:|-------------------|-------------
    `ND`   | dimensions        |  `Signed`   
    `CT`   | coord type        |  `Number`   
-   `KS`   | kind of spline    | spline symbols  
-                                :CatmullRom)     
+   `KS`   | kind of spline    | spline symbols   
    `PD`   | polynomial degree |  `Int`      
    
    
