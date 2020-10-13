@@ -1,18 +1,28 @@
 
 
 
- param  | represents | type  used  
---------|------------|-------------
- `ND`   | number of  |  `Signed`   
-        | dimensions |             
-        |            |
- `CT`   | coordinate |  `Number`   
-        | type       |             
-        |            |
- `KS`   | kind of    | :Bezier     
-        | spline     | :CatmullRom 
-        |            |
- `PD`   | polynomial |  `Int`      
-        | degree     |             
-        |            |
+param   | represents        | type  used  
+--------|-------------------|-------------
+`ND`    | n dimensions      |  `Signed`   
+`CT`    | coord type        |  `Number`   
+`KS`    | kind of spline    | :Bezier :CatmullRom     
+ `PD`   | polynomial degree |  `Int`      
+        |                   |
 
+
+
+
+
+param   | represents        | type  used  
+--------|-------------------|-------------
+`ND`    | n dimensions      |  `Signed`   
+ ..     |      ..           |     ..
+`CT`    | coord type        |  `Number`   
+ ..     |      ..           |     ..
+`KS`    | kind of spline    | :Bezier :CatmullRom     
+ ..     |      ..           |     ..
+ `PD`   | polynomial degree |  `Int`      
+ ..     |      ..           |     ..
+
+
+        |                   |             
