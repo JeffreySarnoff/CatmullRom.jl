@@ -68,7 +68,7 @@ function thiele3(pt₁x, pt₂x, pt₃x, pt₁y, pt₂y, pt₃y, x)
 
     result = @. (-(pt₁x - x) * t1 + pt₁y)
     if !allfinite(result)
-        result = (pt₁x, pt₂x, pt₃x, pt₁y, pt₂y, pt₃y, x)
+        result = quadratic(pt₁x, pt₂x, pt₃x, pt₁y, pt₂y, pt₃y, x)
     end
 
     return result
