@@ -26,7 +26,7 @@ using LoopVectorization, StructArrays, StaticArrays
 include("type/point.jl")
 
 include("support/sequence.jl")
-include("support/angle.jl")
+include("support/distance.jl")
 include("support/init_arcpoints.jl")
 
 #include("point/coordinate.jl")
