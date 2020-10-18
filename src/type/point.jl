@@ -8,6 +8,19 @@ With any of the available parameter-realized sorts of _Point_ (`Point{ND,T}`)
 
 abstract type AbstractPoint{ND, T} end
 
-struct Point{ND, T} <: AbstractPoint{ND, T}
+struct NTupPoint{ND, T} <: AbstractPoint{ND, T}
     coords::NTuple{ND, T}
 end
+
+struct SVecPoint{ND, T} <: AbstractPoint{ND, T}
+    coords::SVector{ND, T}
+end
+
+const Point{ND,T} = Union{NPoint{ND,T}, SPoint{ND,T}}
+
+Point(coords::NTuple{ND,T}) where {ND,T} = NTupPoint{ND,T}(coords)
+Point(coords::SVector{ND,T}) where {ND,T} = SVecPoint{ND,T}(coords)
+Point(coords::Vector{T}) where {T} = SVecPoint{length(coords),T}(coords)
+
+Base.convert{::Type{SVecPoint}, x::NTupPoint{S,T}) where {S,T} = SVecPoint{S,T}(x.coords)
+Base.convert{::Type{NTupPoint}, x::SVecPoint{S,T}) where {S,T} = NTupPoint(x.coords.data)
