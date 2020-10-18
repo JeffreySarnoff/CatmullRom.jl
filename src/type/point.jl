@@ -18,9 +18,11 @@ end
 
 const Point{ND,T} = Union{NTupPoint{ND,T}, SVecPoint{ND,T}}
 
-Point(coords::NTuple{ND,T}) where {ND,T} = NTupPoint{ND,T}(coords)
-Point(coords::SVector{ND,T}) where {ND,T} = SVecPoint{ND,T}(coords)
+Point(coords::NTuple{ND,T}) where {T,ND} = NTupPoint{ND,T}(coords)
+Point(coords::SVector{ND,T}) where {T,ND} = SVecPoint{ND,T}(coords)
 Point(coords::Vector{T}) where {T} = SVecPoint{length(coords),T}(coords)
 
-Base.convert(::Type{SVecPoint{ND,T}, x::NTupPoint{ND,T}) where {ND,T} = SVecPoint{ND,T}(x.coords)
-Base.convert(::Type{NTupPoint{ND,T}, x::SVecPoint{ND,T}) where {ND,T} = NTupPoint{ND,T}(x.coords.data)
+Base.convert(::Type{SVecPoint{ND,T}, x::NTupPoint{ND,T}) where {T,ND} = SVecPoint{ND,T}(x.coords)
+Base.convert(::Type{NTupPoint{ND,T}, x::SVecPoint{ND,T}) where {T,ND} = NTupPoint{ND,T}(x.coords.data)
+    
+Base.promote_rule(::Type{NTupPoint{ND,T}}, ::Type{SVecPoint{ND,T}}) where {T,ND} = SVecPoint{ND,T}
