@@ -21,7 +21,7 @@ using Polynomials: Poly, polyval
 
 using LoopVectorization, StructArrays, StaticArrays
 
-include("support/basemethods.jl")
+# include("support/basemethods.jl")
 include("support/init_arcpoints.jl")
 
 include("point/coordinate.jl")
