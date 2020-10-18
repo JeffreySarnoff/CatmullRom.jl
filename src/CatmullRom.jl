@@ -25,8 +25,9 @@ using LoopVectorization, StructArrays, StaticArrays
 
 include("type/point.jl")
 
-include("support/init_arcpoints.jl")
 include("support/sequence.jl")
+include("support/angle.jl")
+include("support/init_arcpoints.jl")
 
 #include("point/coordinate.jl")
 
@@ -34,7 +35,7 @@ include("centripetal/approx_arclength.jl")
 
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
-include("point/sequences.jl")
+# include("point/sequences.jl")
 
 # suggest outermost two points for Catmull-Rom spline sequence
 const ReflectionScale = 1.0
@@ -50,8 +51,5 @@ include("centripetal/arcbased.jl")
 include("fewpoints/twopoints.jl")    # linear fit, reflection
 include("fewpoints/threepoints.jl")  # thiele3 rational fit, general quadratic fit
 include("fewpoints/fourpoints.jl")   # thiele4 rational fit (preferred)
-
-# myunzip, anglesep
-include("presence/support.jl")
 
 end # CatmullRom
