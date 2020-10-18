@@ -31,7 +31,7 @@ include("support/init_arcpoints.jl")
 
 #include("point/coordinate.jl")
 
-include("centripetal/approx_arclength.jl")
+
 
 # The sorts of sequences understood to hold point coordinates
 #     defines `Points`m `npoints(Points)`, `ncoords(Points)`
@@ -43,6 +43,7 @@ const ReflectionScale = 1.0
 include("fewpoints/outside.jl")
 
 include("spline/catmullrom/arclength.jl")
+#include("centripetal/approx_arclength.jl")
 # centripetal Catmull-Rom compution
 include("centripetal/catmullrom1.jl")
 include("centripetal/catmullrom2.jl")
