@@ -16,7 +16,7 @@ struct SVecPoint{ND, T} <: AbstractPoint{ND, T}
     coords::SVector{ND, T}
 end
 
-const Point{ND,T} = Union{NPoint{ND,T}, SPoint{ND,T}}
+const Point{ND,T} = Union{NTupPoint{ND,T}, SVecPoint{ND,T}}
 
 Point(coords::NTuple{ND,T}) where {ND,T} = NTupPoint{ND,T}(coords)
 Point(coords::SVector{ND,T}) where {ND,T} = SVecPoint{ND,T}(coords)
