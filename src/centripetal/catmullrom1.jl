@@ -82,16 +82,6 @@ function nonuniform_catmullrom(x0::T, x1::T, x2::T, x3::T, dt0::T, dt1::T, dt2::
     return HermiteCubic(x1, x2, t1, t2)
 end
 
-root4(x) = sqrt(sqrt(x))
-
-distancesquared(a::T, b::T) where {T} = sum(subsq(a, b))
-
-subsq(a::NTuple{N,T}, b::NTuple{N,T}) where {N,T} =
-    (((a[i] - b[i])^2 for i=1:N)...,)
-
-subsq(a::T, b::T) where {S,T<:AbstractVector{S}} =
-    (((a[i] - b[i])^2 for i=1:min(length(a),length(b)))...,)
-
 #=
 
 """
