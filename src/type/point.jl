@@ -22,5 +22,5 @@ Point(coords::NTuple{ND,T}) where {ND,T} = NTupPoint{ND,T}(coords)
 Point(coords::SVector{ND,T}) where {ND,T} = SVecPoint{ND,T}(coords)
 Point(coords::Vector{T}) where {T} = SVecPoint{length(coords),T}(coords)
 
-Base.convert{::Type{SVecPoint{ND,T}, x::NTupPoint{ND,T}) where {ND,T} = SVecPoint{ND,T}(x.coords)
-Base.convert{::Type{NTupPoint{ND,T}, x::SVecPoint{ND,T}) where {ND,T} = NTupPoint{ND,T}(x.coords.data)
+Base.convert(::Type{SVecPoint{ND,T}, x::NTupPoint{ND,T}) where {ND,T} = SVecPoint{ND,T}(x.coords)
+Base.convert(::Type{NTupPoint{ND,T}, x::SVecPoint{ND,T}) where {ND,T} = NTupPoint{ND,T}(x.coords.data)
