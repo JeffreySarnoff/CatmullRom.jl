@@ -65,10 +65,10 @@ function catmullrom_as_bezier(p0::T, p1::T, p2::T, p3::T) where T
     d2 = norm(p2 .- p1); d2a = sqrt(d2)
     d3 = norm(p3 .- p2); d3a = sqrt(d3)
     
-    b1n = @. (d1 * p2) - (d2 * p0) + ((2*d1 + 3*d1a*d2a+d2) * p1)
+    b1n = @. (d1 * p2) - (d2 * p0) + ((2*d1 + 3*fma(d1a,d2a,d2)) * p1)
     b1d = 3*d1a*(d1a+d2a)
     b1 = b1n ./ b1d
-    b2n = @. (d3 * p1) - (d2 * p3) + ((2*d3 + 3*d3a*d2a+d2) * p2)
+    b2n = @. (d3 * p1) - (d2 * p3) + ((2*d3 + 3*fma(d3a,d2a,d2)) * p2)
     b2d = 3*d3a*(d3a+d2a)
     b2 = b2n ./ b2d
     
