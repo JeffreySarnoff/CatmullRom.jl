@@ -46,6 +46,9 @@ function centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T; abserr=1.0e-4) where
     return (result...,)	
 end
 
+centripetal_catmullrom(p0::T, p1::T, p2::T, p3::T; abserr=1.0e-4) where {N,T<:NTuple{N,Integer}} =
+    centripetal_catmullrom(Float64.(p0), Float64.(p1), Float64.(p2), Float64.(p3); abserr=abserr)
+
 #=
     nonuniform_catmullrom
 
