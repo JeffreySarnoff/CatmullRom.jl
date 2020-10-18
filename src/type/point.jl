@@ -1,5 +1,5 @@
 #= 
-`AbstractPoint{ND,T}` is an abstraction over all internally recognizable point representions.
+`AbstractPoint{ND,T}` is an abstraction over all internally recognizable point representations.
 
 With any of the available parameter-realized sorts of _Point_ (`Point{ND,T}`) 
 - the parameter `ND` is to be assigned a strictly postive Int that reflects the dimensionality
