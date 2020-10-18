@@ -1,5 +1,6 @@
 """
     approx_catmullrom_arclength(pt0, pt1, pt2, pt3)
+
 Given 4 ND points along a centripetal Catmull-Rom span,
 roughly approximate the arclength of the curvilinear segment
 that would be determined by the two bounding points
@@ -9,7 +10,7 @@ This well-behaved approximation was developed by Jens Gravesen
     (2*corddist + (n-1)*bezdist)/(n+1), n is degree of the curve
     deg=2 --> (2*corddist + bezdist)/(3)
     deg=3 --> (2*corddist + 2*bezdist)/(4) --> (corddist + bezdist)/2
-    deg=4 --> (2*corddsit + 3*bezdist)/(5)
+    deg=4 --> (2*corddidt + 3*bezdist)/(5)
 ```
 """
 function approx_catmullrom_arclength(p0::T, p1::T, p2::T, p3::T) where T
