@@ -42,6 +42,7 @@ const ReflectionScale = 1.0
 
 include("fewpoints/outside.jl")
 
+include("spline/catmullrom/arclength.jl")
 # centripetal Catmull-Rom compution
 include("centripetal/catmullrom1.jl")
 include("centripetal/catmullrom2.jl")
