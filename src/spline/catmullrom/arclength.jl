@@ -35,6 +35,8 @@ approximation of it.
 https://en.wikipedia.org/wiki/Gaussian_quadrature#Gauss.E2.80.93Lobatto_rules
    for t in [0, sqrt(0.5-3/7)/2, sqrt(0.5+3/7)/2, .5, 1],
    weighted 1/20, 49/180, 32/90, 49/180, 1/20 respectively.
+
+from https://github.com/fonttools/fonttools/blob/master/Lib/fontTools/misc/bezierTools.py
 """
 function approx_catmullrom_arclength(p1::T, p2::T, p3::T, p4::T) where T
     b1, b2, b3, b4 = catmullrom_as_bezier(p1, p2, p3, p4)
