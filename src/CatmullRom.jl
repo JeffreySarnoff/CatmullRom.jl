@@ -22,10 +22,13 @@ using Polynomials: Poly, polyval
 using LoopVectorization, StructArrays, StaticArrays
 
 # include("support/basemethods.jl")
-include("support/init_arcpoints.jl")
 
-include("point/coordinate.jl")
-include("point/sequence.jl")
+include("type/point.jl")
+
+include("support/init_arcpoints.jl")
+include("support/sequence.jl")
+
+#include("point/coordinate.jl")
 
 include("centripetal/approx_arclength.jl")
 
