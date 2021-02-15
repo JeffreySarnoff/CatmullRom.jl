@@ -110,9 +110,9 @@ function catmullrom_core(points::P, pointsperarc::Integer) where P
     abcissae01 = range(0.0, stop=1.0, length=n_through_points)
 
     # vals is an `(n_points - 3) x (n_dims)` array of groups of successive point_along_coord placements
-    vals = polyval.(polys, Ref(abcissae01[1:end-1]))
+    vals = polys.(Ref(abcissae01[1:end-1]))
     coord_vals = [collect(Iterators.flatten( vals[:,i] )) for i=1:n_coords]
-    endvals = polyval.(polys[end,:], fill(1.0, n_coords))
+    endvals = (polys[end,:]).(fill(1.0, n_coords))
     @. push!(coord_vals, endvals)
     
     return coord_vals
