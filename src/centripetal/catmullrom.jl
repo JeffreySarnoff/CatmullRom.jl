@@ -170,7 +170,7 @@ function centripetal_catmullrom(pt₋::T,
     c₀,c₁,c₂,c₃ = centripetal_hermite(pt₀, pt₁, tg₀, tg₁)
 
     coeffs = [[x...] for x in zip(c₀,c₁,c₂,c₃)]
-    return Poly.(coeffs)
+    return Polynomial.(coeffs)
 end
 
 """
