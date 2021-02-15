@@ -107,16 +107,24 @@ function catmullrom_core(points::P, pointsperarc::Integer) where P
     polys = catmullrom_polys(points)
     
     # interpolate using span-relative abcissae [0.0..1.0]
-    abcissae01 = range(0.0, stop=1.0, length=n_through_points)
+    abcissae01 = collect(range(0.0, stop=1.0, length=n_through_points))
 
     # vals is an `(n_points - 3) x (n_dims)` array of groups of successive point_along_coord placements
-    vals = polys.(Ref(abcissae01[1:end-1]))
-    coord_vals = [collect(Iterators.flatten( vals[:,i] )) for i=1:n_coords]
-    endvals = (polys[end,:]).(fill(1.0, n_coords))
-    @. push!(coord_vals, endvals)
+    
+    xvals = flat(map(ply, abcissae01[1:end-1]) for ply in polys[:,1])
+    yvals = flat(map(ply, abcissae01[1:end-1]) for ply in polys[:,2])
+    coord_vals = collect(zip(xvals,yvals))
+   
+    # vals = polys.(Ref(abcissae01[1:end-1]))
+    
+    #coord_vals = [collect(Iterators.flatten( vals[:,i] )) for i=1:n_coords]
+    #endvals = (polys[end,:]).(fill(1.0, n_coords))
+    #@. push!(coord_vals, endvals)
     
     return coord_vals
 end
+
+flat(x) = collect(Base.Iterators.flatten(x))
 
 """
     catmullrom_polys(points)
