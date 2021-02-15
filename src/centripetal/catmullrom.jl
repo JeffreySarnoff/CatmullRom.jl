@@ -143,7 +143,7 @@ function catmullrom_polys(points::P) where P
     n_spans  = n_points - 3         # count between fenceposts (-1)
     n_coords = ncoords(points)      # each point has ncoordinates
 
-    polys  = Array{Poly{T}, 2}(undef, n_spans, n_coords)
+    polys  = Array{Polynomial{T}, 2}(undef, n_spans, n_coords)
 
     for idx = 1:n_spans
         pt₋, pt₀, pt₁, pt₊ = points[idx:idx+3]
