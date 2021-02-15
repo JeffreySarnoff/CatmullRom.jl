@@ -12,7 +12,7 @@ export catmullrom,               # populates with points placed between those gi
        floatvecs                 # obtain a vector of vectors of floats
 
 using LinearAlgebra: dot, norm, normalize
-using Polynomials: Poly, polyval
+using Polynomials: Polynomial
 
 include("utilities.jl")
 
